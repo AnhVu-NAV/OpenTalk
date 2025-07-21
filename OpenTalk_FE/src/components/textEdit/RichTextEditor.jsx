@@ -15,7 +15,6 @@ const CustomTextEditor = () => {
     const handleSubmit = () => {
         const content = editorRef.current.innerHTML;
         console.log("Title:", title);
-        console.log("Priority:", priority);
         console.log("Content HTML:", content);
     };
 
@@ -29,7 +28,7 @@ const CustomTextEditor = () => {
                 name="title"
                 type="text"
                 required={false}
-                editable={false}
+                editable={true}
             />
             <div className="editor-toolbar">
                 {/* Heading */}

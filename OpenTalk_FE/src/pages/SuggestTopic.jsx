@@ -34,6 +34,33 @@ const SuggestTopic = () => {
                 setLoading(false);
             });
     }, []);
+
+    const handleSubmitTopic = async ({ title, content }) => {
+        const token = getAccessToken();
+        const user = getCurrentUser();
+        if (!user) return;
+
+        try {
+            const res = await axios.post(
+                "/topic-idea",
+                {
+                    title: title,
+                    description: content,
+                    suggestedBy: { id: user.id } // giả định backend nhận object hoặc chỉ id
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            console.log("Topic suggested successfully:", res.data);
+            alert("Topic submitted!");
+        } catch (err) {
+            console.error("Error submitting topic:", err);
+            alert("Error submitting topic!");
+        }
+    };
     return (
         <div className="page-wrapper">
             <div className="page-header">
@@ -43,7 +70,7 @@ const SuggestTopic = () => {
             <div className="layout">
                 {/* Editor bên trái */}
                 <div className="layout__main">
-                    <CustomTextEditor />
+                    <CustomTextEditor onSubmit={handleSubmitTopic} />
                 </div>
                 {/* Card bên phải */}
                 <aside className="layout__sidebar">
