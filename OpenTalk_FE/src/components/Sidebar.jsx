@@ -55,7 +55,7 @@ function Sidebar() {
         if (role === "ADMIN") return true;
 
         if (role === "USER") {
-            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest"].includes(label);
+            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance"].includes(label);
         }
 
         return false;

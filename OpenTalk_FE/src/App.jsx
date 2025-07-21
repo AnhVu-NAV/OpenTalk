@@ -26,6 +26,7 @@ import PollApp from "./pages/PollMeeting.jsx";
 import CreatePoll from "./pages/CreatePoll.jsx";
 import TopicProposalCategory from "./pages/TopicProposalCategory.jsx";
 import SuggestTopic from "./pages/SuggestTopic.jsx";
+import AttendancePage from "./pages/AttendancePage.jsx";
 
 // Tạo các component placeholder tương ứng từng route
 function Overview() {
@@ -33,7 +34,6 @@ function Overview() {
 }
 function Meeting() {
     return <MeetingList/>;
-    return <h2>Meeting Page</h2>;
 }
 
 function Message() {
@@ -53,7 +53,7 @@ function Employee() {
 }
 
 function Attendance() {
-    return <TopicProposalCategory />;
+    return <AttendancePage />;
 }
 
 function Notice() {
