@@ -211,7 +211,7 @@ const ProposalDetail = ({ id, poll, onClose, showToast, onOpenRejectModal }) => 
                     </div>
                     <div className="info-content">
                         <h4>Branch</h4>
-                        <p>{data.suggestedBy.companyBranch}</p>
+                        <p>{data.suggestedBy.companyBranch.name}</p>
                     </div>
                 </div>
                 {opentalkMeeting && (<div className="info-card">
@@ -225,7 +225,7 @@ const ProposalDetail = ({ id, poll, onClose, showToast, onOpenRejectModal }) => 
                             style={{ textDecoration: 'none', color: 'inherit' }}
                         >
                             <h4>Meeting discuss</h4>
-                            <p>{data.suggestedBy.companyBranch}</p>
+                            <p>{data.suggestedBy.companyBranch.name}</p>
                         </Link>
 
                 </div> )}
