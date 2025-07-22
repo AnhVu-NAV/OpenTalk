@@ -1,139 +1,37 @@
-import { useState } from "react"
+import {useEffect, useState} from "react"
 import "./styles/HostFrequencyReport.css"
+import axios from "../api/axiosClient.jsx"
+import {getAccessToken} from "../helper/auth.jsx";
 
 const HostFrequencyReport = () => {
     const [searchTerm, setSearchTerm] = useState("")
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(10)
+    const [data, setData] = useState([])
+    const [error, setError] = useState()
 
-    const menuItems = [
-        { id: "dashboard", label: "Dashboard", icon: "📊", active: false },
-        { id: "employees", label: "All Employees", icon: "👥", active: false },
-        { id: "departments", label: "All Departments", icon: "🏢", active: false },
-        { id: "host-frequency", label: "Host Frequency", icon: "📹", active: true },
-        { id: "payroll", label: "Payroll", icon: "💰", active: false },
-        { id: "jobs", label: "Jobs", icon: "💼", active: false },
-        { id: "candidates", label: "Candidates", icon: "👤", active: false },
-        { id: "leaves", label: "Leaves", icon: "🏖️", active: false },
-        { id: "holidays", label: "Holidays", icon: "🎉", active: false },
-        { id: "settings", label: "Settings", icon: "⚙️", active: false },
-    ]
+    const fetchData = async () => {
+        try {
+            const res = await axios.get("/hosts/native-query/frequency", {
+                headers: { Authorization: `Bearer ${getAccessToken()}` },
+            })
+            setData(res.data)
+            setError(null)
+        } catch (err) {
+            console.error(err)
+            setError("Không tải được dữ liệu")
+        }
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
 
-    const mockData = [
-        {
-            id: 1,
-            name: "Leasie Watson",
-            designation: "Team Lead - Design",
-            type: "Office",
-            sessionsHosted: 5,
-            lastHosted: "13/06/2025",
-            avatar: "https://randomuser.me/api/portraits/men/29.jpg?height=40&width=40",
-        },
-        {
-            id: 2,
-            name: "Darlene Robertson",
-            designation: "Web Designer",
-            type: "Office",
-            sessionsHosted: 0,
-            lastHosted: "N/A",
-            avatar: "https://randomuser.me/api/portraits/women/13.jpg?height=40&width=40",
-        },
-        {
-            id: 3,
-            name: "Jacob Jones",
-            designation: "Medical Assistant",
-            type: "Remote",
-            sessionsHosted: 0,
-            lastHosted: "N/A",
-            avatar: "https://randomuser.me/api/portraits/women/10.jpg?height=40&width=40",
-        },
-        {
-            id: 4,
-            name: "Kathryn Murphy",
-            designation: "Marketing Coordinator",
-            type: "Office",
-            sessionsHosted: 3,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/women/19.jpg?height=40&width=40",
-        },
-        {
-            id: 5,
-            name: "Leslie Alexander",
-            designation: "Data Analyst",
-            type: "Office",
-            sessionsHosted: 6,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/women/14.jpg?height=40&width=40",
-        },
-        {
-            id: 6,
-            name: "Ronald Richards",
-            designation: "Python Developer",
-            type: "Remote",
-            sessionsHosted: 1,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/women/37.jpg?height=40&width=40",
-        },
-        {
-            id: 7,
-            name: "Guy Hawkins",
-            designation: "UI/UX Design",
-            type: "Remote",
-            sessionsHosted: 3,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/men/39.jpg?height=40&width=40",
-        },
-        {
-            id: 8,
-            name: "Albert Flores",
-            designation: "React JS",
-            type: "Remote",
-            sessionsHosted: 4,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/men/29.jpg?height=40&width=40",
-        },
-        {
-            id: 9,
-            name: "Savannah Nguyen",
-            designation: "IOS Developer",
-            type: "Remote",
-            sessionsHosted: 1,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/women/40.jpg?height=40&width=40",
-        },
-        {
-            id: 10,
-            name: "Marvin McKinney",
-            designation: "HR",
-            type: "Remote",
-            sessionsHosted: 3,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/men/49.jpg?height=40&width=40",
-        },
-        {
-            id: 11,
-            name: "Jerome Bell",
-            designation: "Sales Manager",
-            type: "Remote",
-            sessionsHosted: 7,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/men/19.jpg?height=40&width=40",
-        },
-        {
-            id: 12,
-            name: "Jenny Wilson",
-            designation: "React JS Developer",
-            type: "Remote",
-            sessionsHosted: 8,
-            lastHosted: "11/06/2025",
-            avatar: "https://randomuser.me/api/portraits/men/9.jpg?height=40&width=40",
-        },
-    ]
 
-    const filteredData = mockData.filter(
+
+    const filteredData = data.filter(
         (employee) =>
-            employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            employee.designation.toLowerCase().includes(searchTerm.toLowerCase()),
+            employee.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            employee.branchName.toLowerCase().includes(searchTerm.toLowerCase()),
     )
 
     const totalRecords = 60 // Mock total records
@@ -173,37 +71,35 @@ const HostFrequencyReport = () => {
                         <tr>
                             <th>Employee Name</th>
                             <th>Designation</th>
-                            <th>Type</th>
                             <th>Sessions Hosted</th>
                             <th>Last Hosted</th>
                         </tr>
                         </thead>
                         <tbody>
                         {paginatedData.map((employee) => (
-                            <tr key={employee.id}>
+                            <tr key={employee.userId}>
                                 <td>
                                     <div className="employee-info">
                                         <img
-                                            src={employee.avatar || "/placeholder.svg"}
-                                            alt={employee.name}
+                                            src={"/placeholder.svg"}
                                             className="employee-avatar"
                                         />
-                                        <span className="employee-name">{employee.name}</span>
+                                        <span className="employee-name">{employee.fullName}</span>
                                     </div>
                                 </td>
-                                <td>{employee.designation}</td>
+                                <td>{employee.branchName}</td>
                                 <td>
-                    <span className={`type-badge ${employee.type === "Office" ? "type-office" : "type-remote"}`}>
-                      {employee.type}
-                    </span>
+                                    <span className="sessions-count">{employee.approvedCount}</span>
                                 </td>
                                 <td>
-                                    <span className="sessions-count">{employee.sessionsHosted}</span>
-                                </td>
-                                <td>
-                    <span className={`last-hosted ${employee.lastHosted === "N/A" ? "na" : ""}`}>
-                      {employee.lastHosted}
-                    </span>
+                        <span>
+                                  {employee.lastApprovedAt &&
+                                      new Date(employee.lastApprovedAt).toLocaleDateString("vi-VN", {
+                                          year: "numeric",
+                                          month: "2-digit",
+                                          day: "2-digit",
+                                      })}
+                        </span>
                                 </td>
                             </tr>
                         ))}
