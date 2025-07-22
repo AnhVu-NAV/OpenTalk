@@ -2,9 +2,7 @@ import React from "react";
 import "./MeetingCard.css";
 
 const MeetingCard = ({
-    title,
-    time,
-    meetLink,
+    meeting,
     participants,
     extraCount,
     actionLabel = 'Join Meeting',
@@ -20,10 +18,10 @@ const MeetingCard = ({
                 <span role="img" aria-label="video">📹</span>
             </div>
 
-            <h3>{title}</h3>
-            <span className="meeting-time">{time}</span>
+            <h3>{meeting.meetingName}</h3>
+            <span className="meeting-time">{meeting.scheduledDate}</span>
 
-            {displayLink && <p className="meeting-description">{meetLink}</p>}
+            {displayLink && <p className="meeting-description">{meeting.meetingLink}</p>}
 
             <div className="meeting-participants">
                 {participants.slice(0, 3).map((avatar, idx) => (
