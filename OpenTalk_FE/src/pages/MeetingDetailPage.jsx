@@ -39,10 +39,10 @@ const MeetingDetailPage = () => {
   // Function to format date and time from scheduledDate
   const formatDateTime = (scheduledDate) => {
     if (!scheduledDate) return { date: '', time: '' };
-    
+
     try {
       let dateObj;
-      
+
       // Check if scheduledDate contains time (ISO format or includes 'T')
       if (scheduledDate.includes('T') || scheduledDate.includes(' ')) {
         dateObj = new Date(scheduledDate);
@@ -50,21 +50,21 @@ const MeetingDetailPage = () => {
         // If only date is provided, add a default time (e.g., 09:00)
         dateObj = new Date(scheduledDate + 'T09:00:00');
       }
-      
+
       // Format date as dd/mm/yyyy
       const date = dateObj.toLocaleDateString('en-GB', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
       });
-      
+
       // Format time as HH:MM
       const time = dateObj.toLocaleTimeString('en-GB', {
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
       });
-      
+
       return { date, time };
     } catch (error) {
       console.error('Error formatting date:', error);
@@ -219,9 +219,8 @@ const MeetingDetailPage = () => {
               <button
                 key={i + 1}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`pagination-number ${
-                  currentPage === i + 1 ? "active" : ""
-                }`}
+                className={`pagination-number ${currentPage === i + 1 ? "active" : ""
+                  }`}
               >
                 {i + 1}
               </button>
@@ -305,25 +304,22 @@ const MeetingDetailPage = () => {
         <div className="topic-content">
           <div className="tabs-header">
             <button
-              className={`tab-button ${
-                activeTab === "general" ? "active" : ""
-              }`}
+              className={`tab-button ${activeTab === "general" ? "active" : ""
+                }`}
               onClick={() => setActiveTab("general")}
             >
               Topic General
             </button>
             <button
-              className={`tab-button ${
-                activeTab === "suggest" ? "active" : ""
-              }`}
+              className={`tab-button ${activeTab === "suggest" ? "active" : ""
+                }`}
               onClick={() => setActiveTab("suggest")}
             >
               Suggested By
             </button>
             <button
-              className={`tab-button ${
-                activeTab === "evaluate" ? "active" : ""
-              }`}
+              className={`tab-button ${activeTab === "evaluate" ? "active" : ""
+                }`}
               onClick={() => setActiveTab("evaluate")}
             >
               Evaluated By
@@ -352,7 +348,7 @@ const MeetingDetailPage = () => {
           </div>
         </div>
         {onTab != OpenTalkMeetingStatus.UPCOMING &&
-        onTab != OpenTalkMeetingStatus.WAITING_HOST_REGISTER
+          onTab != OpenTalkMeetingStatus.WAITING_HOST_REGISTER
           ? renderFeedBackCards()
           : null}
       </div>

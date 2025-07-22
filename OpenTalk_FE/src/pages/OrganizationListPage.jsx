@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
   FaPlus,
-  FaEye,
+  FaEdit,
   FaTrash,
   FaSearch,
   FaChevronLeft,
   FaChevronRight,
+  FaBuilding,
 } from 'react-icons/fa';
 import BranchFormModal from '../components/companyBranchFormModal/BranchFormModal.jsx';
 import DeleteModal from '../components/deleteModal/DeleteModal.jsx';
@@ -87,26 +88,36 @@ const OrganizationListPage = () => {
 
   return (
     <div className="organization-page">
-      <div className="header">
-        <div>
-          <h1 className="header-title">Organization</h1>
-          <p className="header-subtitle">Manage your Company Branches</p>
+      <div className="page-header">
+        <div className="header-content">
+          <div className="header-icon">
+            <FaBuilding />
+          </div>
+          <div className="header-text">
+            <h1 className="page-title">Organization Management</h1>
+            <p className="page-subtitle">Manage your company branches and locations</p>
+          </div>
         </div>
-        <div className="header-buttons">
-          <button className="btn btn-primary" onClick={() => { setSelected(null); setModalOpen(true); }}>
-            <FaPlus />
-            Add Branch
-          </button>
-        </div>
+        <button 
+          className="add-branch-btn" 
+          onClick={() => { 
+            setSelected(null); 
+            setError(null); 
+            setModalOpen(true); 
+          }}
+        >
+          <FaPlus />
+          Add Branch
+        </button>
       </div>
 
-      <div className="filters">
+      <div className="search-section">
         <div className="search-container">
           <FaSearch className="search-icon" />
           <input
             type="text"
             className="search-input"
-            placeholder="Search branch"
+            placeholder="Search branches..."
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
@@ -116,88 +127,128 @@ const OrganizationListPage = () => {
         </div>
       </div>
 
-      <div className="table-container">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Company Name</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedBranches.map((b) => (
-              <tr key={b.id}>
-                <td>{b.id}</td>
-                <td>{b.name}</td>
-                <td>
-                  <div className="action-buttons">
+      <div className="branches-container">
+        {paginatedBranches.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">
+              <FaBuilding />
+            </div>
+            <h3>No branches found</h3>
+            <p>
+              {filteredBranches.length === 0 && searchTerm 
+                ? `No branches match "${searchTerm}"`
+                : "Get started by adding your first branch"
+              }
+            </p>
+            {filteredBranches.length === 0 && !searchTerm && (
+              <button 
+                className="empty-action-btn" 
+                onClick={() => { 
+                  setSelected(null); 
+                  setError(null); 
+                  setModalOpen(true); 
+                }}
+              >
+                <FaPlus />
+                Add Your First Branch
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="branches-grid">
+            {paginatedBranches.map((branch, index) => (
+              <div key={branch.id} className="branch-card">
+                <div className="branch-card-header">
+                  <div className="branch-icon">
+                    <FaBuilding />
+                  </div>
+                  <div className="branch-actions">
                     <button
                       onClick={async () => {
-                        const data = await getCompanyBranch(b.id);
-                        setSelected(data);
-                        setModalOpen(true);
+                        try {
+                          const data = await getCompanyBranch(branch.id);
+                          setSelected(data);
+                          setError(null);
+                          setModalOpen(true);
+                        } catch (error) {
+                          console.error('Error fetching branch:', error);
+                        }
                       }}
-                      className="action-btn action-btn-view"
+                      className="action-btn edit-btn"
+                      title="Edit Branch"
                     >
-                      <FaEye />
+                      <FaEdit />
                     </button>
                     <button
-                      onClick={() => { setSelectedBranch(b); setShowDelete(true); }}
-                      className="action-btn action-btn-delete"
+                      onClick={() => { 
+                        setSelectedBranch(branch); 
+                        setShowDelete(true); 
+                      }}
+                      className="action-btn delete-btn"
+                      title="Delete Branch"
                     >
                       <FaTrash />
                     </button>
                   </div>
-                </td>
-              </tr>
+                </div>
+                <div className="branch-content">
+                  <h3 className="branch-name">{branch.name}</h3>
+                  <div className="branch-id">ID: {branch.id}</div>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
-
-        <DeleteModal
-          isOpen={showDelete}
-          title="Delete Branch"
-          message={`Are you sure you want to delete ${selectedBranch?.name}?`}
-          onCancel={() => setShowDelete(false)}
-          onConfirm={handleDelete}
-        />
-
-        <div className="pagination">
-          <div className="pagination-info">
-            Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredBranches.length)} of {filteredBranches.length} results
           </div>
-          <div className="pagination-buttons">
-            <button
-              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-              className="pagination-btn"
-            >
-              <FaChevronLeft />
-            </button>
-            {[...Array(totalPages)].map((_, i) => (
+        )}
+
+        {totalPages > 1 && (
+          <div className="pagination">
+            <div className="pagination-info">
+              Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredBranches.length)} of {filteredBranches.length} results
+            </div>
+            <div className="pagination-buttons">
               <button
-                key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`pagination-number ${currentPage === i + 1 ? 'active' : ''}`}
+                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className="pagination-btn"
               >
-                {i + 1}
+                <FaChevronLeft />
               </button>
-            ))}
-            <button
-              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
-              className="pagination-btn"
-            >
-              <FaChevronRight />
-            </button>
+              {[...Array(totalPages)].map((_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`pagination-number ${currentPage === i + 1 ? 'active' : ''}`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                className="pagination-btn"
+              >
+                <FaChevronRight />
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
+
+      <DeleteModal
+        isOpen={showDelete}
+        title="Delete Branch"
+        message={`Are you sure you want to delete "${selectedBranch?.name}"?`}
+        onCancel={() => setShowDelete(false)}
+        onConfirm={handleDelete}
+      />
 
       <BranchFormModal
         isOpen={modalOpen}
-        toggle={() => { setModalOpen(false); setSelected(null); }}
+        toggle={() => { 
+          setModalOpen(false); 
+          setSelected(null); 
+          setError(null);
+        }}
         onSubmit={selected ? handleUpdate : handleCreate}
         initialData={selected}
         error={error}
