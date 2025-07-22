@@ -29,7 +29,7 @@ const CustomTextEditor = () => {
                 name="title"
                 type="text"
                 required={false}
-                editable={false}
+                editable={true}
             />
             <div className="editor-toolbar">
                 {/* Heading */}
