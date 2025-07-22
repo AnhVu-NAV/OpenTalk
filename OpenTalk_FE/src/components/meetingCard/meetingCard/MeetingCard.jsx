@@ -4,13 +4,14 @@ import "./MeetingCard.css";
 const MeetingCard = ({
     title,
     time,
-    description,
+    meetLink,
     participants,
     extraCount,
     actionLabel = 'Join Meeting',
     onAction,
     isDisabledButton = false,
     showButton = true,
+    displayLink = true,
     onView,
 }) => {
     return (
@@ -22,7 +23,7 @@ const MeetingCard = ({
             <h3>{title}</h3>
             <span className="meeting-time">{time}</span>
 
-            <p className="meeting-description">{description}</p>
+            {displayLink && <p className="meeting-description">{meetLink}</p>}
 
             <div className="meeting-participants">
                 {participants.slice(0, 3).map((avatar, idx) => (
