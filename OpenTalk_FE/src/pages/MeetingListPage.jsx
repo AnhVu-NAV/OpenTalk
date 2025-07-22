@@ -162,11 +162,10 @@ const MeetingListPage = () => {
         {paginatedMeetings.map((m) => (
           <MeetingCard
             key={m.id}
-            title={m.meetingName}
-            time={m.scheduledDate}
-            description={m.meetingLink}
+            meeting={m}
             participants={[]}
             extraCount={0}
+            displayLink={m.status !== OpenTalkMeetingStatus.COMPLETED}
             showButton={
               activeTab === OpenTalkMeetingStatus.WAITING_HOST_REGISTER || activeTab === OpenTalkMeetingStatus.ONGOING
             }

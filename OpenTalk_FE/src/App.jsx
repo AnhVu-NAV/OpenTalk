@@ -34,7 +34,7 @@ function Overview() {
     return <h2>Overview Page</h2>;
 }
 function Meeting() {
-    return <MeetingList/>;
+    return <MeetingListPage/>;
 }
 
 function Message() {
