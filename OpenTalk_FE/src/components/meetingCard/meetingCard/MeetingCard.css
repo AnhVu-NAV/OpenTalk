@@ -22,6 +22,28 @@
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
 }
 
+.meeting-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.meeting-rating {
+    display: flex;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.meeting-rating svg {
+    color: #d1d5db;
+    width: 16px;
+    height: 16px;
+}
+
+.meeting-rating .filled {
+    color: #f59e0b;
+}
+
 .meeting-card h3 {
     font-size: 1.2rem;
     margin: 0;

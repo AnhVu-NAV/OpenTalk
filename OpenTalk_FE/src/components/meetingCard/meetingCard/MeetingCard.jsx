@@ -1,4 +1,6 @@
 import React from "react";
+import { FaStar } from 'react-icons/fa';
+import { OpenTalkMeetingStatus } from '../../../constants/enums/openTalkMeetingStatus';
 import "./MeetingCard.css";
 
 const MeetingCard = ({
@@ -14,8 +16,18 @@ const MeetingCard = ({
 }) => {
     return (
         <div className="meeting-card" onClick={onView}>
-            <div className="meeting-icon">
-                <span role="img" aria-label="video">📹</span>
+            <div className="meeting-card-header">
+                <div className="meeting-icon">
+                    <span role="img" aria-label="video">📹</span>
+                </div>
+                
+                {meeting.status === OpenTalkMeetingStatus.COMPLETED && meeting.avgRating && (
+                    <div className="meeting-rating">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <FaStar key={i} className={i < meeting.avgRating ? 'filled' : ''} />
+                        ))}
+                    </div>
+                )}
             </div>
 
             <h3>{meeting.meetingName}</h3>
