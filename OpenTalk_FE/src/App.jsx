@@ -27,6 +27,7 @@ import CreatePoll from "./pages/CreatePoll.jsx";
 import TopicProposalCategory from "./pages/TopicProposalCategory.jsx";
 import SuggestTopic from "./pages/SuggestTopic.jsx";
 import AttendancePage from "./pages/AttendancePage.jsx";
+import TopicHub from "./pages/TopicHub.jsx";
 
 // Tạo các component placeholder tương ứng từng route
 function Overview() {
@@ -125,7 +126,7 @@ function App() {
                         <Route path="/suggestTopic" element={<SuggestTopic/>}/>
                         <Route path="/account" element={<Account/>}/>
                         <Route path="/topic/:id" element={<ProposalDetail/>}/>
-                        <Route path="/test" element={<PollApp />} />
+                        <Route path="/test" element={<TopicHub />} />
                         <Route path="/createPoll" element={<CreatePoll />} />
                         <Route path="/project/new-meeting" element={<AddMeeting />} />
                     <Route path="/project/meeting-details/:id" element={<MeetingDetail />} />
