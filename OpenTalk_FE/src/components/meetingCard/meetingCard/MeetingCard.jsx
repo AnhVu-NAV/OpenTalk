@@ -9,6 +9,7 @@ const MeetingCard = ({
     extraCount,
     actionLabel = 'Join Meeting',
     onAction,
+    isDisabledButton = false,
     showButton = true,
     onView,
 }) => {
@@ -32,6 +33,7 @@ const MeetingCard = ({
 
             {showButton && (
                 <button
+                    disabled={isDisabledButton}
                     className="join-button"
                     onClick={(e) => {
                         e.stopPropagation();

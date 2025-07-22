@@ -2,12 +2,12 @@
 
 import { useEffect, useState, useCallback } from "react"
 import "/src/css/ProposalDetail.css"
-import { FaBuilding, FaCalendarAlt, FaUser, FaTimes, FaCheck } from "react-icons/fa"
+import {FaBuilding, FaCalendarAlt, FaUser, FaTimes, FaCheck, FaPlus} from "react-icons/fa"
 import { getAccessToken, getCurrentUser } from "../../helper/auth.jsx"
 import axios from "/src/api/axiosClient.jsx"
 import { Modal, Button, Form, Spinner } from "react-bootstrap"
 
-const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
+const ProposalDetail = ({ id, poll, onClose, showToast, onOpenRejectModal }) => {
     const [data, setData] = useState(null)
     const [successMsg, setSuccessMsg] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
@@ -19,6 +19,7 @@ const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
     const [approveSubmitting, setApproveSubmitting] = useState(false)
     const [toastVisible, setToastVisible] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
+    const [opentalkMeeting, setOntalkMeeting] = useState(null)
 
     const fetchData = useCallback(async () => {
         try {
@@ -30,17 +31,12 @@ const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
             console.error(err)
             setErrorMsg("Không tải được dữ liệu.")
         }
-    }, [id])
+    }, [id]);
 
     useEffect(() => {
         fetchData()
     }, [fetchData])
 
-    const openRejectModal = () => {
-        setRejectNote("")
-        setRejectError("")
-        setShowRejectModal(true)
-    }
 
     const closeRejectModal = () => {
         if (!rejectSubmitting) {
@@ -58,9 +54,9 @@ const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
         try {
             setRejectSubmitting(true)
             await axios.put(
-                `/topic-idea/${id}/decision`,
+                `/topic-idea/decision`,
                 {
-                    decision: "REJECTED",
+                    decision: "rejected",
                     remark: rejectNote.trim(),
                     topicId: data.id,
                     userId: user.id,
@@ -113,6 +109,22 @@ const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
         }
     }
 
+    const handleAdd = async (topic) => {
+        try {
+            await axios.post(
+                `/topic-poll/`,
+                {
+                    topic: topic,
+                    poll: poll
+                },
+                { headers: { Authorization: `Bearer ${getAccessToken()}` } },
+            )
+        } catch (err) {
+            console.error(err)
+            setErrorMsg("Đã có lỗi khi thêm mới lưạ chọn.")
+        }
+    }
+
     useEffect(() => {
         if (successMsg) {
             const timeout = setTimeout(() => {
@@ -126,10 +138,10 @@ const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
 
     const getStatusBadge = (status) => {
         const statusConfig = {
-            APPROVED: { class: "status-approved", icon: "✅", text: "Approved" },
-            REJECTED: { class: "status-rejected", icon: "❌", text: "Rejected" },
-            PENDING: { class: "status-pending", icon: "⏳", text: "Pending" },
+            approved: { class: "status-approved", icon: "✅", text: "Approved" },
+            rejected: { class: "status-rejected", icon: "❌", text: "Rejected" },
             pending: { class: "status-pending", icon: "⏳", text: "Pending" },
+            discussed: { class: "status-pending", icon: "🗣️", text: "Pending" },
         }
 
         const config = statusConfig[status] || { class: "status-default", icon: "📋", text: status }
@@ -202,6 +214,21 @@ const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
                         <p>{data.suggestedBy.companyBranch}</p>
                     </div>
                 </div>
+                {opentalkMeeting && (<div className="info-card">
+                    <div className="info-icon">
+                        <FaBuilding />
+                    </div>
+
+                        <Link
+                            to={`/meetings/${opentalkMeeting.id}`}
+                            className="info-content"
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                        >
+                            <h4>Meeting discuss</h4>
+                            <p>{data.suggestedBy.companyBranch}</p>
+                        </Link>
+
+                </div> )}
             </div>
 
             {/* Description Section */}
@@ -239,6 +266,21 @@ const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
                             <>
                                 <FaCheck />
                                 Approve
+                            </>
+                        )}
+                    </button>
+                </div>
+            )}
+
+            {data?.status === "approved" && (
+                <div className="action-buttons">
+                    <button className="btn btn-approve" onClick={handleAdd(data.id)} disabled={rejectSubmitting || approveSubmitting}>
+                        {approveSubmitting ? (
+                            <Spinner animation="border" size="sm" />
+                        ) : (
+                            <>
+                                <FaPlus />
+                                Add to Poll
                             </>
                         )}
                     </button>
@@ -314,4 +356,4 @@ const ProposalDetail = ({ id, onClose, showToast, onOpenRejectModal }) => {
     )
 }
 
-export default ProposalDetail
+export default ProposalDetail;

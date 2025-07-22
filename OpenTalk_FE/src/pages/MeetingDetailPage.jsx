@@ -8,10 +8,14 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import FeedBackCard from "../components/feedBackCard/FeedBackCard";
+import FeedBackCardInput from "../components/feedBackCard/FeedBackCardInput";
 import { feedbackMockData } from "../api/__mocks__/data/feedback";
 import "./styles/MeetingDetailPage.css";
-import { getAllFeedbacksByMeetingId } from "../api/feedback";
-import axiosClient from '../api/axiosClient';
+import axiosClient from "../api/axiosClient";
+import { OpenTalkMeetingStatus } from "../constants/enums/openTalkMeetingStatus";
+import { getCurrentUser } from "../helper/auth";
+import { createFeedback, getAllFeedbacksByMeetingId } from "../api/apiList";
+import SuccessToast from "../components/SuccessToast/SuccessToast.jsx";
 
 const MeetingDetailPage = () => {
   const { id } = useParams();
@@ -24,36 +28,71 @@ const MeetingDetailPage = () => {
 
   const location = useLocation();
   const [meetings] = useState(location.state?.meetingList || []);
+  const [onTab] = useState(
+    location.state?.onTab || OpenTalkMeetingStatus.UPCOMING
+  );
 
-    const handleDownloadMaterial = async () => {
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
+
+  const showToast = (message, type = "success") => {
+    setToastMessage(message);
+    setToastType(type);
+    setToastVisible(true);
+  };
+
+  const handleDownloadMaterial = async () => {
     try {
-        const response = await axiosClient.get(`/files/download-all/${id}`, {
-        responseType: 'blob',
+      const response = await axiosClient.get(`/files/download-all/${id}`, {
+        responseType: "blob",
         validateStatus: (status) => status < 500,
-        });
+      });
 
-        const contentType = response.headers['content-type'];
-        if (contentType && contentType.includes('application/json')) {
+      const contentType = response.headers["content-type"];
+      if (contentType && contentType.includes("application/json")) {
         const text = await response.data.text();
         const json = JSON.parse(text);
-        alert(json.message || 'No attachment found');
+        alert(json.message || "No attachment found");
         return;
-        }
+      }
 
-        const blob = new Blob([response.data], { type: 'application/zip' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `meeting_${id}_materials.zip`);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
+      const blob = new Blob([response.data], { type: "application/zip" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `meeting_${id}_materials.zip`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
     } catch (error) {
-        console.error(error);
-        alert('Something went wrong while downloading the file.');
+      console.error(error);
+      alert("Something went wrong while downloading the file.");
     }
-    };
+  };
+
+  const handleSubmitFeedback = async ({ comment, rating }) => {
+    const user = getCurrentUser();
+    if (!user || !meeting) return;
+
+    try {
+      const dto = {
+        rate: rating,
+        comment,
+        user: { id: user.id },
+        meeting: { id: meeting.id },
+      };
+
+      await createFeedback(dto);
+      const updatedFeedbacks = await getAllFeedbacksByMeetingId(meeting.id);
+      setFeedbacks(updatedFeedbacks);
+      showToast("Feedback submitted successfully!", "success");
+    } catch (err) {
+      const msg = err?.response?.data?.message || "Failed to submit feedback";
+      showToast(msg, "error");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,6 +152,58 @@ const MeetingDetailPage = () => {
     </>
   );
 
+  const renderFeedBackCards = () => {
+    return (
+      <div className="feedback-section">
+        <h2 className="section-title">FeedBack</h2>
+        <div className="feedback-content">
+          <FeedBackCardInput onSubmit={handleSubmitFeedback} />
+          <div className="feedback-list">
+            {paginatedFeedbacks.map((fb) => (
+              <FeedBackCard key={fb.id} feedback={fb} />
+            ))}
+          </div>
+        </div>
+        <div className="pagination">
+          <div className="pagination-info">
+            Showing {startIndex + 1} to{" "}
+            {Math.min(startIndex + itemsPerPage, feedbacks.length)} of{" "}
+            {feedbacks.length} results
+          </div>
+          <div className="pagination-buttons">
+            <button
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className="pagination-btn"
+            >
+              <FaChevronLeft />
+            </button>
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`pagination-number ${
+                  currentPage === i + 1 ? "active" : ""
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              onClick={() =>
+                setCurrentPage(Math.min(totalPages, currentPage + 1))
+              }
+              disabled={currentPage === totalPages}
+              className="pagination-btn"
+            >
+              <FaChevronRight />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="meeting-detail-page">
       <div className="page-header">
@@ -120,7 +211,9 @@ const MeetingDetailPage = () => {
           <FaArrowLeft size={16} />
         </button>
         <h1 className="page-title">Meeting Detail</h1>
-        <button className="download-button" onClick={handleDownloadMaterial}>Download material</button>
+        <button className="download-button" onClick={handleDownloadMaterial}>
+          Download material
+        </button>
       </div>
 
       <div className="content-grid">
@@ -217,52 +310,18 @@ const MeetingDetailPage = () => {
             {activeTab === "evaluate" && evaluteBy && renderUserInfo(evaluteBy)}
           </div>
         </div>
-
-        <div className="feedback-section">
-          <h2 className="section-title">FeedBack</h2>
-          <div className="feedback-list">
-            {paginatedFeedbacks.map((fb) => (
-              <FeedBackCard key={fb.id} feedback={fb} />
-            ))}
-          </div>
-          <div className="pagination">
-            <div className="pagination-info">
-              Showing {startIndex + 1} to{" "}
-              {Math.min(startIndex + itemsPerPage, feedbacks.length)} of{" "}
-              {feedbacks.length} results
-            </div>
-            <div className="pagination-buttons">
-              <button
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className="pagination-btn"
-              >
-                <FaChevronLeft />
-              </button>
-              {[...Array(totalPages)].map((_, i) => (
-                <button
-                  key={i + 1}
-                  onClick={() => setCurrentPage(i + 1)}
-                  className={`pagination-number ${
-                    currentPage === i + 1 ? "active" : ""
-                  }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
-              <button
-                onClick={() =>
-                  setCurrentPage(Math.min(totalPages, currentPage + 1))
-                }
-                disabled={currentPage === totalPages}
-                className="pagination-btn"
-              >
-                <FaChevronRight />
-              </button>
-            </div>
-          </div>
-        </div>
+        {onTab != OpenTalkMeetingStatus.UPCOMING &&
+        onTab != OpenTalkMeetingStatus.WAITING_HOST_REGISTER
+          ? renderFeedBackCards()
+          : null}
       </div>
+
+      <SuccessToast
+        message={toastMessage}
+        isVisible={toastVisible}
+        type={toastType}
+        onClose={() => setToastVisible(false)}
+      />
     </div>
   );
 };

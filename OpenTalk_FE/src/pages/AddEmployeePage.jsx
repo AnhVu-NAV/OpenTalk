@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react"
-import axios from "axios"
+import axios from "/src/api/axiosClient.jsx"
 import {useNavigate} from "react-router-dom"
 import "./styles/AddEmployeePage.css"
 import {getAccessToken} from "../helper/auth.jsx";
@@ -24,7 +24,7 @@ const AddEmployeeNew = () => {
     useEffect(() => {
         const fetchBranches = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/api/company-branch",
+                const res = await axios.get("/company-branch",
                     {
                         headers: {
                             Authorization: `Bearer ${getAccessToken()}`,

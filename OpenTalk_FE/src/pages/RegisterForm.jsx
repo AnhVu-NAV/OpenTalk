@@ -10,12 +10,16 @@ export default function SignUp() {
     password: "",
     agree: false,
   });
-
+  const [formErrors, setFormErrors] = useState({});      // Server-side field errors
+  const [generalError, setGeneralError] = useState("");  // Non-field error
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+    // clear field error when user types
+    setFormErrors({ ...formErrors, [name]: null });
+    setGeneralError("");
   };
 
   const handleSubmit = async (e) => {
@@ -24,6 +28,11 @@ export default function SignUp() {
       alert("You must agree to the terms.");
       return;
     }
+
+    // reset previous errors
+    setFormErrors({});
+    setGeneralError("");
+
     try {
       const response = await authApi.register({
         fullname: form.fullname,
@@ -32,15 +41,23 @@ export default function SignUp() {
         password: form.password,
       });
 
-      if (response.data.code === 0) {
+      const { code, message } = response.data;
+      if (code === 0) {
         alert("Registered successfully! Please login.");
         navigate("/login");
       } else {
-        alert("Register failed: " + response.data.message);
+        setGeneralError(message);
       }
+
     } catch (err) {
+      if (err.response && err.response.status === 400 && typeof err.response.data === "object") {
+        setFormErrors(err.response.data);
+      } else if (err.response && err.response.data && err.response.data.message) {
+        setGeneralError(err.response.data.message);
+      } else {
+        setGeneralError("An unexpected error occurred during registration.");
+      }
       console.error(err);
-      alert("An error occurred during registration.");
     }
   };
 
@@ -50,28 +67,13 @@ export default function SignUp() {
         className="bg-white p-5 shadow rounded"
         style={{ width: "100%", maxWidth: 400 }}
       >
-        <div className="text-center mb-4">
-          {/* <img
-            src="https://via.placeholder.com/60x60?text=F"
-            alt="Logo"
-            className="mb-3"
-          /> */}
-          <h5 className="fw-bold">Create An Account</h5>
-          <p className="text-muted" style={{ fontSize: 14 }}>
-            We’d love to have you on board. Join over 500+ customers around the
-            globe and enhance productivity.
-          </p>
-        </div>
-        <div className="d-grid gap-2 mb-3">
-          <button className="btn btn-outline-primary">
-            <i className="bi bi-facebook me-2"></i> Continue with Facebook
-          </button>
-          <button className="btn btn-outline-danger">
-            <i className="bi bi-google me-2"></i> Continue with Google
-          </button>
-        </div>
+        {generalError && (
+          <div className="alert alert-danger">
+            {generalError}
+          </div>
+        )}
 
-        <hr className="my-4" />
+        <h5 className="fw-bold text-center mb-4">Create An Account</h5>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -81,12 +83,17 @@ export default function SignUp() {
             <input
               type="text"
               name="fullname"
-              className="form-control"
+              className={`form-control ${formErrors.fullname ? "is-invalid" : ""}`}
               placeholder="Enter your name"
               value={form.fullname}
               onChange={handleChange}
               required
             />
+            {formErrors.fullname && (
+              <div className="invalid-feedback">
+                {formErrors.fullname}
+              </div>
+            )}
           </div>
 
           <div className="mb-3">
@@ -96,12 +103,17 @@ export default function SignUp() {
             <input
               type="text"
               name="username"
-              className="form-control"
+              className={`form-control ${formErrors.username ? "is-invalid" : ""}`}
               placeholder="Enter account username"
               value={form.username}
               onChange={handleChange}
               required
             />
+            {formErrors.username && (
+              <div className="invalid-feedback">
+                {formErrors.username}
+              </div>
+            )}
           </div>
 
           <div className="mb-3">
@@ -111,12 +123,17 @@ export default function SignUp() {
             <input
               type="email"
               name="email"
-              className="form-control"
+              className={`form-control ${formErrors.email ? "is-invalid" : ""}`}
               placeholder="Enter your email"
               value={form.email}
               onChange={handleChange}
               required
             />
+            {formErrors.email && (
+              <div className="invalid-feedback">
+                {formErrors.email}
+              </div>
+            )}
           </div>
 
           <div className="mb-3">
@@ -126,12 +143,17 @@ export default function SignUp() {
             <input
               type="password"
               name="password"
-              className="form-control"
+              className={`form-control ${formErrors.password ? "is-invalid" : ""}`}
               placeholder="Create a password"
               value={form.password}
               onChange={handleChange}
               required
             />
+            {formErrors.password && (
+              <div className="invalid-feedback">
+                {formErrors.password}
+              </div>
+            )}
           </div>
 
           <div className="form-check mb-3">
@@ -143,8 +165,7 @@ export default function SignUp() {
               onChange={handleChange}
             />
             <label className="form-check-label">
-              I agree to the <a href="#">Terms</a> and{" "}
-              <a href="#">Privacy Policy</a>
+              I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
             </label>
           </div>
 

@@ -52,10 +52,12 @@ function Sidebar() {
     const visibleMenuItems = menuItems.filter(({ label }) => {
         const role = roleMap[user?.role];
 
-        if (role === "ADMIN") return true;
+        if (role === "ADMIN") {
+            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance"].includes(label);
+        }
 
         if (role === "USER") {
-            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest"].includes(label);
+            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance"].includes(label);
         }
 
         return false;

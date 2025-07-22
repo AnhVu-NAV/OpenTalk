@@ -1,74 +1,105 @@
 import React, { useState } from 'react';
-import authApi from '../api/authApi'
+import authApi from '../api/authApi';
 import { saveAuthTokens } from '../helper/auth';
+import SuccessToast from '../components/SuccessToast/SuccessToast';
 
 export default function Login() {
-    const [form, setForm] = useState({
-        username: '',
-        password: ''
-    });
+  const [form, setForm] = useState({ username: '', password: '' });
 
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
+  // State cho toast
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState('success');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const res = await authApi.login(form);
-            const data = res.data.result;
-            saveAuthTokens(data);
-            window.location.href = '/dashboard'; //
-        } catch (err) {
-            alert('Login failed');
-            console.error(err);
-        }
-    };
+  const showToast = (msg, type = 'success') => {
+    setToastMessage(msg);
+    setToastType(type);
+    setToastVisible(true);
+  };
 
-    return (
-        <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-            <div className="bg-white p-5 shadow rounded" style={{ width: '100%', maxWidth: 400 }}>
-                <div className="text-center mb-4">
-                    {/* <img src="https://via.placeholder.com/60x60?text=F" alt="Logo" className="mb-3" /> */}
-                    <h5 className="fw-bold">Welcome Back</h5>
-                    <p className="text-muted" style={{ fontSize: 14 }}>
-                        Login to your account to continue
-                    </p>
-                </div>
+  const handleChange = e => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-                <div className="d-grid gap-2 mb-3">
-                    <button className="btn btn-outline-primary">
-                        <i className="bi bi-facebook me-2"></i> Continue with Facebook
-                    </button>
-                    <button className="btn btn-outline-danger">
-                        <i className="bi bi-google me-2"></i> Continue with Google
-                    </button>
-                </div>
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      const res = await authApi.login(form);
+      const data = res.data.result;
+      saveAuthTokens(data);
+      showToast('Login successful!', 'success');
+      setTimeout(() => window.location.href = '/dashboard', 1000);
+    } catch (err) {
+      const msg = err.response?.data?.message
+        || 'Login failed. Please try again!';
+      showToast(msg, 'error');
+      console.error(err);
+    }
+  };
 
-                <hr className="my-4" />
+  return (
+    <>
+      <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+        <div className="bg-white p-5 shadow rounded" style={{ width: '100%', maxWidth: 400 }}>
+          <div className="text-center mb-4">
+            <h5 className="fw-bold">Welcome Back</h5>
+            <p className="text-muted" style={{ fontSize: 14 }}>
+              Login to your account to continue
+            </p>
+          </div>
 
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Email<span className="text-danger">*</span></label>
-                        <input type="text" name="username" className="form-control" placeholder="Enter your email" value={form.username} onChange={handleChange} required />
-                    </div>
+          <hr className="my-4" />
 
-                    <div className="mb-3">
-                        <label className="form-label">Password<span className="text-danger">*</span></label>
-                        <input type="password" name="password" className="form-control" placeholder="Enter your password" value={form.password} onChange={handleChange} required />
-                    </div>
-
-                    <div className="mb-3 text-end">
-                        <a href="#" className="text-decoration-none small">Forgot password?</a>
-                    </div>
-
-                    <button type="submit" className="btn btn-dark w-100">Login</button>
-                </form>
-
-                <p className="text-center mt-3 small">
-                    Don’t have an account? <a href="/register">Register now.</a>
-                </p>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">
+                Username<span className="text-danger">*</span>
+              </label>
+              <input
+                type="text"
+                name="username"
+                className="form-control"
+                placeholder="Enter your username"
+                value={form.username}
+                onChange={handleChange}
+                required
+              />
             </div>
+
+            <div className="mb-3">
+              <label className="form-label">
+                Password<span className="text-danger">*</span>
+              </label>
+              <input
+                type="password"
+                name="password"
+                className="form-control"
+                placeholder="Enter your password"
+                value={form.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="mb-3 text-end">
+              <a href="#" className="text-decoration-none small">Forgot password?</a>
+            </div>
+
+            <button type="submit" className="btn btn-dark w-100">Login</button>
+          </form>
+
+          <p className="text-center mt-3 small">
+            Don’t have an account? <a href="/register">Register now.</a>
+          </p>
         </div>
-    );
+      </div>
+
+      <SuccessToast
+        message={toastMessage}
+        isVisible={toastVisible}
+        type={toastType}
+        onClose={() => setToastVisible(false)}
+      />
+    </>
+  );
 }

@@ -64,3 +64,9 @@
     border-radius: 8px;
     cursor: pointer;
 }
+
+.join-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #6b7280;
+}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { FaSearch, FaDownload, FaPlus, FaEye, FaTrash, FaChevronLeft, FaChevronRight, FaFilter } from "react-icons/fa"
-import axios from "axios"
+import axios from "/src/api/axiosClient.jsx"
 import DeleteModal from "../components/deleteModal/DeleteModal.jsx"
 import { getAccessToken } from "../helper/auth"
 import "./styles/EmployeePage.css"
@@ -21,9 +21,8 @@ const getStatusClass = (status) => {
 const EmployeePage = () => {
     const [employees, setEmployees] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
-    const [officeFilter, setOfficeFilter] = useState("")
-    const [jobFilter, setJobFilter] = useState("")
-    const [statusFilter, setStatusFilter] = useState("")
+    const [officeFilter, setOfficeFilter] = useState(null)
+    const [statusFilter, setStatusFilter] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
     const [loading, setLoading] = useState(true)
     const [showDelete, setShowDelete] = useState(false)
@@ -37,7 +36,7 @@ const EmployeePage = () => {
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/api/hr/employees", {
+                const res = await axios.get("/hr/employees", {
                     headers: {
                         Authorization: `Bearer ${getAccessToken()}`,
                     },
@@ -52,14 +51,15 @@ const EmployeePage = () => {
         fetchEmployees()
     }, [])
 
+
+
     const filtered = employees.filter((emp) => {
         const matchesSearch =
             emp.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             emp.email?.toLowerCase().includes(searchTerm.toLowerCase())
         const matchesOffice = officeFilter ? emp.companyBranch?.name === officeFilter : true
-        const matchesJob = jobFilter ? emp.jobTitle === jobFilter : true
         const matchesStatus = statusFilter ? emp.status === statusFilter : true
-        return matchesSearch && matchesOffice && matchesJob && matchesStatus
+        return matchesSearch && matchesOffice  && matchesStatus
     })
 
     const totalPages = Math.ceil(filtered.length / itemsPerPage)
@@ -67,12 +67,12 @@ const EmployeePage = () => {
     const paginatedEmployees = filtered.slice(startIndex, startIndex + itemsPerPage)
 
     const uniqueOffices = [...new Set(employees.map((e) => e.companyBranch?.name).filter(Boolean))]
-    const uniqueJobs = [...new Set(employees.map((e) => e.jobTitle).filter(Boolean))]
-    const uniqueStatuses = [...new Set(employees.map((e) => e.status).filter(Boolean))]
+    const uniqueStatuses = [...new Set(employees.map((e) => e.isEnabled).filter(Boolean))]
+    console.log(uniqueStatuses)
 
     const handleConfirmDelete = async () => {
         try {
-            await axios.delete(`http://localhost:8080/api/hr/employees/${selectedEmployee.id}`, {
+            await axios.delete(`/hr/employees/${selectedEmployee.id}`, {
                 headers: {
                     Authorization: `Bearer ${getAccessToken()}`
                 }
@@ -85,6 +85,29 @@ const EmployeePage = () => {
             alert("Failed to delete employee.")
         } finally {
             setShowDelete(false)
+        }
+    }
+    const handleExport = async () => {
+        try {
+            const response = await axios.get('/hr/export/', {
+                params: { status: statusFilter, companyBranchId: officeFilter},
+                responseType: 'blob',
+                headers: {
+                    Authorization: `Bearer ${getAccessToken()}`
+                }// vì server trả file Excel
+            })
+            // tạo link ẩn để download
+            const blob = new Blob([response.data])
+            const url = window.URL.createObjectURL(blob)
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', 'employees.xlsx')
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
+            window.URL.revokeObjectURL(url)
+        } catch (err) {
+            console.error('Export thất bại:', err)
         }
     }
 
@@ -158,7 +181,7 @@ const EmployeePage = () => {
                     </div>
 
                     <div className="action-buttons">
-                        <button className="btn btn-outline">
+                        <button className="btn btn-outline" onClick={handleExport}>
                             <FaDownload />
                             Export
                         </button>
@@ -186,34 +209,23 @@ const EmployeePage = () => {
                         </select>
                     </div>
 
-                    <div className="filter-group">
-                        <select className="filter-select" value={jobFilter} onChange={(e) => setJobFilter(e.target.value)}>
-                            <option value="">All Job Titles</option>
-                            {uniqueJobs.map((job) => (
-                                <option key={job} value={job}>
-                                    {job}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
 
                     <div className="filter-group">
                         <select className="filter-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
                             <option value="">All Status</option>
                             {uniqueStatuses.map((status) => (
                                 <option key={status} value={status}>
-                                    {status}
+                                    {status ? 'Activated' : 'Inactivated'}
                                 </option>
                             ))}
                         </select>
                     </div>
 
-                    {(officeFilter || jobFilter || statusFilter || searchTerm) && (
+                    {(officeFilter  || statusFilter || searchTerm) && (
                         <button
                             className="clear-filters-btn"
                             onClick={() => {
                                 setOfficeFilter("")
-                                setJobFilter("")
                                 setStatusFilter("")
                                 setSearchTerm("")
                             }}

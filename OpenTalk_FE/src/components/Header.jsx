@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaBell, FaMoon } from "react-icons/fa";
 import { getCurrentUser, clearTokens } from "../helper/auth";
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../api/axiosClient";
 
 function Header() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -14,9 +15,21 @@ function Header() {
         setUser(current);
     }, []);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+    try {
+        const accessToken = localStorage.getItem("accessToken");
+
+        await axiosClient.post("/auth/logout", null, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+        });
+    } catch (err) {
+        console.error("Logout failed or token expired: " + err);
+    } finally {
         clearTokens();
         navigate("/login");
+    }
     };
 
     return (

@@ -1,31 +1,39 @@
 import React, { useState } from "react";
-// import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./layouts/MainLayout";
 import LoginForm from "./pages/LoginForm";
 import RegisterForm from "./pages/RegisterForm";
 import DashBoard from "./pages/DashBoard.jsx";
 import AuthGuard from "./components/common/AuthGuard";
-import TopicProposalCategory from "./pages/TopicProposalCategory.jsx";
-import SuggestTopic from "./pages/SuggestTopic.jsx";
+import MeetingList from "./pages/test.jsx";
+import OpenTalkManagerPage from "./pages/OpenTalkManager";
+import OpenTalkHostRequestPage from "./pages/OpenTalkHostRequest";
+import AddMeeting from "./components/opentalkManager/AddNewMeeting.jsx"; 
+import MeetingDetail from "./components/opentalkManager/MeetingDetail.jsx";
+import EditMeeting from "./components/opentalkManager/EditMeeting.jsx";
+import CustomTextEditor from "./components/textEdit/RichTextEditor.jsx";
+import TiptapEditor from "./components/textEdit/TiptapEditor.jsx";
+import NoticeCard from "./components/noticeCard/NoticeCard.jsx";
 import EmployeePage from "./pages/EmployeePage.jsx";
 import EditEmployeePage from "./pages/EditEmployeePage.jsx";
 import AddEmployeeNew from "./pages/AddEmployeePage.jsx";
 import HostFrequencyReport from "./pages/HostFrequencyReport.jsx";
-import NoticeCard from "./components/noticeCard/NoticeCard.jsx";
 import ProposalDetail from "./components/proposalTopic/ProposalDetail.jsx";
 import OrganizationListPage from "./pages/OrganizationListPage.jsx";
 import MeetingDetailPage from "./pages/MeetingDetailPage.jsx";
 import MeetingListPage from "./pages/MeetingListPage.jsx";
 import PollApp from "./pages/PollMeeting.jsx";
 import CreatePoll from "./pages/CreatePoll.jsx";
+import TopicProposalCategory from "./pages/TopicProposalCategory.jsx";
+import SuggestTopic from "./pages/SuggestTopic.jsx";
+import AttendancePage from "./pages/AttendancePage.jsx";
 
 // Tạo các component placeholder tương ứng từng route
 function Overview() {
     return <h2>Overview Page</h2>;
 }
 function Meeting() {
-  return <MeetingListPage />;
+    return <MeetingListPage/>;
 }
 
 function Message() {
@@ -33,11 +41,11 @@ function Message() {
 }
 
 function Project() {
-    return <h2>Project Page</h2>;
+    return <OpenTalkManagerPage />;
 }
 
 function Ticket() {
-    return <TopicProposalCategory/>;
+    return <OpenTalkHostRequestPage />;
 }
 
 function Employee() {
@@ -45,7 +53,7 @@ function Employee() {
 }
 
 function Attendance() {
-  return <h2>Attendance Page</h2>;
+    return <AttendancePage />;
 }
 
 function Notice() {
@@ -119,6 +127,9 @@ function App() {
                         <Route path="/topic/:id" element={<ProposalDetail/>}/>
                         <Route path="/test" element={<PollApp />} />
                         <Route path="/createPoll" element={<CreatePoll />} />
+                        <Route path="/project/new-meeting" element={<AddMeeting />} />
+                    <Route path="/project/meeting-details/:id" element={<MeetingDetail />} />
+                    <Route path="/project/edit-meeting/:id" element={<EditMeeting />} />
                     </Route>
                 </Route>
             </Routes>
