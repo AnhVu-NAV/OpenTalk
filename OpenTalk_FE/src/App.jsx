@@ -33,7 +33,7 @@ function Overview() {
     return <h2>Overview Page</h2>;
 }
 function Meeting() {
-    return <MeetingListPage />;
+    return <MeetingListPage/>;
 }
 
 function Message() {

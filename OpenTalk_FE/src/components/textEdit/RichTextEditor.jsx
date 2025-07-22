@@ -4,7 +4,7 @@ import {MdFormatClear} from "react-icons/md";
 import { FaBold, FaItalic, FaUnderline, FaListUl, FaListOl, FaAlignLeft, FaAlignCenter, FaAlignRight, FaAlignJustify, FaLink, FaImage, FaEraser } from "react-icons/fa";
 import Input from "../common/Input.jsx";
 
-const CustomTextEditor = () => {
+const CustomTextEditor = ({ onSubmit }) => {
     const [title, setTitle] = useState("");
     const editorRef = useRef(null);
 
@@ -12,11 +12,17 @@ const CustomTextEditor = () => {
         document.execCommand(command, false, null);
     };
 
-    const handleSubmit = () => {
-        const content = editorRef.current.innerHTML;
-        console.log("Title:", title);
-        console.log("Priority:", priority);
-        console.log("Content HTML:", content);
+    const handleSubmit = async () => {
+        const content = editorRef.current?.innerHTML || "";
+        if (typeof onSubmit === "function") {
+            try {
+                await onSubmit({ title, content });
+            } catch (e) {
+                console.error("[Editor] submit error:", e);
+            }
+        } else {
+            console.warn("onSubmit prop is missing");
+        }
     };
 
     return (
