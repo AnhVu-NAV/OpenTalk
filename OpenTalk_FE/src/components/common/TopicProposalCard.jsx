@@ -16,7 +16,7 @@ const TopicProposalCard = ({ id, title, description, authorName, date, avatarUrl
         <div className="proposal-card">
             <div className="proposal-card__content">
                 <h3 className="proposal-card__title">{title}</h3>
-                <p className="proposal-card__excerpt">{description}</p>
+                <div className="proposal-card__excerpt">{description}</div>
                 {status && (
                     <div className={`proposal-card__status ${statusClass}`}>{statusLabel}</div>
                 )}

@@ -17,12 +17,9 @@ const SuggestTopic = () => {
             setLoading(false);
             return;
         }
-
         const userId = user.id;
-        const token = getAccessToken();
-
-        axios.get(`/topic-idea/suggestedBy/1`, {
-            headers: { Authorization: `Bearer ${token}` }
+        axios.get(`/topic-idea/suggestedBy/${userId}`, {
+            headers: { Authorization: `Bearer ${ getAccessToken()}` }
         })
             .then(res => {
                 setTopicUser(res.data);
@@ -33,20 +30,27 @@ const SuggestTopic = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [loading]);
+
+    // useEffect(() => {
+    //     handleSubmitTopic({ title: "hehe", content: "hahah" });
+    // }, [])
 
     const handleSubmitTopic = async ({ title, content }) => {
         const token = getAccessToken();
         const user = getCurrentUser();
-        if (!user) return;
 
         try {
+            console.log(title);
+            console.log(content);
             const res = await axios.post(
                 "/topic-idea",
                 {
                     title: title,
                     description: content,
-                    suggestedBy: { id: user.id } // giả định backend nhận object hoặc chỉ id
+                    status: '',
+                    remark: '',
+                    suggestedBy:  user,
                 },
                 {
                     headers: {
@@ -54,6 +58,7 @@ const SuggestTopic = () => {
                     }
                 }
             );
+            setLoading(true)
             console.log("Topic suggested successfully:", res.data);
             alert("Topic submitted!");
         } catch (err) {
