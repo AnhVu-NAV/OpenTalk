@@ -1,28 +1,79 @@
 import React from "react";
+import { FaStar } from 'react-icons/fa';
+import { OpenTalkMeetingStatus } from '../../../constants/enums/openTalkMeetingStatus';
 import "./MeetingCard.css";
 
 const MeetingCard = ({
-    title,
-    time,
-    description,
+    meeting,
     participants,
     extraCount,
     actionLabel = 'Join Meeting',
     onAction,
     isDisabledButton = false,
     showButton = true,
+    displayLink = true,
     onView,
 }) => {
+    // Function to format date and time from scheduledDate
+    const formatDateTime = (scheduledDate) => {
+        if (!scheduledDate) return { date: '', time: '' };
+        
+        try {
+            let dateObj;
+            
+            // Check if scheduledDate contains time (ISO format or includes 'T')
+            if (scheduledDate.includes('T') || scheduledDate.includes(' ')) {
+                dateObj = new Date(scheduledDate);
+            } else {
+                // If only date is provided, add a default time (e.g., 09:00)
+                dateObj = new Date(scheduledDate + 'T09:00:00');
+            }
+            
+            // Format date as dd/mm/yyyy
+            const date = dateObj.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            
+            // Format time as HH:MM
+            const time = dateObj.toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            
+            return { date, time };
+        } catch (error) {
+            console.error('Error formatting date:', error);
+            return { date: scheduledDate, time: '' };
+        }
+    };
+    
+    const { date, time } = formatDateTime(meeting.scheduledDate);
     return (
         <div className="meeting-card" onClick={onView}>
-            <div className="meeting-icon">
-                <span role="img" aria-label="video">📹</span>
+            <div className="meeting-card-header">
+                <div className="meeting-icon">
+                    <span role="img" aria-label="video">📹</span>
+                </div>
+                
+                {meeting.status === OpenTalkMeetingStatus.COMPLETED && meeting.avgRating && (
+                    <div className="meeting-rating">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <FaStar key={i} className={i < meeting.avgRating ? 'filled' : ''} />
+                        ))}
+                    </div>
+                )}
             </div>
 
-            <h3>{title}</h3>
-            <span className="meeting-time">{time}</span>
+            <h3>{meeting.meetingName}</h3>
+            <div className="meeting-datetime">
+                <span className="meeting-date">{date}</span>
+                <span className="meeting-time">{time}</span>
+            </div>
 
-            <p className="meeting-description">{description}</p>
+            {displayLink && <p className="meeting-description">{meeting.meetingLink}</p>}
 
             <div className="meeting-participants">
                 {participants.slice(0, 3).map((avatar, idx) => (

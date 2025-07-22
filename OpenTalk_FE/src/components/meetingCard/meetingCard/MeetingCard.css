@@ -1,72 +1,169 @@
 .meeting-card {
-    background: #fff;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    width: 300px;
-    font-family: Arial, sans-serif;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    max-width: 320px;
+    min-width: 320px;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.meeting-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.meeting-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.meeting-rating {
+    display: flex;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.meeting-rating svg {
+    color: #d1d5db;
+    width: 16px;
+    height: 16px;
+}
+
+.meeting-rating .filled {
+    color: #f59e0b;
+}
+
+.meeting-card h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #1f2937;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .meeting-icon {
-    background: #d1fae5;
-    width: 40px;
-    height: 40px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2));
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .meeting-time {
-    background: #d1fae5;
-    padding: 4px 8px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+    padding: 8px 16px;
+    border-radius: 12px;
     display: inline-block;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    color: #10b981;
+    font-weight: 600;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.meeting-datetime {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     margin-top: 8px;
 }
 
+.meeting-date {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #10b981;
+    font-weight: 600;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    align-self: flex-start;
+}
+
+.meeting-time {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #667eea;
+    font-weight: 600;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    align-self: flex-start;
+}
+
 .meeting-description {
-    margin: 10px 0;
-    color: #666;
-    font-size: 0.9rem;
+    margin: 12px 0;
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 500;
 }
 
 .meeting-participants {
     display: flex;
     align-items: center;
-    gap: 4px;
-    margin: 10px 0;
+    gap: 8px;
+    margin: 12px 0;
 }
 
 .meeting-participants img {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid rgba(16, 185, 129, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .extra-count {
-    background-color: #111;
+    background: linear-gradient(135deg, #475569, #374151);
     color: #fff;
     border-radius: 50%;
-    padding: 6px 8px;
-    font-size: 0.75rem;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .join-button {
     width: 100%;
-    background-color: #022c22;
+    background: linear-gradient(135deg, #10b981, #059669);
     color: #fff;
     border: none;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 14px 20px;
+    border-radius: 12px;
     cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+    margin-top: auto;
+}
+
+.join-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
 }
 
 .join-button:disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
-    background-color: #6b7280;
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
