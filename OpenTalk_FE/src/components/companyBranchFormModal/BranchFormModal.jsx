@@ -85,9 +85,6 @@ const BranchFormModal = ({ isOpen, toggle, onSubmit, initialData, error }) => {
                   required
                   maxLength={100}
                 />
-                <div className="input-icon">
-                  <FaBuilding />
-                </div>
               </div>
               
               {error && (
