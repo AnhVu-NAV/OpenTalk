@@ -14,6 +14,43 @@ const MeetingCard = ({
     displayLink = true,
     onView,
 }) => {
+    // Function to format date and time from scheduledDate
+    const formatDateTime = (scheduledDate) => {
+        if (!scheduledDate) return { date: '', time: '' };
+        
+        try {
+            let dateObj;
+            
+            // Check if scheduledDate contains time (ISO format or includes 'T')
+            if (scheduledDate.includes('T') || scheduledDate.includes(' ')) {
+                dateObj = new Date(scheduledDate);
+            } else {
+                // If only date is provided, add a default time (e.g., 09:00)
+                dateObj = new Date(scheduledDate + 'T09:00:00');
+            }
+            
+            // Format date as dd/mm/yyyy
+            const date = dateObj.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            
+            // Format time as HH:MM
+            const time = dateObj.toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            
+            return { date, time };
+        } catch (error) {
+            console.error('Error formatting date:', error);
+            return { date: scheduledDate, time: '' };
+        }
+    };
+    
+    const { date, time } = formatDateTime(meeting.scheduledDate);
     return (
         <div className="meeting-card" onClick={onView}>
             <div className="meeting-card-header">
@@ -31,7 +68,10 @@ const MeetingCard = ({
             </div>
 
             <h3>{meeting.meetingName}</h3>
-            <span className="meeting-time">{meeting.scheduledDate}</span>
+            <div className="meeting-datetime">
+                <span className="meeting-date">{date}</span>
+                <span className="meeting-time">{time}</span>
+            </div>
 
             {displayLink && <p className="meeting-description">{meeting.meetingLink}</p>}
 
