@@ -36,6 +36,42 @@ const MeetingDetailPage = () => {
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("success");
 
+  // Function to format date and time from scheduledDate
+  const formatDateTime = (scheduledDate) => {
+    if (!scheduledDate) return { date: '', time: '' };
+    
+    try {
+      let dateObj;
+      
+      // Check if scheduledDate contains time (ISO format or includes 'T')
+      if (scheduledDate.includes('T') || scheduledDate.includes(' ')) {
+        dateObj = new Date(scheduledDate);
+      } else {
+        // If only date is provided, add a default time (e.g., 09:00)
+        dateObj = new Date(scheduledDate + 'T09:00:00');
+      }
+      
+      // Format date as dd/mm/yyyy
+      const date = dateObj.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+      
+      // Format time as HH:MM
+      const time = dateObj.toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+      
+      return { date, time };
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return { date: scheduledDate, time: '' };
+    }
+  };
+
   const showToast = (message, type = "success") => {
     setToastMessage(message);
     setToastType(type);
@@ -118,6 +154,7 @@ const MeetingDetailPage = () => {
   const host = meeting.host;
   const suggestBy = meeting.topic.suggestBy;
   const evaluteBy = meeting.topic.evaluteBy;
+  const { date, time } = formatDateTime(meeting.scheduledDate);
   const totalPages = Math.ceil(feedbacks.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedFeedbacks = feedbacks.slice(
@@ -221,8 +258,12 @@ const MeetingDetailPage = () => {
           <div className="meeting-highlight">
             <h2 className="meeting-name">{meeting.meetingName}</h2>
             <div className="detail-row">
-              <span className="label">Scheduled Date:</span>
-              <span className="value">{meeting.scheduledDate}</span>
+              <span className="label">Date:</span>
+              <span className="value">{date}</span>
+            </div>
+            <div className="detail-row">
+              <span className="label">Time:</span>
+              <span className="value">{time}</span>
             </div>
             <div className="detail-row">
               <span className="label">Meeting Link:</span>
