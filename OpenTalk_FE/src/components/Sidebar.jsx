@@ -32,7 +32,6 @@ const menuItems = [
 
     // 5. Suggest / Topics
     { label: "Suggest Topic", icon: <FaRegNewspaper />, path: "/suggest-topic" },
-    { label: "Topic Hub", icon: <FaRegLightbulb />, path: "/topic" },
     { label: "Topic Proposal", icon: <FaRegLightbulb />, path: "/topicProposal" },
     { label: "Topic Proposal Category", icon: <FaRegLightbulb />, path: "/topic-proposal-category" },
 

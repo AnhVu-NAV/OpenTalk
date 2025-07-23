@@ -42,7 +42,7 @@ const TopicProposalCategory = () => {
     const fetchTopics = async ({ pageNo, statusFilter, title }) => {
         setLoading(true)
         try {
-            const res = await axios.get("/topic-idea/", {
+            const res = await axios.get("/topic-idea", {
                 headers: { Authorization: `Bearer ${getAccessToken()}` },
                 params: { pageNo, pageSize, status: statusFilter, title },
             })

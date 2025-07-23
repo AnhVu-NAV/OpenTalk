@@ -4,8 +4,11 @@ import { FaQuestion } from "react-icons/fa"
 import axios from "/src/api/axiosClient.jsx"
 import {getAccessToken} from "../helper/auth.jsx";
 import TopicProposal from "../components/common/TopicProposalCard.jsx";
+import {useParams} from "react-router-dom";
+import ProposalDetail from "../components/proposalTopic/ProposalDetail.jsx";
+import CustomModal from "../components/CustomModal/CustomModal.jsx";
 
-const CreatePoll = (meetingId, meetingName) => {
+const CreatePoll = () => {
     const[pollOption, setPollOption] = useState([]);
     const[poll, setPoll] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -13,11 +16,16 @@ const CreatePoll = (meetingId, meetingName) => {
     const [error, setError]     = useState(null);
     const [pollId, setPollId] = useState(null);
     const [posts, setPosts] = useState([]);
+    const [selectedTopicId, setSelectedTopicId] = useState(null)
+    const [showDetailModal, setShowDetailModal] = useState(false)
+    const [isDetailHidden, setIsDetailHidden] = useState(false)
+
+    const {id} = useParams();
 
     const fetchTopics = async () => {
         setLoading(true);
         try {
-            const res = await axios.get('/topic-idea/', {
+            const res = await axios.get('/topic-idea', {
                 headers: { Authorization: `Bearer ${getAccessToken()}` },
                 params: {status: 'approved' }
             });
@@ -38,7 +46,8 @@ const CreatePoll = (meetingId, meetingName) => {
     useEffect(() => {
         const fetchPoll = async () => {
             try {
-                const response = await axios.get(`/poll/2`,
+                console.log(id);
+                const response = await axios.get(`/poll/${id}`,
                     { headers: { Authorization: `Bearer ${getAccessToken()}` }});
                 setPoll(response.data);
                 setPollId(response.data.id);
@@ -51,23 +60,36 @@ const CreatePoll = (meetingId, meetingName) => {
 
         fetchPoll();
     }, []);
+    const fetchTopicPolls = async () => {
+        try {
+            const response = await axios.get(`/topic-poll/${pollId}`,
+                { headers: { Authorization: `Bearer ${getAccessToken()}` }});
+            setPollOption(response.data);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         if (!pollId) return;
-        const fetchTopicPolls = async () => {
-            try {
-                const response = await axios.get(`/topic-poll/${pollId}`,
-                    { headers: { Authorization: `Bearer ${getAccessToken()}` }});
-                setPollOption(response.data);
-            } catch (err) {
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+
 
         fetchTopicPolls();
     }, [pollId]);
+
+    const handleViewDetail = (id) => {
+        setSelectedTopicId(id)
+        setShowDetailModal(true)
+    }
+
+    const handleCloseModal = () => {
+        setShowDetailModal(false)
+        setSelectedTopicId(null)
+        fetchTopics()
+        fetchTopicPolls()
+    }
 
 
     return (
@@ -88,7 +110,7 @@ const CreatePoll = (meetingId, meetingName) => {
                     <div className="poll-content">
                         <div className="poll-question">
                             <span className="poll-question-emoji"><FaQuestion /></span>
-                            <h2 className="poll-question-text">{`Voting discussion for ${meetingName}`}</h2>
+                            <h2 className="poll-question-text">{`Voting discussion for `}</h2>
                         </div>
 
                         <div className="poll-options">
@@ -124,11 +146,24 @@ const CreatePoll = (meetingId, meetingName) => {
                                 date={post.createdAt}
                                 avatarUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"
                                 status={post.status}
+                                onClickDetail={handleViewDetail}
                             />
                         ))}
                     </div>
                 )}
             </div>
+            <CustomModal isOpen={showDetailModal && !isDetailHidden} onClose={handleCloseModal}>
+                {selectedTopicId && (
+                    <ProposalDetail
+                        id={selectedTopicId}
+                        onClose={handleCloseModal}
+                        onOpenRejectModal={() => {
+                            setIsDetailHidden(true)
+                        }}
+                        pollId={pollId}
+                    />
+                )}
+            </CustomModal>
         </div>
     )
 }
