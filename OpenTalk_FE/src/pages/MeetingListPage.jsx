@@ -165,7 +165,6 @@ const MeetingListPage = () => {
             meeting={m}
             participants={[]}
             extraCount={0}
-            displayLink={m.status !== OpenTalkMeetingStatus.COMPLETED}
             showButton={
               activeTab === OpenTalkMeetingStatus.WAITING_HOST_REGISTER || activeTab === OpenTalkMeetingStatus.ONGOING
             }

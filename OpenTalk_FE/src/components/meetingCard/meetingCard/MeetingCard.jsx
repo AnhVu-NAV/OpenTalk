@@ -11,7 +11,6 @@ const MeetingCard = ({
     onAction,
     isDisabledButton = false,
     showButton = true,
-    displayLink = true,
     onView,
 }) => {
     // Function to format date and time from scheduledDate
@@ -67,13 +66,16 @@ const MeetingCard = ({
                 )}
             </div>
 
-            <h3>{meeting.meetingName}</h3>
-            <div className="meeting-datetime">
-                <span className="meeting-date">{date}</span>
-                <span className="meeting-time">{time}</span>
+            <div className="meeting-title-section">
+                <h3>{meeting.meetingName}</h3>
+                <span className={`meeting-status ${meeting.status?.toLowerCase()}`}>
+                    {meeting.status}
+                </span>
             </div>
-
-            {displayLink && <p className="meeting-description">{meeting.meetingLink}</p>}
+            <div className="meeting-datetime">
+                <span className="meeting-date">Date: {date}</span>
+                <span className="meeting-time">Time: {time}</span>
+            </div>
 
             <div className="meeting-participants">
                 {participants.slice(0, 3).map((avatar, idx) => (
