@@ -1,0 +1,244 @@
+// @import '../../../scss/mixins';
+
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$font-color: #fff;
+$background-color: #f3f3f3;
+$tab-background: #f0f0f0;
+$border-radius: 5px;
+$transition: 0.3s ease;
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: $background-color;
+}
+
+.ccbox_timing {
+  display: inline-block; 
+  margin-right: 10px;
+}
+
+fieldset {
+  margin-top: 7px;
+  padding: 10px;
+  max-width: 1000px;
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  background-color: #f9f9f9; 
+}
+
+.legend {
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+}
+
+.timing_details_label {
+	font-size: 12px;
+	font-weight: bold;
+	color: #3f7ed5;
+	cursor: default;
+	text-shadow: 0px 1px 0px white;
+}
+
+.timing_details_content {
+	margin-top: 1px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #555;
+	line-height: 21px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px
+}
+
+.timing_details_content_hours_minutes_second{
+  margin-top: 1px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #555;
+	line-height: 21px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.cronjob {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.ccbox_timing {
+  display: inline-block; 
+  margin-right: 10px;
+}
+
+.checkbox_minute_seconds {
+  margin-top: 1px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #555;
+	line-height: 21px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cronjob-container-selection{
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #857b7b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .cronjob-select-wrapper {
+    margin-bottom: 20px;
+    .cronjob-select-container {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      label {
+        font-size: 18px;
+        font-weight: 800;
+        color: #857b7b;
+        margin-bottom: 0px;
+      }
+      select {
+        padding: 5px 15px;
+        font-size: 15px;
+        font-weight: 800;
+        color: #857b7b;
+      }
+    }
+  }
+}
+
+
+.cronjob-container {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 50px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+  label {
+    display: flex;
+    margin-bottom: 0;
+    gap: 3px;
+    width: 100px;
+  }
+  .cronjob-select-wrapper {
+    margin-bottom: 20px;
+    .cronjob-select-container {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      label {
+        font-size: 18px;
+        font-weight: 800;
+        color: #857b7b;
+      }
+      select {
+        padding: 5px 15px;
+        font-size: 15px;
+        font-weight: 800;
+        color: #857b7b;
+      }
+    }
+  }
+  .cronjob-value {
+    margin: 5px 0;
+    font-weight: 800;
+    font-size: 15px;
+    color: #857b7b;
+  }
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+    color: #4b4848;
+    font-weight: 800;
+    border: 1px solid black;
+    padding: 5px 10px;
+    margin-top: 5px;
+    &:hover {
+      background-color: #131413;
+      color: white;
+    }
+  }
+}
+
+.tabs {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  // border-bottom: 1px solid #ccc;
+
+  button {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+    color: #007bff;
+    font-weight: 400;
+    font-size: 14px;
+    transition: color 0.3s, border-bottom 0.3s;
+    // background-color: $tab-background;
+    // padding: 10px 20px;
+    // border: none;
+    // cursor: pointer;
+    // transition: $transition;
+    // border-radius: $border-radius;
+    // color: $primary-color;
+
+    // &.active {
+    //   font-weight: 700;
+    //   border-bottom: 3px solid #007bff;
+    // }
+
+    // &:hover {
+    //   color: #0056b3;
+    // }
+    &:hover,
+    &.active {
+      background-color: $primary-color;
+      color: $font-color;
+    }
+  }
+}
+
+.form-section {
+  background-color: $tab-background;
+  padding: 20px;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    color: $primary-color;
+    margin-bottom: 20px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #333;
+
+      input[type='radio'] {
+        margin-right: 10px;
+      }
+    }
+  }
+}
