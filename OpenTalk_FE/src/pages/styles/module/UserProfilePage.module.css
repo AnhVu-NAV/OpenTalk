@@ -1,0 +1,385 @@
+/* ===== USER PROFILE PAGE SCOPED STYLES ===== */
+.userProfilePage {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Loading State */
+.profileLoadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #10b981;
+}
+
+.profileLoadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e5f3f0;
+    border-top: 4px solid #10b981;
+    border-radius: 50%;
+    animation: profileSpin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes profileSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Main Content */
+.profileMain {
+    flex: 1;
+    margin-left: 280px;
+    background: #f8fafc;
+}
+
+/* Header */
+.profileHeader {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.profileHeaderTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.profileBreadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.profileSeparator {
+    color: #d1d5db;
+}
+
+.profileHeaderActions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profileSearchBox {
+    position: relative;
+}
+
+.profileSearchBox input {
+    padding: 8px 40px 8px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 200px;
+}
+
+.profileSearchIcon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+/* User Header Section */
+.profileUserHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px;
+}
+
+.profileUserInfoSection {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.profileUserAvatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid #e5f3f0;
+}
+
+.profileUserDetails h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 12px 0;
+}
+
+.profileUserMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profileMetaItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.profileMetaIcon {
+    font-size: 16px;
+}
+
+.profileEditBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.profileEditBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+.profileEditIcon {
+    font-size: 16px;
+}
+
+/* Tab Navigation */
+.profileTabNavigation {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profileMainTabs {
+    display: flex;
+}
+
+.profileSecondaryTabs {
+    display: flex;
+    gap: 8px;
+}
+
+.profileTabBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 20px;
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.profileTabBtn:hover {
+    color: #10b981;
+    background-color: #f9fafb;
+}
+
+.profileTabBtn.active {
+    color: #10b981;
+    border-bottom-color: #10b981;
+    background-color: #ecfdf5;
+}
+
+.profileTabBtn.secondary {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border-bottom: none;
+    font-size: 13px;
+}
+
+.profileTabBtn.secondary.active {
+    background-color: #10b981;
+    color: white;
+}
+
+.profileTabIcon {
+    font-size: 16px;
+}
+
+/* Tab Content */
+.profileTabContent {
+    padding: 32px;
+    background: white;
+    min-height: calc(100vh - 300px);
+}
+
+/* Profile Form */
+.profileForm {
+    max-width: 800px;
+}
+
+.profileFormRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 24px;
+}
+
+.profileFormGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profileFormGroup label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.profileFormValue {
+    font-size: 15px;
+    color: #1f2937;
+    font-weight: 500;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+/* Professional Info */
+.profileProfessionalInfo {
+    max-width: 800px;
+}
+
+/* Documents Section */
+.profileDocumentsSection {
+    max-width: 600px;
+}
+
+.profileDocumentItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background: #fafafa;
+}
+
+.profileDocIcon {
+    font-size: 24px;
+}
+
+.profileDocName {
+    flex: 1;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.profileDocDate {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.profileDocAction {
+    padding: 6px 12px;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* Access Section */
+.profileAccessSection {
+    max-width: 600px;
+}
+
+.profileAccessItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.profileAccessItem label {
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.profileAccessStatus.active {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.profileAccessValue {
+    color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .profileMain {
+        margin-left: 0;
+    }
+
+    .profileFormRow {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profileHeaderTop {
+        padding: 12px 16px;
+    }
+
+    .profileUserHeader {
+        padding: 20px 16px;
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .profileTabNavigation {
+        padding: 0 16px;
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .profileMainTabs,
+    .profileSecondaryTabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .profileTabContent {
+        padding: 20px 16px;
+    }
+
+    .profileSearchBox input {
+        width: 150px;
+    }
+}

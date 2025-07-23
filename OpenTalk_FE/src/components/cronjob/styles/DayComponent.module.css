@@ -1,0 +1,184 @@
+/* Day Component Styles */
+.customTabPane {
+    padding: 1rem 0;
+}
+
+.customFormCheck {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.customFormCheck:hover {
+    background: #f1f8e9;
+    border-color: #c8e6c9;
+}
+
+.customFormCheckInput {
+    margin-right: 0.75rem;
+    width: 18px;
+    height: 18px;
+    accent-color: #4caf50;
+    cursor: pointer;
+}
+
+.customFormCheckLabel {
+    font-weight: 500;
+    color: #2e7d32;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.labelSelect {
+    margin: 0 0.5rem;
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+.labelSelectIncrement {
+    margin: 0 0.5rem;
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+.labelSelectRangeLeft {
+    margin-right: 0.5rem;
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+.labelSelectRangeRight {
+    margin-left: 0.5rem;
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+.customSelectForm {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid #a5d6a7;
+    border-radius: 6px;
+    background: white;
+    color: #2e7d32;
+    font-size: 0.95rem;
+    margin: 0 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.customSelectFormWide {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid #a5d6a7;
+    border-radius: 6px;
+    background: white;
+    color: #2e7d32;
+    font-size: 0.95rem;
+    margin: 0 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 125px;
+}
+
+.customSelectFormInline {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid #a5d6a7;
+    border-radius: 6px;
+    background: white;
+    color: #2e7d32;
+    font-size: 0.95rem;
+    margin: 0 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.customSelectForm:focus,
+.customSelectFormWide:focus,
+.customSelectFormInline:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.customSelectForm:hover,
+.customSelectFormWide:hover,
+.customSelectFormInline:hover {
+    border-color: #66bb6a;
+}
+
+.customCheckboxCronjobWrapper {
+    margin-top: 1rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.customCheckboxCronjobWrapper.show {
+    max-height: 400px;
+}
+
+.customCheckboxCronjob {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.75rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 2px solid #c8e6c9;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.customCol6p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: #f9f9f9;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.customCol6p:hover {
+    background: #f1f8e9;
+}
+
+.customCol6p input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #4caf50;
+    cursor: pointer;
+}
+
+.customCol6p label {
+    font-size: 0.9rem;
+    color: #2e7d32;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .customCheckboxCronjob {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .customCol6p {
+        padding: 0.25rem;
+    }
+
+    .customFormCheck {
+        padding: 0.75rem;
+    }
+
+    .customSelectForm,
+    .customSelectFormWide,
+    .customSelectFormInline {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.6rem;
+        min-width: auto;
+    }
+}

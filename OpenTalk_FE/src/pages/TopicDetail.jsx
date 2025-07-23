@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'; // Import useParams to get the rou
 import ProposalDetail from "/src/components/proposalTopic/ProposalDetail.jsx";
 import axios from '/src/api/axiosClient.jsx';
 import {getAccessToken} from "../helper/auth.jsx";
+import "./styles/TopicDetail.css"
 
 const TopicDetail = () => {
     const { id } = useParams(); // Extract 'id' from the URL params

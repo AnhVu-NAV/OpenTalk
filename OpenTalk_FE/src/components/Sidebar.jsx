@@ -14,9 +14,11 @@ const menuItems = [
 
     // 2. Meetings
     { label: "Meeting", icon: <FaVideo />, path: "/meeting" },
-    { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/:id" },
+    // { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/:id" },
     { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting" },
-    { label: "Host Meeting Detail", icon: <FaVideo />, path: "/host-meeting/:id" },
+    // { label: "Host Meeting Detail", icon: <FaVideo />, path: "/host-meeting/:id" },
+    { label: "Meetings", icon: <FaVideo />, path: "/meeting" },
+    // { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/detail/:id" },
     { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request" },
     { label: "OpenTalk Manager", icon: <FaVideo />, path: "/opentalk/manager" },
     { label: "Poll Meeting", icon: <FaProjectDiagram />, path: "/poll-meeting" },
@@ -32,6 +34,7 @@ const menuItems = [
 
     // 5. Suggest / Topics
     { label: "Suggest Topic", icon: <FaRegNewspaper />, path: "/suggest-topic" },
+    { label: "Topic Hub", icon: <FaRegLightbulb />, path: "/topic" },
     { label: "Topic Proposal", icon: <FaRegLightbulb />, path: "/topicProposal" },
     { label: "Topic Proposal Category", icon: <FaRegLightbulb />, path: "/topic-proposal-category" },
 
@@ -49,7 +52,6 @@ const menuItems = [
     // { label: "User Profile", icon: <FaUserCircle />, path: "/user/:id" },
     { label: "Account", icon: <FaUserCircle />, path: "/account" },
     { label: "Settings", icon: <FaCog />, path: "/settings" },
-    { label: "Cronjob Configuration", icon: <FaCog />, path: "/cronjob" }
 
 
 ];
@@ -74,15 +76,23 @@ function Sidebar() {
         setUser(getCurrentUser());
     }, []);
 
+    useEffect(() => {
+        const user = getCurrentUser();
+        console.log("User role:", user?.role);
+        console.log("Resolved role name:", roleMap[user?.role]);
+        setUser(user);
+    }, []);
+
+
     const roleMap = {
-        1: "ADMIN",
+        1: "HR",
         2: "USER",
-        3: "HR",
-        4: "MEETING_MANAGER"
+        3: "MEETING_MANAGER",
+        4: "ADMIN"
     };
 
     const visibleMenuItems = menuItems.filter(({ label }) => {
-        const role = roleMap[user?.role]; // ví dụ: "HR", "USER", "MEETING_MANAGER"
+        const role = roleMap[user?.role];// Ex: "USER", "HR", "MEETING_MANAGER"
 
         const accessMap = {
             ADMIN: [
@@ -90,7 +100,7 @@ function Sidebar() {
                 "Employee",
                 "HostFrequencyReport", "Organization", "User Profile",
                 "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting"
-                
+
             ],
             HR: [
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
@@ -103,13 +113,29 @@ function Sidebar() {
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "User Profile",
                 "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test",
-                "Host Meeting"
+                "Host Meeting",
+                "Overview", "Meetings", "Meeting Detail", "Poll Meeting",
+                "Attendance", "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
+                "Message", "Account", "Settings", "Test Page"
+            ],
+            HR: [
+                "Dashboard", "Meetings", "Meeting Detail", "Attendance", "Attendance (Admin)",
+                "Employee", "Host Frequency Report", "Organization", "Salary",
+                "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
+                "Message", "Account", "Settings", "Test Page"
             ],
             MEETING_MANAGER: [
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "HostFrequencyReport", "Poll Meeting",
                 "User Profile",
-                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting"
+                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting",
+                "Dashboard", "Meetings", "Meeting Detail", "Poll Meeting", "Create Poll",
+                "OpenTalk Manager", "OpenTalk Requests", "Attendance", "Attendance (Admin)",
+                "Host Frequency Report", "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
+                "Message", "Account", "Settings", "Test Page"
+            ],
+            ADMIN: [  // full quyền (tuỳ hệ thống)
+                ...menuItems.map(item => item.label) // tất cả
             ]
         };
 

@@ -20,7 +20,7 @@ const UserProfilePage = ({ userId }) => {
         const current = getCurrentUser()
         axios
             .get(`/users/${current.id}`)
-            .then((res) => setUser(res.data))
+            .then((res) => setUser(res.data.result))
             .catch((err) => console.error("User fetch error", err))
     }, [userId])
 

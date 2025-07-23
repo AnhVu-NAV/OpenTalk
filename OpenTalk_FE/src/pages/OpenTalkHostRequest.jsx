@@ -5,6 +5,7 @@ import OpenTalkPagination from "../components/opentalkManager/Pagination";
 import RequestsModal from "../components/opentalkHostRequest/HostRequestModal";
 import { getMeetings } from "../services/opentalkManagerService";
 import { getMeetingRequestCounts } from "../services/opentalkHostRegistrationService";
+import "./styles/OpenTalkHostRequest.css"
 
 function OpenTalkHostRequestPage() {
   const [meetings, setMeetings] = useState([]);
