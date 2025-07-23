@@ -29,7 +29,6 @@ import UserAttendanceTab from "./pages/UserAttendanceTab";
 import EmployeePage from "./pages/EmployeePage";
 import AddEmployeeNew from "./pages/AddEmployeePage";
 import EditEmployeePage from "./pages/EditEmployeePage";
-import ExportEmployeePage from "./pages/ExportEmployeePage";
 
 // Suggest / Topics
 import SuggestTopic from "./pages/SuggestTopic";
@@ -45,6 +44,7 @@ import SalaryPage from "./pages/SalaryPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import TestPage from "./pages/test";
 import AttendancePage from "./pages/AttendancePage.jsx";
+import TopicHub from "./pages/TopicHub.jsx";
 
 // Optional Pages
 function Message() { return <h2>Message Page</h2>; }
@@ -72,7 +72,7 @@ function App() {
                         {/* Meeting routes */}
                         <Route path="/meeting" element={<MeetingListPage />} />
                         <Route path="/meeting/detail/:id" element={<MeetingDetailPage />} />
-                        {/*<Route path="/poll-meeting" element={<PollApp />} />*/}
+                        <Route path="/poll-meeting" element={<TopicHub />} />
                         {/*<Route path="/poll/create" element={<CreatePoll />} />*/}
                         <Route path="/opentalk/manager" element={<OpenTalkManagerPage />} />
                         <Route path="/opentalk/request" element={<OpenTalkHostRequestPage />} />
@@ -86,15 +86,15 @@ function App() {
                         <Route path="/employee" element={<EmployeePage />} />
                         <Route path="/employee/add" element={<AddEmployeeNew />} />
                         <Route path="/employee/edit/:id" element={<EditEmployeePage />} />
-                        <Route path="/employee/export" element={<ExportEmployeePage />} />
+
 
                         {/* Suggest / Topics */}
                         <Route path="/suggest-topic" element={<SuggestTopic />} />
                         <Route path="/topicProposal" element={<TopicProposalCategory />} />
-                        <Route path="/topic" element={<TopicProposalCategory />} />
                         <Route path="/topic/:id" element={<ProposalDetail />} />
                         <Route path="/topic-proposal-category" element={<TopicProposalCategory />} />
-
+                        <Route path="/meeting" element={<MeetingListPage />} />
+                        <Route path="/project/meeting-details/:id" element={<MeetingDetailPage />} />
                         {/* Reports & Org */}
                         <Route path="/hostfrequencyreport" element={<HostFrequencyReport />} />
                         <Route path="/organization" element={<OrganizationListPage />} />
