@@ -29,12 +29,12 @@ function ViewMeetingDetails() {
     // Nếu không có meeting ở state, gọi API lấy detail
     if (!meeting) {
       setLoading(true);
-      // getMeetingById(id)
-      //   .then(res => {
-      //     setMeeting(res.data);
-      //     setLoading(false);
-      //   })
-      //   .catch(() => setLoading(false));
+      getMeetingById(id)
+        .then(res => {
+          setMeeting(res.data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
     }
   }, [id, meeting]);
 
@@ -80,7 +80,7 @@ function ViewMeetingDetails() {
           <Button
             className="px-4 py-2 rounded-3 btn-dark-green"
             style={{ minWidth: 110, fontWeight: 500 }}
-            onClick={() => navigate(`/project/edit-meeting/${id}`, { state: { meeting } })}
+            onClick={() => navigate(`/meeting/edit-meeting/${id}`, { state: { meeting } })}
           >
             <i className="bi bi-pencil-square me-2"></i>
             Edit
