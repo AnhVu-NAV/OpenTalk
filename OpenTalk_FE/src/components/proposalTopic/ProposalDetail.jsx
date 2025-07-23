@@ -1,7 +1,5 @@
-"use client"
-
 import { useEffect, useState, useCallback } from "react"
-import "/src/css/ProposalDetail.css"
+import "./ProposalDetail.css"
 import {FaBuilding, FaCalendarAlt, FaUser, FaTimes, FaCheck, FaPlus} from "react-icons/fa"
 import { getAccessToken, getCurrentUser } from "../../helper/auth.jsx"
 import axios from "/src/api/axiosClient.jsx"
@@ -246,9 +244,10 @@ const ProposalDetail = ({ id, poll, onClose, showToast, onOpenRejectModal }) => 
                             <p>Topic Proposer</p>
                         </div>
                     </div>
-                    <div className="description-content">
-                        <p>{data.description}</p>
-                    </div>
+                    <div
+                        className="description-content"
+                        dangerouslySetInnerHTML={{ __html: data.description }}
+                    ></div>
                 </div>
             </div>
 

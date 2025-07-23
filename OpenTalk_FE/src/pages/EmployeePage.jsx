@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { FaSearch, FaDownload, FaPlus, FaEye, FaTrash, FaChevronLeft, FaChevronRight, FaFilter } from "react-icons/fa"
@@ -7,6 +5,7 @@ import axios from "/src/api/axiosClient.jsx"
 import DeleteModal from "../components/deleteModal/DeleteModal.jsx"
 import { getAccessToken } from "../helper/auth"
 import "./styles/EmployeePage.css"
+import SuccessToast from "../components/SuccessToast/SuccessToast.jsx";
 
 const getStatusClass = (status) => {
     const statusMap = {
@@ -355,6 +354,13 @@ const EmployeePage = () => {
                     message={`Are you sure you want to delete ${selectedEmployee?.fullName}?`}
                     onCancel={() => setShowDelete(false)}
                     onConfirm={handleConfirmDelete}
+                />
+
+                <SuccessToast
+                    message={toastMessage}
+                    isVisible={showToast}
+                    type="success"
+                    onClose={() => setShowToast(false)}
                 />
             </div>
         </div>

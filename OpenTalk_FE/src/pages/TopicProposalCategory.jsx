@@ -1,8 +1,6 @@
-"use client"
-
 import { useEffect, useRef, useState } from "react"
 import axios from "/src/api/axiosClient.jsx"
-import "/src/css/TopicProposalCategory.css"
+import "/src/pages/styles/TopicProposalCategory.css"
 import TopicProposal from "../components/common/TopicProposalCard.jsx"
 import { getAccessToken, getCurrentUser } from "../helper/auth.jsx"
 import ProposalDetail from "../components/proposalTopic/ProposalDetail.jsx"
