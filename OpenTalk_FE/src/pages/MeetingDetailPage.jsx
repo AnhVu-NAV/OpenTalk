@@ -164,25 +164,25 @@ const MeetingDetailPage = () => {
 
   const renderUserInfo = (user) => (
     <>
-      <div className="profile-header">
+      <div className="meeting-detail-profile-header">
         <img
           src="/placeholder.svg"
           alt={user.fullName}
-          className="profile-avatar"
+          className="meeting-detail-profile-avatar"
         />
-        <h2 className="profile-name">{user.fullName}</h2>
-        <p className="profile-title">{user.username}</p>
+        <h2 className="meeting-detail-profile-name">{user.fullName}</h2>
+        <p className="meeting-detail-profile-title">{user.username}</p>
       </div>
-      <div className="contact-info">
-        <div className="contact-item">
-          <FaEnvelope className="contact-icon" />
+      <div className="meeting-detail-contact-info">
+        <div className="meeting-detail-contact-item">
+          <FaEnvelope className="meeting-detail-contact-icon" />
           <span>{user.email}</span>
         </div>
-        <div className="contact-item">
-          <FaPhone className="contact-icon" />
+        <div className="meeting-detail-contact-item">
+          <FaPhone className="meeting-detail-contact-icon" />
           <span>000-000-0000</span>
         </div>
-        <div className="contact-item">
+        <div className="meeting-detail-contact-item">
           <span>Branch: {user.companyBranch.name}</span>
         </div>
       </div>
@@ -191,27 +191,27 @@ const MeetingDetailPage = () => {
 
   const renderFeedBackCards = () => {
     return (
-      <div className="feedback-section">
-        <h2 className="section-title">FeedBack</h2>
-        <div className="feedback-content">
+      <div className="meeting-detail-feedback-section">
+        <h2 className="meeting-detail-section-title">FeedBack</h2>
+        <div className="meeting-detail-feedback-content">
           <FeedBackCardInput onSubmit={handleSubmitFeedback} />
-          <div className="feedback-list">
+          <div className="meeting-detail-feedback-list">
             {paginatedFeedbacks.map((fb) => (
               <FeedBackCard key={fb.id} feedback={fb} />
             ))}
           </div>
         </div>
-        <div className="pagination">
-          <div className="pagination-info">
+        <div className="meeting-detail-pagination">
+          <div className="meeting-detail-pagination-info">
             Showing {startIndex + 1} to{" "}
             {Math.min(startIndex + itemsPerPage, feedbacks.length)} of{" "}
             {feedbacks.length} results
           </div>
-          <div className="pagination-buttons">
+          <div className="meeting-detail-pagination-buttons">
             <button
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
-              className="pagination-btn"
+              className="meeting-detail-pagination-btn"
             >
               <FaChevronLeft />
             </button>
@@ -219,7 +219,7 @@ const MeetingDetailPage = () => {
               <button
                 key={i + 1}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`pagination-number ${currentPage === i + 1 ? "active" : ""
+                className={`meeting-detail-pagination-number ${currentPage === i + 1 ? "active" : ""
                   }`}
               >
                 {i + 1}
@@ -230,7 +230,7 @@ const MeetingDetailPage = () => {
                 setCurrentPage(Math.min(totalPages, currentPage + 1))
               }
               disabled={currentPage === totalPages}
-              className="pagination-btn"
+              className="meeting-detail-pagination-btn"
             >
               <FaChevronRight />
             </button>
@@ -242,83 +242,75 @@ const MeetingDetailPage = () => {
 
   return (
     <div className="meeting-detail-page">
-      <div className="page-header">
-        <button onClick={() => navigate("/meeting")} className="back-button">
+      <div className="meeting-detail-page-header">
+        <button onClick={() => navigate("/meeting")} className="meeting-detail-back-button">
           <FaArrowLeft size={16} />
         </button>
-        <h1 className="page-title">Meeting Detail</h1>
-        <button className="download-button" onClick={handleDownloadMaterial}>
+        <h1 className="meeting-detail-page-title">Meeting Detail</h1>
+        <button className="meeting-detail-download-button" onClick={handleDownloadMaterial}>
           Download material
         </button>
       </div>
 
-      <div className="content-grid">
-        <div className="profile-card">
-          <div className="meeting-highlight">
-            <h2 className="meeting-name">{meeting.meetingName}</h2>
-            <div className="detail-row">
-              <span className="label">Date:</span>
-              <span className="value">{date}</span>
+      <div className="meeting-detail-content-grid">
+        <div className="meeting-detail-profile-card">
+          <div className="meeting-detail-meeting-highlight">
+            <h2 className="meeting-detail-meeting-name">{meeting.meetingName}</h2>
+            <div className="meeting-detail-detail-row">
+              <span className="meeting-detail-label">Date:</span>
+              <span className="meeting-detail-value">{date}</span>
             </div>
-            <div className="detail-row">
-              <span className="label">Time:</span>
-              <span className="value">{time}</span>
+            <div className="meeting-detail-detail-row">
+              <span className="meeting-detail-label">Time:</span>
+              <span className="meeting-detail-value">{time}</span>
             </div>
-            <div className="detail-row">
-              <span className="label">Meeting Link:</span>
+            <div className="meeting-detail-detail-row">
+              <span className="meeting-detail-label">Meeting Link:</span>
               <a
                 href={meeting.meetingLink}
-                className="value link"
+                className="meeting-detail-value meeting-detail-link"
                 target="_blank"
                 rel="noreferrer"
               >
                 {meeting.meetingLink}
               </a>
             </div>
-            <div className="detail-row">
-              <span className="label">Status:</span>
-              <span className="value">{meeting.status}</span>
+            <div className="meeting-detail-detail-row">
+              <span className="meeting-detail-label">Status:</span>
+              <span className="meeting-detail-value">{meeting.status}</span>
             </div>
-            <div className="detail-row">
-              <span className="label">Branch:</span>
-              <span className="value">{meeting.companyBranch.name}</span>
+            <div className="meeting-detail-detail-row">
+              <span className="meeting-detail-label">Branch:</span>
+              <span className="meeting-detail-value">{meeting.companyBranch.name}</span>
             </div>
-          </div>
-          <div className="host-section">
-            <h3 className="section-title">Host</h3>
-            {host ? (
-              renderUserInfo(host)
-            ) : (
-              <div className="profile-header">
-                <img
-                  src="/placeholder.svg"
-                  alt="No Host"
-                  className="profile-avatar"
-                />
-                <h2 className="profile-name">No Host</h2>
-              </div>
-            )}
           </div>
         </div>
 
-        <div className="topic-content">
-          <div className="tabs-header">
+        <div className="meeting-detail-topic-content">
+          <div className="meeting-detail-tabs-header">
             <button
-              className={`tab-button ${activeTab === "general" ? "active" : ""
+              className={`meeting-detail-tab-button ${activeTab === "general" ? "active" : ""
                 }`}
               onClick={() => setActiveTab("general")}
             >
               Topic General
             </button>
             <button
-              className={`tab-button ${activeTab === "suggest" ? "active" : ""
+              className={`meeting-detail-tab-button ${activeTab === "host" ? "active" : ""
+                }`}
+              onClick={() => setActiveTab("host")}
+            >
+              User Host
+            </button>
+            <button
+              className={`meeting-detail-tab-button ${activeTab === "suggest" ? "active" : ""
                 }`}
               onClick={() => setActiveTab("suggest")}
             >
               Suggested By
             </button>
             <button
-              className={`tab-button ${activeTab === "evaluate" ? "active" : ""
+              className={`meeting-detail-tab-button ${activeTab === "evaluate" ? "active" : ""
                 }`}
               onClick={() => setActiveTab("evaluate")}
             >
@@ -326,23 +318,35 @@ const MeetingDetailPage = () => {
             </button>
           </div>
 
-          <div className="tab-content">
+          <div className="meeting-detail-tab-content">
             {activeTab === "general" && (
               <>
-                <div className="detail-row">
-                  <span className="label">Title:</span>
-                  <span className="value">{meeting.topic.title}</span>
+                <div className="meeting-detail-detail-row">
+                  <span className="meeting-detail-label">Title:</span>
+                  <span className="meeting-detail-value">{meeting.topic.title}</span>
                 </div>
-                <div className="detail-row">
-                  <span className="label">Description:</span>
-                  <span className="value">{meeting.topic.description}</span>
+                <div className="meeting-detail-detail-row">
+                  <span className="meeting-detail-label">Description:</span>
+                  <span className="meeting-detail-value">{meeting.topic.description}</span>
                 </div>
-                <div className="detail-row">
-                  <span className="label">Remark:</span>
-                  <span className="value">{meeting.topic.remark}</span>
+                <div className="meeting-detail-detail-row">
+                  <span className="meeting-detail-label">Remark:</span>
+                  <span className="meeting-detail-value">{meeting.topic.remark}</span>
                 </div>
               </>
             )}
+            {activeTab === "host" && host ? (
+              renderUserInfo(host)
+            ) : activeTab === "host" && !host ? (
+              <div className="meeting-detail-profile-header">
+                <img
+                  src="/placeholder.svg"
+                  alt="No Host"
+                  className="meeting-detail-profile-avatar"
+                />
+                <h2 className="meeting-detail-profile-name">No Host</h2>
+              </div>
+            ) : null}
             {activeTab === "suggest" && suggestBy && renderUserInfo(suggestBy)}
             {activeTab === "evaluate" && evaluteBy && renderUserInfo(evaluteBy)}
           </div>

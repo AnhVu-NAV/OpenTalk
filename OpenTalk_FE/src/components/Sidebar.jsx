@@ -13,8 +13,10 @@ const menuItems = [
     { label: "Overview", icon: <FaHome />, path: "/" },             // USER
 
     // 2. Meetings
-    { label: "Meetings", icon: <FaVideo />, path: "/meeting" },
-    { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/detail/:id" },
+    { label: "Meeting", icon: <FaVideo />, path: "/meeting" },
+    { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/:id" },
+    { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting" },
+    { label: "Host Meeting Detail", icon: <FaVideo />, path: "/host-meeting/:id" },
     { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request" },
     { label: "OpenTalk Manager", icon: <FaEnvelope />, path: "/opentalk/manager" },
     { label: "Poll Meeting", icon: <FaProjectDiagram />, path: "/poll-meeting" },
@@ -86,24 +88,28 @@ function Sidebar() {
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "Employee",
                 "HostFrequencyReport", "Organization", "User Profile",
-                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests"
+                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests",
+                "Host Meeting"
             ],
             HR: [
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "Employee","Suggest Topic",
                 "HostFrequencyReport", "Organization", "User Profile",
-                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test"
+                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test",
+                "Host Meeting"
             ],
             USER: [
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "User Profile",
-                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test"
+                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test",
+                "Host Meeting"
             ],
             MEETING_MANAGER: [
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "HostFrequencyReport", "Poll Meeting",
                 "User Profile",
-                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests"
+                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests",
+                "Host Meeting"
             ]
         };
 
