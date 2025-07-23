@@ -87,7 +87,7 @@ function AddMeeting() {
   };
   const handleSuccessClose = () => {
     setShowSuccess(false);
-    navigate("/project");
+    navigate("/opentalk/manager");
   };
 
   return (

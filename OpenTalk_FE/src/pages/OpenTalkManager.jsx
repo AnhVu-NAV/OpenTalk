@@ -142,7 +142,7 @@ function OpenTalkManagerPage() {
 
   // Xem chi tiết
   const handleViewDetail = (meeting) => {
-    navigate(`meeting-details/${meeting.id}`, { state: { meeting } });
+    navigate(`/meeting/meeting-detail/${meeting.id}`, { state: { meeting } });
   };
 
   // Xử lý xóa
@@ -166,7 +166,7 @@ function OpenTalkManagerPage() {
 
   // Thêm mới
   const handleGoToAddNew = () => {
-    navigate("new-meeting");
+    navigate("/meeting/add-meeting");
   };
 
   return (

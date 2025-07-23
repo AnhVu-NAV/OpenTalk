@@ -20,6 +20,9 @@ import PollApp from "./pages/PollMeeting";
 import CreatePoll from "./pages/CreatePoll";
 import OpenTalkManagerPage from "./pages/OpenTalkManager";
 import OpenTalkHostRequestPage from "./pages/OpenTalkHostRequest";
+import AddNewMeeting from "./components/opentalkManager/AddNewMeeting";
+import EditMeeting from "./components/opentalkManager/EditMeeting";
+import ViewMeetingDetails from "./components/opentalkManager/MeetingDetail";
 
 // Attendance
 import AttendanceAdminPage from "./pages/AttendanceAdminPage";
@@ -29,7 +32,7 @@ import UserAttendanceTab from "./pages/UserAttendanceTab";
 import EmployeePage from "./pages/EmployeePage";
 import AddEmployeeNew from "./pages/AddEmployeePage";
 import EditEmployeePage from "./pages/EditEmployeePage";
-import ExportEmployeePage from "./pages/ExportEmployeePage";
+// import ExportEmployeePage from "./pages/ExportEmployeePage";
 
 // Suggest / Topics
 import SuggestTopic from "./pages/SuggestTopic";
@@ -48,11 +51,11 @@ import AttendancePage from "./pages/AttendancePage.jsx";
 
 // Optional Pages
 function Message() { return <h2>Message Page</h2>; }
-function Project() { return <OpenTalkManagerPage />; }
-function Ticket() { return <OpenTalkHostRequestPage />; }
-function Notice() { return <SuggestTopic />; }
-function Account() { return <UserProfilePage />; }
-function Setting() { return <h2>Settings Page</h2>; }
+// function Project() { return <OpenTalkManagerPage />; }
+// function Ticket() { return <OpenTalkHostRequestPage />; }
+// function Notice() { return <SuggestTopic />; }
+// function Account() { return <UserProfilePage />; }
+// function Setting() { return <h2>Settings Page</h2>; }
 
 function App() {
     return (
@@ -76,6 +79,10 @@ function App() {
                         {/*<Route path="/poll/create" element={<CreatePoll />} />*/}
                         <Route path="/opentalk/manager" element={<OpenTalkManagerPage />} />
                         <Route path="/opentalk/request" element={<OpenTalkHostRequestPage />} />
+                        <Route path="/meeting/add-meeting" element={<AddNewMeeting />} />
+                        <Route path="/meeting/meeting-detail/:id" element={<ViewMeetingDetails />} />
+                        <Route path="/meeting/edit-meeting/:id" element={<EditMeeting />} />
+
 
                         {/* Attendance */}
                         <Route path="/attendance" element={<AttendancePage />} />
@@ -86,7 +93,7 @@ function App() {
                         <Route path="/employee" element={<EmployeePage />} />
                         <Route path="/employee/add" element={<AddEmployeeNew />} />
                         <Route path="/employee/edit/:id" element={<EditEmployeePage />} />
-                        <Route path="/employee/export" element={<ExportEmployeePage />} />
+                        {/* <Route path="/employee/export" element={<ExportEmployeePage />} /> */}
 
                         {/* Suggest / Topics */}
                         <Route path="/suggest-topic" element={<SuggestTopic />} />
@@ -100,14 +107,13 @@ function App() {
                         <Route path="/organization" element={<OrganizationListPage />} />
 
                         {/* Others */}
-                        <Route path="/message" element={<Message />} />
-                        <Route path="/project" element={<Project />} />
+                        {/* <Route path="/message" element={<Message />} />
                         <Route path="/ticket" element={<Ticket />} />
                         <Route path="/notice" element={<Notice />} />
                         <Route path="/account" element={<Account />} />
                         <Route path="/settings" element={<Setting />} />
                         <Route path="/salary" element={<SalaryPage />} />
-                        <Route path="/test" element={<TestPage />} />
+                        <Route path="/test" element={<TestPage />} /> */}
                     </Route>
                 </Route>
             </Routes>
