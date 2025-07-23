@@ -1,13 +1,28 @@
 import classNames from 'classnames';
 
-function StatusBadge({ status }) {
-  const statusClassMap = {
-    ACTIVE: 'badge-soft-success',
-    'ON BOARDING': 'badge-soft-warning',
-    PROBATION: 'badge-soft-info',
-    'ON LEAVE': 'badge-soft-danger',
-  };
+// Định nghĩa mapping cho từng status của MeetingStatus enum
+const statusClassMap = {
+  WAITING_TOPIC: "badge-soft-secondary",
+  WAITING_HOST_REGISTER: "badge-soft-info",
+  WAITING_HOST_SELECTION: "badge-soft-warning",
+  UPCOMING: "badge-soft-primary",
+  ONGOING: "badge-soft-success",
+  COMPLETED: "badge-soft-dark",
+  CANCELLED: "badge-soft-danger",
+  POSTPONED: "badge-soft-warning"
+};
 
+function beautifyStatus(status) {
+  // Chuyển "WAITING_HOST_REGISTER" thành "Waiting Host Register"
+  if (!status) return "";
+  return status
+    .toLowerCase()
+    .split("_")
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+function StatusBadge({ status }) {
   return (
     <>
       <span
@@ -16,7 +31,7 @@ function StatusBadge({ status }) {
           statusClassMap[status] || 'badge-soft-secondary'
         )}
       >
-        {status.replace('_', ' ')}
+        {beautifyStatus(status)}
       </span>
       <style>{`
         .badge-custom {
@@ -26,11 +41,9 @@ function StatusBadge({ status }) {
           font-weight: 600;
           border-radius: 9999px;
           letter-spacing: 0.02em;
-          min-width: 80px;
+          min-width: 110px;
           text-align: center;
           border: none;
-          background: #e6f7ec;
-          color: #26a75d;
         }
         .badge-soft-success {
           background: #e6f7ec !important;
@@ -51,6 +64,14 @@ function StatusBadge({ status }) {
         .badge-soft-secondary {
           background: #edeef0 !important;
           color: #6c757d !important;
+        }
+        .badge-soft-primary {
+          background: #ecf5fd !important;
+          color: #2371c6 !important;
+        }
+        .badge-soft-dark {
+          background: #eeeeee !important;
+          color: #222 !important;
         }
       `}</style>
     </>

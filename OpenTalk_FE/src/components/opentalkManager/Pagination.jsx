@@ -62,7 +62,7 @@ function OpenTalkPagination({ page, totalPages, onPageChange }) {
       </ul>
 
       {/* CSS in component, bạn có thể copy vào file css global cũng được */}
-      <style>{`
+      {/* <style>{`
         .pagination-opentalk {
           gap: 12px;
           padding: 0;
@@ -96,7 +96,7 @@ function OpenTalkPagination({ page, totalPages, onPageChange }) {
           text-align: center;
           user-select: none;
         }
-      `}</style>
+      `}</style> */}
     </>
   );
 }

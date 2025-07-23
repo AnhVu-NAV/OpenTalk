@@ -115,7 +115,7 @@ function MeetingMaterial({
         </Button>
       </div>
 
-      <style>{`
+      {/* <style>{`
         .material-dropzone {
           display: flex;
           flex-direction: column;
@@ -151,7 +151,7 @@ function MeetingMaterial({
         .meeting-material-modal-content {
           border-radius: 18px !important;
         }
-      `}</style>
+      `}</style> */}
     </Modal>
   );
 }
