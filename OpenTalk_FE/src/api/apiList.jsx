@@ -30,22 +30,12 @@ export const createFeedback = async (feedbackDTO) => {
 };
 
 // API CronJob
-export const getListCronjob = async (meetingId) => {
-  const res = await axiosClient.get(`/feedbacks/${meetingId}`);
+export const getListCronjob = async () => {
+  const res = await axiosClient.get(`/cron/all`);
   return res.data;
 };
 
 export const saveCronjob = async (feedbackDTO) => {
-  const res = await axiosClient.post("/feedbacks", feedbackDTO);
-  return res.data;
-};
-
-export const getConfig = async (meetingId) => {
-  const res = await axiosClient.get(`/feedbacks/${meetingId}`);
-  return res.data;
-};
-
-export const updateConfig = async (feedbackDTO) => {
   const res = await axiosClient.post("/feedbacks", feedbackDTO);
   return res.data;
 };
