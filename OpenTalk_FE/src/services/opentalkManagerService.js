@@ -70,3 +70,12 @@ export const generateCheckinCode = (meetingId, validMinutes = 15) => {
     });
 };
 
+export const getCheckinCode = (meetingId) => {
+    const token = getAccessToken();
+    return axiosClient.get(`/attendance/checkin-code`, {
+        params: { meetingId }, 
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};

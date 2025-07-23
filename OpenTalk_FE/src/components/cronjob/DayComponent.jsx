@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Constants from '../../../../../../constants/Constants';
+import Constants from '../common/Constant';
 
 const DaysContent = ({ dayOfMonth, setDayOfMonth, dayOfWeek, setDayOfWeek }) => {
   const [dayType, setDayType] = useState(Constants.TYPE_CRONJOB.EVERY);
@@ -14,13 +14,16 @@ const DaysContent = ({ dayOfMonth, setDayOfMonth, dayOfWeek, setDayOfWeek }) => 
   const [nthDay, setNthDay] = useState({ nth: '1', dow: '1' });
   const [lastSpecificDay, setLastSpecificDay] = useState('1');
   const [daysBeforeEom, setDaysBeforeEom] = useState('1');
+
+  // Dùng để detect đang sync props (từ cha) hay đang thao tác UI (nội bộ)
+  const [isSyncingFromProps, setIsSyncingFromProps] = useState(false);
+
+  // Khi user thao tác UI: tính lại cron, chỉ set lên cha nếu KHÁC giá trị cũ
   useEffect(() => {
+    if (isSyncingFromProps) return; // Chặn cập nhật vòng lặp khi đang sync props
+
     let resultDayOfMonth = '';
     let resultDayOfWeek = '';
-
-
-    setDayOfMonth(resultDayOfMonth);
-    setDayOfWeek(resultDayOfWeek);
     switch (dayType) {
       case 'every':
         resultDayOfMonth = '?';
@@ -65,8 +68,11 @@ const DaysContent = ({ dayOfMonth, setDayOfMonth, dayOfWeek, setDayOfWeek }) => 
       default:
         return;
     }
-    setDayOfMonth(resultDayOfMonth);
-    setDayOfWeek(resultDayOfWeek);
+    // Chỉ set lại nếu giá trị thực sự khác
+    if (dayOfMonth !== resultDayOfMonth) setDayOfMonth(resultDayOfMonth);
+    if (dayOfWeek !== resultDayOfWeek) setDayOfWeek(resultDayOfWeek);
+
+    // eslint-disable-next-line
   }, [
     dayType,
     dowIncrementStep,
@@ -78,13 +84,15 @@ const DaysContent = ({ dayOfMonth, setDayOfMonth, dayOfWeek, setDayOfWeek }) => 
     nthDay,
     lastSpecificDay,
     daysBeforeEom,
+    isSyncingFromProps, // nếu là true thì bỏ qua, chỉ update khi false (user thao tác)
   ]);
 
-  const dayAllOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  const dayAllOfMonth = Array.from({ length: 31 }, (_, i) => i + 1);
-  const dayAll = Constants.DAYS;
+  // Khi props từ cha đổi (user chọn lại cronjob khác), sync lại state nội bộ
   useEffect(() => {
     if (!dayOfMonth || !dayOfWeek) return;
+    setIsSyncingFromProps(true); // Đánh dấu đang sync
+    const dayAllOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const dayAllOfMonth = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
 
     if (dayOfMonth === '?' && dayOfWeek === '*') {
       setDayType('every');
@@ -116,31 +124,41 @@ const DaysContent = ({ dayOfMonth, setDayOfMonth, dayOfWeek, setDayOfWeek }) => 
       setNthDay({ nth: dayOfWeek.split('#')[0], dow: dayOfWeek.split('#')[1] });
       setDayType('nthDay');
     }
+    setTimeout(() => setIsSyncingFromProps(false), 0); // Sau khi sync xong, reset cờ này
+    // eslint-disable-next-line
   }, [dayOfMonth, dayOfWeek]);
+
+  const dayAllOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const dayAllOfMonth = Array.from({ length: 31 }, (_, i) => i + 1);
+  const dayAll = Constants.DAYS;
   const suffixes = { 0: 'st', 1: 'nd', 2: 'rd' };
+
   const handleSpecificDaysChange = (day) => {
     setSpecificDays((prev) => {
       const updatedDays = prev.includes(day)
-          ? prev.filter(d => d !== day)
-          : [...prev, day];
+        ? prev.filter(d => d !== day)
+        : [...prev, day];
       return updatedDays.sort((a, b) => dayAllOfWeek.indexOf(a) - dayAllOfWeek.indexOf(b));
     });
   };
   const handleDaySelection = (day) => {
     setSelectedDays((prev) => {
       const updatedDays = prev.includes(day.toString())
-          ? prev.filter(d => d !== day.toString())
-          : [...prev, day.toString()];
+        ? prev.filter(d => d !== day.toString())
+        : [...prev, day.toString()];
       return updatedDays.sort((a, b) => a - b);
     });
   };
+
   const monthOrder = [
     'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
     'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
   ];
+  
   return (
     <div className='custom-tab-pane' id='tabs-4' role='tabpanel'>
       <div>
+        {/* ... UI giữ nguyên như cũ ... */}
         {/* 1. Every day */}
         <div className='custom-form-check mb-3'>
           <input

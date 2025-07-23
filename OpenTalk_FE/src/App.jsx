@@ -48,6 +48,7 @@ import SalaryPage from "./pages/SalaryPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import TestPage from "./pages/test";
 import AttendancePage from "./pages/AttendancePage.jsx";
+import CronjobManagePage from "./pages/CronjobManagePage";
 
 // Optional Pages
 function Message() { return <h2>Message Page</h2>; }
@@ -105,6 +106,8 @@ function App() {
                         {/* Reports & Org */}
                         <Route path="/hostfrequencyreport" element={<HostFrequencyReport />} />
                         <Route path="/organization" element={<OrganizationListPage />} />
+
+                        <Route path="/cronjob" element={<CronjobManagePage />} />
 
                         {/* Others */}
                         {/* <Route path="/message" element={<Message />} />

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import MeetingMaterialModal from "./MeetingMaterial";
+// Import hàm getMeetingById và getCheckinCode từ service của bạn
+import { getMeetingById, getCheckinCode } from "../../services/opentalkManagerService";
 
 function formatDateTime(dtStr) {
   if (!dtStr) return "";
@@ -21,12 +23,16 @@ function ViewMeetingDetails() {
   const [meeting, setMeeting] = useState(meetingFromState || null);
   const [loading, setLoading] = useState(!meetingFromState);
 
+  // State cho Attendance Code động
+  const [attendanceCode, setAttendanceCode] = useState(meetingFromState?.attendanceCode || "");
+  const [attendanceCodeLoading, setAttendanceCodeLoading] = useState(false);
+
   // Meeting material (UI only)
   const [showMaterial, setShowMaterial] = useState(false);
   const [files, setFiles] = useState([]);
 
+  // Khi vào trang, fetch detail nếu cần
   useEffect(() => {
-    // Nếu không có meeting ở state, gọi API lấy detail
     if (!meeting) {
       setLoading(true);
       getMeetingById(id)
@@ -37,6 +43,33 @@ function ViewMeetingDetails() {
         .catch(() => setLoading(false));
     }
   }, [id, meeting]);
+
+  // Khi meeting thay đổi hoặc vừa fetch xong, handle attendance code
+  useEffect(() => {
+    if (!loading && meeting) {
+      if (meeting.status === "ONGOING") {
+        setAttendanceCodeLoading(true);
+        getCheckinCode(meeting.id)
+          .then(res => {
+            if (res.data && res.data.checkinCode && res.data.expiresAt) {
+              const expiresAt = new Date(res.data.expiresAt).getTime();
+              if (expiresAt > Date.now()) {
+                setAttendanceCode(res.data.checkinCode);
+              } else {
+                setAttendanceCode("");
+              }
+            } else {
+              setAttendanceCode("");
+            }
+          })
+          .catch(() => setAttendanceCode(""))
+          .finally(() => setAttendanceCodeLoading(false));
+      } else {
+        setAttendanceCode(meeting.attendanceCode || "");
+        setAttendanceCodeLoading(false);
+      }
+    }
+  }, [loading, meeting]);
 
   if (loading || !meeting) return <div className="p-4">Loading...</div>;
 
@@ -63,29 +96,29 @@ function ViewMeetingDetails() {
             </span>
           </div>
           <div className="d-flex gap-2">
-          {/* Nút Create Poll chỉ hiện khi WAITING_TOPIC */}
-          {meeting.status === "WAITING_TOPIC" && (
+            {/* Nút Create Poll chỉ hiện khi WAITING_TOPIC */}
+            {meeting.status === "WAITING_TOPIC" && (
+              <Button
+                className="px-4 py-2 rounded-3 btn-warning"
+                style={{ minWidth: 110, fontWeight: 500 }}
+                onClick={() => {
+                  // TODO: Gọi API hoặc mở modal tạo poll
+                }}
+              >
+                <i className="bi bi-bar-chart-steps me-2"></i>
+                Create Poll
+              </Button>
+            )}
+            {/* Nút Edit luôn hiện */}
             <Button
-              className="px-4 py-2 rounded-3 btn-warning"
+              className="px-4 py-2 rounded-3 btn-dark-green"
               style={{ minWidth: 110, fontWeight: 500 }}
-              onClick={() => {
-                // TODO: Gọi API hoặc mở modal tạo poll
-              }}
+              onClick={() => navigate(`/meeting/edit-meeting/${id}`, { state: { meeting } })}
             >
-              <i className="bi bi-bar-chart-steps me-2"></i>
-              Create Poll
+              <i className="bi bi-pencil-square me-2"></i>
+              Edit
             </Button>
-          )}
-          {/* Nút Edit luôn hiện */}
-          <Button
-            className="px-4 py-2 rounded-3 btn-dark-green"
-            style={{ minWidth: 110, fontWeight: 500 }}
-            onClick={() => navigate(`/meeting/edit-meeting/${id}`, { state: { meeting } })}
-          >
-            <i className="bi bi-pencil-square me-2"></i>
-            Edit
-          </Button>
-        </div>
+          </div>
         </div>
         <h2 className="addmeeting-title mb-3">Meeting Details</h2>
         {/* FORM VIEW-ONLY */}
@@ -177,7 +210,7 @@ function ViewMeetingDetails() {
             <Form.Label className="form-label-enterprise">Attendance Code</Form.Label>
             <Form.Control
               name="attendanceCode"
-              value={meeting.attendanceCode || ""}
+              value={attendanceCodeLoading ? "Loading..." : (attendanceCode || "")}
               readOnly
               size="sm"
               style={{ background: "#f8fafb" }}
@@ -204,71 +237,6 @@ function ViewMeetingDetails() {
         onUpload={(e) => setFiles([...files, ...Array.from(e.target.files).map(f => ({ name: f.name }))])}
         onDelete={(idx) => setFiles(files.filter((_, i) => i !== idx))}
       />
-      {/* <style>{`
-        .addmeeting-bg-enterprise {
-          background: #fafbfc;
-        }
-        .addmeeting-container {
-          width: 100%;
-          margin: 0;
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-        .addmeeting-title {
-          font-weight: 700;
-          font-size: 2rem;
-          color: #233d29;
-          letter-spacing: 0.01em;
-        }
-        .addmeeting-grid-row {
-          width: 100%;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 24px;
-        }
-        .form-label-enterprise {
-          font-weight: 600;
-          font-size: 15px;
-          color: #233d29;
-          margin-bottom: 3px;
-        }
-        .form-label-enterprise.text-primary {
-          color: #1976d2;
-        }
-        .form-control, .form-select {
-          border-radius: 9px;
-          font-size: 14px;
-          padding-top: 6px;
-          padding-bottom: 6px;
-        }
-        .form-control:disabled, .form-control[readonly] {
-          background: #f1f3f4;
-        }
-        .btn-dark-green {
-          background: #234c38;
-          border: none;
-        }
-        .btn-dark-green:hover, .btn-dark-green:focus {
-          background: #18926e;
-        }
-        .btn-outline-dark-green {
-          background: #fff;
-          border: 2px solid #234c38;
-          color: #234c38;
-          transition: 0.18s;
-        }
-        .btn-outline-dark-green:hover, .btn-outline-dark-green:focus {
-          background: #18926e;
-          color: #fff;
-          border-color: #18926e;
-        }
-        .rounded-3 {
-          border-radius: 10px !important;
-        }
-        .back-text {
-          color: #233d29;
-        }
-      `}</style> */}
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"

@@ -15,6 +15,7 @@ const customToastId = {
     failure: 'toastIdFailure',
     warn: 'toastIdWarn',
 };
+
 const CronJobComponent = () => {
     const [seconds, setSeconds] = useState('');
     const [minutes, setMinutes] = useState('');
@@ -27,6 +28,11 @@ const CronJobComponent = () => {
     const [selectedCronjobKey, setSelectedCronjobKey] = useState('');
     const [cronjobList, setCronjobList] = useState([]);
     const [statusChangeToFetch, setStatusChangeToFetch] = useState(true);
+
+    // Thêm trigger để đảm bảo render khi các trường đã cập nhật xong
+    const [fieldsReady, setFieldsReady] = useState(false);
+
+    // Parse cron và báo hiệu fields ready
     const handleParseCronjob = (cronjob) => {
         const cronjobArray = cronjob.split(' ');
         setSeconds(cronjobArray[0]);
@@ -35,7 +41,10 @@ const CronJobComponent = () => {
         setDayOfMonth(cronjobArray[3]);
         setMonths(cronjobArray[4]);
         setDayOfWeek(cronjobArray[5]);
+        setFieldsReady(false); // Đánh dấu chưa sẵn sàng
+        setTimeout(() => setFieldsReady(true), 0); // Chờ render xong mới ready
     };
+
     const handleCronjobSelect = useCallback(
         (newEvent) => {
             const selectedKey = newEvent.target.value;
@@ -110,6 +119,7 @@ const CronJobComponent = () => {
             });
         }
     };
+
     return (
         <div className="cronjob-container">
             {/* Cronjob Selector */}
@@ -181,33 +191,35 @@ const CronJobComponent = () => {
                         </div>
                     </div>
                     {/* Cron Expression */}
-                    <div className="custom-cron-expression">
-                        <h5>Cron Expression</h5>
-                        <table className="cron-expression-table-horizontal">
-                            <thead>
-                            <tr>
-                                <th>Seconds</th>
-                                <th>Minutes</th>
-                                <th>Hours</th>
-                                <th>Day of Month</th>
-                                <th>Months</th>
-                                <th>Day of Week</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>{seconds}</td>
-                                <td>{minutes}</td>
-                                <td>{hours}</td>
-                                <td>{dayOfMonth}</td>
-                                <td>{months}</td>
-                                <td>{dayOfWeek}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <h5>Describe Expression</h5>
-                        <div>{handleCronExpression()}</div>
-                    </div>
+                    {fieldsReady && (
+                        <div className="custom-cron-expression">
+                            <h5>Cron Expression</h5>
+                            <table className="cron-expression-table-horizontal">
+                                <thead>
+                                <tr>
+                                    <th>Seconds</th>
+                                    <th>Minutes</th>
+                                    <th>Hours</th>
+                                    <th>Day of Month</th>
+                                    <th>Months</th>
+                                    <th>Day of Week</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{seconds}</td>
+                                    <td>{minutes}</td>
+                                    <td>{hours}</td>
+                                    <td>{dayOfMonth}</td>
+                                    <td>{months}</td>
+                                    <td>{dayOfWeek}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <h5>Describe Expression</h5>
+                            <div>{handleCronExpression()}</div>
+                        </div>
+                    )}
                 </div>
             }
         </div>
