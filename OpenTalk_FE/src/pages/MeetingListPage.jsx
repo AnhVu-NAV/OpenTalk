@@ -63,6 +63,31 @@ const MeetingListPage = () => {
     }
   };
 
+  const handleRegisterHost = (meetingId) => {
+    const currentUserInfo = getCurrentUser();
+    if (currentUserInfo) {
+      registerHost({
+        user: currentUserInfo,
+        meeting: {
+          id: meetingId
+        }
+      });
+      setMeetings((prevMeetings) => {
+        return prevMeetings.map((m) => {
+          if (m.id === meetingId) {
+            return { ...m, registeredHostUserIds: [...m.registeredHostUserIds, currentUserInfo.id] };
+          }
+          return m;
+        });
+      });
+    }
+  }
+
+  function isAlreadyRegiteredHost(meetingId) {
+    return activeTab === OpenTalkMeetingStatus.WAITING_HOST_REGISTER &&
+      meetings.some(m => m.id === meetingId && m.registeredHostUserIds?.includes(getCurrentUser()?.id));
+  }
+
   const filteredMeetings = meetings.filter((m) => {
     switch (activeTab) {
       case OpenTalkMeetingStatus.COMPLETED:
@@ -137,33 +162,26 @@ const MeetingListPage = () => {
         {paginatedMeetings.map((m) => (
           <MeetingCard
             key={m.id}
-            title={m.meetingName}
-            time={m.scheduledDate}
-            description={m.meetingLink}
+            meeting={m}
             participants={[]}
             extraCount={0}
+            displayLink={m.status !== OpenTalkMeetingStatus.COMPLETED}
             showButton={
               activeTab === OpenTalkMeetingStatus.WAITING_HOST_REGISTER || activeTab === OpenTalkMeetingStatus.ONGOING
             }
             actionLabel={
               activeTab === OpenTalkMeetingStatus.WAITING_HOST_REGISTER ? 'Register Host' : 'Join Meeting'
             }
+            isDisabledButton={isAlreadyRegiteredHost(m.id)}
             onAction={() => {
               if (activeTab === OpenTalkMeetingStatus.ONGOING) {
                 handleJoin(m.meetingLink);
               } else if (activeTab === OpenTalkMeetingStatus.WAITING_HOST_REGISTER) {
-                const currentUserInfo = getCurrentUser();
-                if (currentUserInfo) {
-                  registerHost({
-                    user: currentUserInfo,
-                    meeting: {
-                      id: m.id
-                    }
-                  });
-                }
+                handleRegisterHost(m.id);
+                alert('Your host request has been sent successfully.');
               }
             }}
-            onView={() => navigate(`/meeting/${m.id}`, { state: { meetingList: meetings } })}
+            onView={() => navigate(`/meeting/${m.id}`, { state: { meetingList: meetings, onTab: activeTab } })}
           />
         ))}
       </div>

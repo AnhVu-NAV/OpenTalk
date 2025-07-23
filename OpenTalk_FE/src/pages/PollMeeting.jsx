@@ -3,7 +3,7 @@ import "./styles/PollMeeting.css"
 import { FaQuestion } from "react-icons/fa"
 import axios from "/src/api/axiosClient.jsx"
 import {getAccessToken, getCurrentUser} from "../helper/auth.jsx";
-const PollApp = (meetingId, meetingName) => {
+const PollApp = (meeting) => {
     const[pollOption, setPollOption] = useState([]);
     const[poll, setPoll] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -16,14 +16,16 @@ const PollApp = (meetingId, meetingName) => {
     const [showResults, setShowResults] = useState(false)
 
     const totalVotes = pollData.reduce((sum, option) => sum + option.votes, 0)
-
+    const meetingId = meeting.meeting.id
     useEffect(() => {
         const fetchPoll = async () => {
             try {
+
                 const response = await axios.get(`/poll/${meetingId}`,
                     { headers: { Authorization: `Bearer ${getAccessToken()}` }});
                 setPoll(response.data);
                 setPollId(response.data.id);
+                console.log("Poll: " +response.data.id)
                 setVote(true)
             } catch (err) {
                 setError(err);
@@ -33,10 +35,13 @@ const PollApp = (meetingId, meetingName) => {
         };
 
         fetchPoll();
-    }, []);
+    }, [meetingId]);
 
     useEffect(() => {
-        if (!pollId) return;
+        if (!pollId) {
+            setPollOption([]);
+            return;
+        }
         const fetchTopicPolls = async () => {
             try {
                 const response = await axios.get(`/topic-poll/${pollId}`,
@@ -99,7 +104,9 @@ const PollApp = (meetingId, meetingName) => {
                 }, { headers: { Authorization: `Bearer ${getAccessToken()}` }
             }
             );
+            console.log("Before: "+response.data)
             setHasVoted(response.data)
+            console.log("After: "+hasVoted)
         } catch (err) {
             setError(err);
         } finally {
@@ -113,20 +120,22 @@ const PollApp = (meetingId, meetingName) => {
     }, [reload]);
 
     useEffect(() => {
-        if (!pollId) return;
+        if(!pollId){
+            setHasVoted(true);
+        }
         fetchAvailableToVote();
     }, [pollId]);
 
 
     const handleVote = async (pollOption) => {
-        if (hasVoted) return
+        if (!hasVoted) return
 
         await fetchVote(pollOption);
 
         setPollData((prev) =>
             prev.map((option) => (option.id === pollOption ? { ...option, votes: option.votes + 1 } : option))
         )
-        setHasVoted(true)
+        setHasVoted(false)
         setShowResults(true)
     }
 
@@ -155,7 +164,7 @@ const PollApp = (meetingId, meetingName) => {
                     <div className="poll-content">
                         <div className="poll-question">
                             <span className="poll-question-emoji"><FaQuestion /></span>
-                            <h2 className="poll-question-text">{`Voting discussion for ${meetingName}`}</h2>
+                            <h2 className="poll-question-text">{`Voting discussion for ${meeting.meetingName}`}</h2>
                         </div>
 
                         <div className="poll-options">
@@ -183,7 +192,7 @@ const PollApp = (meetingId, meetingName) => {
                                     </div>
                                     <button
                                         onClick={() => handleVote(option.id)}
-                                        disabled={hasVoted}
+                                        disabled={!hasVoted}
                                         className="poll-vote-button"
                                     >
                                         Vote

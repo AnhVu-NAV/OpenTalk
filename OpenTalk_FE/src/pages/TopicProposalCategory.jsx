@@ -1,8 +1,6 @@
-"use client"
-
 import { useEffect, useRef, useState } from "react"
 import axios from "/src/api/axiosClient.jsx"
-import "/src/css/TopicProposalCategory.css"
+import "/src/pages/styles/TopicProposalCategory.css"
 import TopicProposal from "../components/common/TopicProposalCard.jsx"
 import { getAccessToken, getCurrentUser } from "../helper/auth.jsx"
 import ProposalDetail from "../components/proposalTopic/ProposalDetail.jsx"
@@ -65,7 +63,7 @@ const TopicProposalCategory = () => {
 
     useEffect(() => {
         axios
-            .get("/topic-idea/status", {
+            .get("/topic-idea/admin/status", {
                 headers: { Authorization: `Bearer ${getAccessToken()}` },
             })
             .then((res) => setStatusOptions(res.data))
@@ -110,9 +108,9 @@ const TopicProposalCategory = () => {
             setRejectSubmitting(true)
             const user = getCurrentUser()
             await axios.put(
-                `/topic-idea/${selectedTopicId}/decision`,
+                `/topic-idea/decision`,
                 {
-                    decision: "REJECTED",
+                    decision: "rejected",
                     remark: rejectNote.trim(),
                     topicId: selectedTopicId,
                     userId: user.id,
@@ -176,21 +174,21 @@ const TopicProposalCategory = () => {
                 <div className="stat-card">
                     <div className="stat-icon">✅</div>
                     <div className="stat-content">
-                        <h3>{posts.filter((p) => p.status === "APPROVED").length}</h3>
+                        <h3>{posts.filter((p) => p.status === "approved").length}</h3>
                         <p>Approved</p>
                     </div>
                 </div>
                 <div className="stat-card">
                     <div className="stat-icon">⏳</div>
                     <div className="stat-content">
-                        <h3>{posts.filter((p) => p.status === "PENDING").length}</h3>
+                        <h3>{posts.filter((p) => p.status === "pending").length}</h3>
                         <p>Pending</p>
                     </div>
                 </div>
                 <div className="stat-card">
                     <div className="stat-icon">❌</div>
                     <div className="stat-content">
-                        <h3>{posts.filter((p) => p.status === "REJECTED").length}</h3>
+                        <h3>{posts.filter((p) => p.status === "rejected").length}</h3>
                         <p>Rejected</p>
                     </div>
                 </div>

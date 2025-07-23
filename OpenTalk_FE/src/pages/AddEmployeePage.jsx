@@ -1,8 +1,9 @@
 import {useState, useEffect} from "react"
-import axios from "axios"
+import axios from "/src/api/axiosClient.jsx"
 import {useNavigate} from "react-router-dom"
 import "./styles/AddEmployeePage.css"
 import {getAccessToken} from "../helper/auth.jsx";
+import SuccessToast from "../components/SuccessToast/SuccessToast.jsx";
 
 const AddEmployeeNew = () => {
     const [employee, setEmployee] = useState({
@@ -11,20 +12,23 @@ const AddEmployeeNew = () => {
         username: "",
         password: "",
         isEnabled: true,
-        companyBranchId: "",
-        roleId: "2", // default USER
+        companyBranch: { id: "" },
+        role: "2", // default USER
         avatarUrl: "",
     })
     const [branches, setBranches] = useState([])
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState({})
     const navigate = useNavigate()
+    const [toastMessage, setToastMessage] = useState("")
+    const [showToast, setShowToast] = useState(false)
+
 
 
     useEffect(() => {
         const fetchBranches = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/api/company-branch",
+                const res = await axios.get("/company-branch",
                     {
                         headers: {
                             Authorization: `Bearer ${getAccessToken()}`,
@@ -48,7 +52,7 @@ const AddEmployeeNew = () => {
         if (!employee.username.trim()) newErrors.username = "Username is required"
         if (!employee.password.trim()) newErrors.password = "Password is required"
         if (employee.password.length < 6) newErrors.password = "Password must be at least 6 characters"
-        if (!employee.companyBranchId) newErrors.companyBranchId = "Company branch is required"
+        if (!employee.companyBranch) newErrors.companyBranch = "Company branch is required"
 
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -61,17 +65,24 @@ const AddEmployeeNew = () => {
     }
 
     const handleChange = (e) => {
-        const {name, value, type, checked} = e.target
-        setEmployee((prev) => ({
-            ...prev,
-            [name]: type === "checkbox" ? checked : value,
-        }))
+        const { name, value, type, checked } = e.target;
 
-        // Clear error when user starts typing
-        if (errors[name]) {
-            setErrors((prev) => ({...prev, [name]: ""}))
+        if (name === "companyBranch") {
+            setEmployee((prev) => ({
+                ...prev,
+                companyBranch: { id: value },
+            }));
+        } else {
+            setEmployee((prev) => ({
+                ...prev,
+                [name]: type === "checkbox" ? checked : value,
+            }));
         }
-    }
+
+        if (errors[name]) {
+            setErrors((prev) => ({ ...prev, [name]: "" }));
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -87,8 +98,9 @@ const AddEmployeeNew = () => {
                     },
                 }
             );
-            alert("Employee created successfully!")
-            navigate("/employee")
+            setToastMessage("Employee created successfully!")
+            setShowToast(true)
+            setTimeout(() => navigate("/employee"), 1000)
         } catch (error) {
             console.error("Error creating employee:", error)
             alert("Failed to create employee.")
@@ -199,9 +211,9 @@ const AddEmployeeNew = () => {
                                         Company Branch <span className="required">*</span>
                                     </label>
                                     <select
-                                        className={`form-select ${errors.companyBranchId ? "error" : ""}`}
-                                        name="companyBranchId"
-                                        value={employee.companyBranchId}
+                                        className={`form-select ${errors.companyBranch ? "error" : ""}`}
+                                        name="companyBranch"
+                                        value={employee.companyBranch.id}
                                         onChange={handleChange}
                                     >
                                         <option value="">Select a branch</option>
@@ -211,8 +223,7 @@ const AddEmployeeNew = () => {
                                             </option>
                                         ))}
                                     </select>
-                                    {errors.companyBranchId &&
-                                        <span className="error-message">{errors.companyBranchId}</span>}
+                                    {errors.companyBranch && <span className="error-message">{errors.companyBranch}</span>}
                                 </div>
                             </div>
                         </div>
@@ -300,6 +311,12 @@ const AddEmployeeNew = () => {
                     </form>
                 </div>
             </div>
+            <SuccessToast
+                message={toastMessage}
+                isVisible={showToast}
+                type="success"
+                onClose={() => setShowToast(false)}
+            />
         </div>
     )
 }

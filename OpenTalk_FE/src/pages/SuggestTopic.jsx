@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CustomTextEditor from "../components/textEdit/RichTextEditor.jsx";
-import '../css/SuggestTopic.css'
+import './styles/SuggestTopic.css'
 import {getCurrentUser, getAccessToken} from "../helper/auth.jsx";
 import axios from '/src/api/axiosClient.jsx';
 
@@ -17,12 +17,9 @@ const SuggestTopic = () => {
             setLoading(false);
             return;
         }
-
         const userId = user.id;
-        const token = getAccessToken();
-
-        axios.get(`/topic-idea/suggestedBy/1`, {
-            headers: { Authorization: `Bearer ${token}` }
+        axios.get(`/topic-idea/suggestedBy/${userId}`, {
+            headers: { Authorization: `Bearer ${ getAccessToken()}` }
         })
             .then(res => {
                 setTopicUser(res.data);
@@ -33,7 +30,42 @@ const SuggestTopic = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [loading]);
+
+    // useEffect(() => {
+    //     handleSubmitTopic({ title: "hehe", content: "hahah" });
+    // }, [])
+
+    const handleSubmitTopic = async ({ title, content }) => {
+        const token = getAccessToken();
+        const user = getCurrentUser();
+
+        try {
+            console.log(title);
+            console.log(content);
+            const res = await axios.post(
+                "/topic-idea",
+                {
+                    title: title,
+                    description: content,
+                    status: '',
+                    remark: '',
+                    suggestedBy:  user,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            setLoading(true)
+            console.log("Topic suggested successfully:", res.data);
+            alert("Topic submitted!");
+        } catch (err) {
+            console.error("Error submitting topic:", err);
+            alert("Error submitting topic!");
+        }
+    };
     return (
         <div className="page-wrapper">
             <div className="page-header">
@@ -43,7 +75,7 @@ const SuggestTopic = () => {
             <div className="layout">
                 {/* Editor bên trái */}
                 <div className="layout__main">
-                    <CustomTextEditor />
+                    <CustomTextEditor onSubmit={handleSubmitTopic} />
                 </div>
                 {/* Card bên phải */}
                 <aside className="layout__sidebar">

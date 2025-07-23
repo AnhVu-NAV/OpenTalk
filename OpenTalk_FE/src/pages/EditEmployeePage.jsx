@@ -1,10 +1,9 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { getAccessToken } from "../helper/auth.jsx"
 import "./styles/EditEmployeePage.css"
+import SuccessToast from "../components/SuccessToast/SuccessToast.jsx";
 
 const ROLE_MAP = {
     1: "Admin",
@@ -28,6 +27,8 @@ const EditEmployeePage = () => {
         companyBranchId: null,
     })
     const [branchName, setBranchName] = useState("")
+    const [toastMessage, setToastMessage] = useState("")
+    const [showToast, setShowToast] = useState(false)
 
     useEffect(() => {
         const fetchEmployee = async () => {
@@ -109,8 +110,9 @@ const EditEmployeePage = () => {
                     Authorization: `Bearer ${getAccessToken()}`,
                 },
             })
-            alert("Employee updated successfully!")
-            navigate("/employee")
+            setToastMessage("Employee updated successfully!")
+            setShowToast(true)
+            setTimeout(() => navigate("/employee"), 1000)
         } catch (error) {
             console.error("Failed to update employee", error)
             alert("Failed to update employee!")
@@ -330,6 +332,12 @@ const EditEmployeePage = () => {
                     </div>
                 </div>
             </div>
+            <SuccessToast
+                message={toastMessage}
+                isVisible={showToast}
+                type="success"
+                onClose={() => setShowToast(false)}
+            />
         </div>
     )
 }
