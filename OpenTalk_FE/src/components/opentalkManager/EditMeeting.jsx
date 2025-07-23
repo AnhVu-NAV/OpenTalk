@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import MeetingMaterialModal from "./MeetingMaterial";
-import { updateMeeting, getMeetingById, getCompanyBranches } from "../../services/opentalkManagerService";
+import {
+  updateMeeting,
+  getMeetingById,
+  getCompanyBranches,
+  generateCheckinCode,
+  getCheckinCode,
+} from "../../services/opentalkManagerService";
 import SuccessDialog from "./SuccessModal";
-import { Modal } from "react-bootstrap"; 
-import {generateCheckinCode} from "../../services/opentalkManagerService";
 
 const statusOptions = [
   "WAITING_TOPIC",
@@ -22,7 +26,6 @@ function EditMeeting() {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
-
   const meetingFromState = location.state?.meeting;
 
   // Form state
@@ -31,11 +34,14 @@ function EditMeeting() {
   const [branchesLoading, setBranchesLoading] = useState(true);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // Attendance code state
   const [showExpireModal, setShowExpireModal] = useState(false);
   const [expireMinutes, setExpireMinutes] = useState(15);
   const [genCodeLoading, setGenCodeLoading] = useState(false);
   const [attendanceCodeInfo, setAttendanceCodeInfo] = useState({ code: "", expiresAt: "" });
+  const [attendanceCodeLoading, setAttendanceCodeLoading] = useState(true);
 
+  const codeTimeout = useRef(null);
 
   // Material files (UI only, không gửi backend)
   const [showMaterial, setShowMaterial] = useState(false);
@@ -45,33 +51,70 @@ function EditMeeting() {
   const topics = [];
   const hosts = [];
 
-  // Init: fetch data nếu reload trang
-  useEffect(() => {
-    if (meetingFromState) {
-      setForm({
-        ...meetingFromState,
-        topic: meetingFromState.topic?.id || "",
-        host: meetingFromState.host?.id || "",
-        companyBranch: meetingFromState.companyBranch?.id || "",
-        scheduledDate: meetingFromState.scheduledDate?.slice(0, 16), // datetime-local
-        attendanceCode: meetingFromState.attendanceCode || "",
-        duration: meetingFromState.duration || "",
-      });
-    } else {
-      // Fetch từ API nếu vào thẳng /edit-meeting/:id
-      getMeetingById(id).then(res => {
-        setForm({
-          ...res.data,
-          topic: res.data.topic?.id || "",
-          host: res.data.host?.id || "",
-          companyBranch: res.data.companyBranch?.id || "",
-          scheduledDate: res.data.scheduledDate?.slice(0, 16),
-          attendanceCode: res.data.attendanceCode || "",
-          duration: res.data.duration || "",
+  // --- Attendance code: Fetch & setup auto-clear ---
+  const fetchAttendanceCode = useCallback(async () => {
+    setAttendanceCodeLoading(true);
+    try {
+      const res = await getCheckinCode(id);
+      const data = res.data;
+      if (data?.checkinCode && data?.expiresAt) {
+        setAttendanceCodeInfo({
+          code: data.checkinCode,
+          expiresAt: data.expiresAt,
         });
-      });
+        setupExpireTimeout(data.expiresAt);
+      } else {
+        setAttendanceCodeInfo({ code: "", expiresAt: "" });
+      }
+    } catch {
+      setAttendanceCodeInfo({ code: "", expiresAt: "" });
+    } finally {
+      setAttendanceCodeLoading(false);
     }
-  }, [id, meetingFromState]);
+  }, [id]);
+
+  const setupExpireTimeout = (expiresAtStr) => {
+    if (codeTimeout.current) clearTimeout(codeTimeout.current);
+    if (!expiresAtStr) return;
+    const expiresAt = new Date(expiresAtStr).getTime();
+    const now = Date.now();
+    const ms = expiresAt - now;
+    if (ms > 0) {
+      codeTimeout.current = setTimeout(() => {
+        setAttendanceCodeInfo({ code: "", expiresAt: "" });
+      }, ms);
+    } else {
+      setAttendanceCodeInfo({ code: "", expiresAt: "" });
+    }
+  };
+
+  // Fetch form + attendance code khi vào trang
+  useEffect(() => {
+    let didCancel = false;
+    async function fetchData() {
+      let meetingObj = meetingFromState;
+      if (!meetingObj) {
+        const res = await getMeetingById(id);
+        meetingObj = res.data;
+      }
+      setForm({
+        ...meetingObj,
+        topic: meetingObj.topic?.id || "",
+        host: meetingObj.host?.id || "",
+        companyBranch: meetingObj.companyBranch?.id || "",
+        scheduledDate: meetingObj.scheduledDate?.slice(0, 16),
+        attendanceCode: meetingObj.attendanceCode || "",
+        duration: meetingObj.duration || "",
+      });
+      if (!didCancel) fetchAttendanceCode();
+    }
+    fetchData();
+
+    return () => {
+      didCancel = true;
+      if (codeTimeout.current) clearTimeout(codeTimeout.current);
+    };
+  }, [id, meetingFromState, fetchAttendanceCode]);
 
   // Fetch branch list
   useEffect(() => {
@@ -82,39 +125,34 @@ function EditMeeting() {
       .finally(() => setBranchesLoading(false));
   }, []);
 
-  const handleChange = (e) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  // Khi generate code, show modal
+  const handleGenerateCode = () => setShowExpireModal(true);
+
+  // Khi xác nhận generate, gọi API generate xong gọi lại GET để update UI
+  const handleConfirmGenerate = async () => {
+    setGenCodeLoading(true);
+    try {
+      await generateCheckinCode(id, expireMinutes);
+      await fetchAttendanceCode();
+      setShowExpireModal(false);
+    } catch {
+      alert("Failed to generate code.");
+    } finally {
+      setGenCodeLoading(false);
+    }
   };
+
+  // Xử lý form change
+  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
   // Material
   const handleFileChange = (e) => {
     const filesArr = Array.from(e.target.files).map(file => ({ name: file.name }));
     setFiles(prev => [...prev, ...filesArr]);
   };
-  const handleDeleteFile = (idx) => {
-    setFiles(prev => prev.filter((_, i) => i !== idx));
-  };
+  const handleDeleteFile = (idx) => setFiles(prev => prev.filter((_, i) => i !== idx));
   const handleShowMaterial = () => setShowMaterial(true);
   const handleCloseMaterial = () => setShowMaterial(false);
-
-  const handleGenerateCode = () => setShowExpireModal(true);
-
-const handleConfirmGenerate = async () => {
-  setGenCodeLoading(true);
-  try {
-    const res = await generateCheckinCode(id, expireMinutes);
-    setAttendanceCodeInfo({
-      code: res.data.checkinCode,
-      expiresAt: res.data.expiresAt,
-    });
-    setShowExpireModal(false);
-  } catch {
-    alert("Failed to generate code.");
-  } finally {
-    setGenCodeLoading(false);
-  }
-};
-
 
   // Submit update
   const handleSubmit = async (e) => {
@@ -139,10 +177,8 @@ const handleConfirmGenerate = async () => {
   };
   const handleSuccessClose = () => {
     setShowSuccess(false);
-    navigate("/meeting-manager");
+    navigate("/opentalk/manager");
   };
-
-  
 
   if (!form) return <div className="p-4">Loading...</div>;
 
@@ -276,18 +312,22 @@ const handleConfirmGenerate = async () => {
           </Form.Group>
           {/* Attendance Code */}
           <Form.Group className="mb-3">
-            <Form.Label className="form-label-enterprise">Attendance Code</Form.Label>
-            <Form.Control
-              type="text"
-              value={attendanceCodeInfo.code}
-              placeholder="Attendance code will be generated here"
-              readOnly
-            />
-            {attendanceCodeInfo.expiresAt && (
-              <div className="text-muted mt-1" style={{ fontSize: 13 }}>
-                Expire at: <b>{new Date(attendanceCodeInfo.expiresAt).toLocaleString()}</b>
-              </div>
-            )}
+          <Form.Label className="form-label-enterprise">Attendance Code</Form.Label>
+          <Form.Control
+            type="text"
+            value={attendanceCodeLoading ? "Loading..." : attendanceCodeInfo.code}
+            readOnly
+            isInvalid={attendanceCodeLoading}
+          />
+          {/* Hiển thị ngày hết hạn nếu có */}
+          {attendanceCodeInfo.expiresAt && attendanceCodeInfo.code && !attendanceCodeLoading && (
+            <div className="text-muted mt-1" style={{ fontSize: 13 }}>
+              Expire at: <b>{new Date(attendanceCodeInfo.expiresAt).toLocaleString()}</b>
+            </div>
+          )}
+
+          {/* Phần Generate chỉ xuất hiện khi ONGOING */}
+          {form.status === "ONGOING" && (
             <div className="gen-attendance-card mt-2 d-flex align-items-center justify-content-between">
               <div style={{ width: "100%" }}>
                 <div className="fw-semibold" style={{ color: "#18926e", fontSize: 16 }}>
@@ -304,11 +344,13 @@ const handleConfirmGenerate = async () => {
                 type="button"
                 onClick={handleGenerateCode}
                 style={{ minHeight: 44, minWidth: 120 }}
+                disabled={attendanceCodeLoading || genCodeLoading}
               >
-                <i className="bi bi-lightning-charge-fill me-1"></i> Generate
+                <i className="bi bi-lightning-charge-fill me-1"></i> {genCodeLoading ? "Generating..." : "Generate"}
               </Button>
             </div>
-          </Form.Group>
+          )}
+        </Form.Group>
           {/* Save button & Manage Meeting Material */}
           <div className="d-flex justify-content-between align-items-center mt-2 gap-3">
             <Button className="px-4 py-2 rounded-3 btn-dark-green" type="submit" style={{ minWidth: 110 }}>
@@ -325,33 +367,33 @@ const handleConfirmGenerate = async () => {
             </Button>
           </div>
         </Form>
+        {/* Modal chọn expire */}
         <Modal show={showExpireModal} onHide={() => setShowExpireModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Set Expiry Time</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group>
-            <Form.Label>Valid Minutes</Form.Label>
-            <Form.Control
-              type="number"
-              min={1}
-              max={120}
-              value={expireMinutes}
-              onChange={e => setExpireMinutes(Number(e.target.value))}
-              disabled={genCodeLoading}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowExpireModal(false)} disabled={genCodeLoading}>
-            Cancel
-          </Button>
-          <Button variant="success" onClick={handleConfirmGenerate} disabled={genCodeLoading}>
-            {genCodeLoading ? "Generating..." : "Confirm"}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
+          <Modal.Header closeButton>
+            <Modal.Title>Set Expiry Time</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group>
+              <Form.Label>Valid Minutes</Form.Label>
+              <Form.Control
+                type="number"
+                min={1}
+                max={120}
+                value={expireMinutes}
+                onChange={e => setExpireMinutes(Number(e.target.value))}
+                disabled={genCodeLoading}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowExpireModal(false)} disabled={genCodeLoading}>
+              Cancel
+            </Button>
+            <Button variant="success" onClick={handleConfirmGenerate} disabled={genCodeLoading}>
+              {genCodeLoading ? "Generating..." : "Confirm"}
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
       {/* MeetingMaterialModal popup */}
       <MeetingMaterialModal
@@ -367,89 +409,6 @@ const handleConfirmGenerate = async () => {
         title="Success"
         message="Meeting updated successfully!"
       />
-      {/* <style>{`
-        .addmeeting-bg-enterprise {
-          background: #fafbfc;
-        }
-        .addmeeting-container {
-          width: 100%;
-          margin: 0;
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-        .addmeeting-title {
-          font-weight: 700;
-          font-size: 2rem;
-          color: #233d29;
-          letter-spacing: 0.01em;
-        }
-        .addmeeting-grid-row {
-          width: 100%;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 24px;
-        }
-        .form-label-enterprise {
-          font-weight: 600;
-          font-size: 15px;
-          color: #233d29;
-          margin-bottom: 3px;
-        }
-        .form-label-enterprise.text-primary {
-          color: #1976d2;
-        }
-        .form-control, .form-select {
-          border-radius: 9px;
-          font-size: 14px;
-          padding-top: 6px;
-          padding-bottom: 6px;
-        }
-        .form-control:disabled, .form-control[readonly] {
-          background: #f1f3f4;
-        }
-        .btn-dark-green {
-          background: #234c38;
-          border: none;
-        }
-        .btn-dark-green:hover, .btn-dark-green:focus {
-          background: #18926e;
-        }
-        .btn-outline-dark-green {
-          background: #fff;
-          border: 2px solid #234c38;
-          color: #234c38;
-          transition: 0.18s;
-        }
-        .btn-outline-dark-green:hover, .btn-outline-dark-green:focus {
-          background: #18926e;
-          color: #fff;
-          border-color: #18926e;
-        }
-        .rounded-3 {
-          border-radius: 10px !important;
-        }
-        .back-text {
-          color: #233d29;
-        }
-        .gen-attendance-card {
-          border-radius: 9px;
-          background: #f4faf6;
-          box-shadow: 0 1px 7px rgba(0,0,0,0.02);
-          border: 1.3px solid #d1eee4;
-          padding: 16px 18px 14px 18px;
-        }
-        .btn-gen-code {
-          background: #18926e;
-          border: none;
-          font-weight: 500;
-          font-size: 15px;
-          padding: 6px 18px;
-        }
-        .btn-gen-code:hover, .btn-gen-code:focus {
-          background: #13563f;
-        }
-
-      `}</style> */}
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"

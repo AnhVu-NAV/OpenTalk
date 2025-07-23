@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Constants from '../../../../../../constants/Constants';
+import Constants from '../common/Constant';
 
 
 const SecondsComponent = ({ seconds, setSeconds }) => {

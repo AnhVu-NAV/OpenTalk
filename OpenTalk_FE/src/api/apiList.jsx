@@ -35,7 +35,12 @@ export const getListCronjob = async () => {
   return res.data;
 };
 
-export const saveCronjob = async (feedbackDTO) => {
-  const res = await axiosClient.post("/feedbacks", feedbackDTO);
+export const saveCronjob = async ({ cronjobKey, cronjobValue }) => {
+  const params = new URLSearchParams({
+    key: cronjobKey,
+    expression: cronjobValue,
+  }).toString();
+
+  const res = await axiosClient.put(`/cron/update?${params}`);
   return res.data;
 };

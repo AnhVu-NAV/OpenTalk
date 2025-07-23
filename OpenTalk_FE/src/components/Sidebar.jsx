@@ -18,7 +18,7 @@ const menuItems = [
     { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting" },
     { label: "Host Meeting Detail", icon: <FaVideo />, path: "/host-meeting/:id" },
     { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request" },
-    { label: "OpenTalk Manager", icon: <FaEnvelope />, path: "/opentalk/manager" },
+    { label: "OpenTalk Manager", icon: <FaVideo />, path: "/opentalk/manager" },
     { label: "Poll Meeting", icon: <FaProjectDiagram />, path: "/poll-meeting" },
     { label: "Create Poll", icon: <FaProjectDiagram />, path: "/poll/create" },
 
@@ -49,6 +49,7 @@ const menuItems = [
     // { label: "User Profile", icon: <FaUserCircle />, path: "/user/:id" },
     { label: "Account", icon: <FaUserCircle />, path: "/account" },
     { label: "Settings", icon: <FaCog />, path: "/settings" },
+    { label: "Cronjob Configuration", icon: <FaCog />, path: "/cronjob" }
 
 
 ];
@@ -88,8 +89,8 @@ function Sidebar() {
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "Employee",
                 "HostFrequencyReport", "Organization", "User Profile",
-                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests",
-                "Host Meeting"
+                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting"
+                
             ],
             HR: [
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
@@ -108,8 +109,7 @@ function Sidebar() {
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "HostFrequencyReport", "Poll Meeting",
                 "User Profile",
-                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests",
-                "Host Meeting"
+                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting"
             ]
         };
 

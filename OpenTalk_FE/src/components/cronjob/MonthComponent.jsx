@@ -1,5 +1,5 @@
-import React, { useState, useEffect, use } from 'react';
-import Constants from '../../../../../../constants/Constants';
+import React, { useState, useEffect } from 'react';
+import Constants from '../common/Constant';
 
 const MonthComponent = ({ months, setMonths }) => {
   const [monthType, setMonthType] = useState(Constants.TYPE_CRONJOB.EVERY);
@@ -9,42 +9,50 @@ const MonthComponent = ({ months, setMonths }) => {
   const [rangeStart, setRangeStart] = useState(1);
   const [rangeEnd, setRangeEnd] = useState(12);
 
+  // Flag để biết đang sync props (tránh loop)
+  const [isSyncingFromProps, setIsSyncingFromProps] = useState(false);
+
   const monthOrder = [
     'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
     'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
   ];
-
   const monthsAll = Constants.MONTHS;
 
   const handleSpecificMonthsChange = (month) => {
     setSpecificMonths((prev) => {
       const updated = prev.includes(month)
-        ? prev.filter(m => m !== month) // Remove if exists
-        : [...prev, month]; // Add if not exists
-      return updated.sort((a, b) => monthOrder.indexOf(a) - monthOrder.indexOf(b)); // Sort by order
+        ? prev.filter(m => m !== month)
+        : [...prev, month];
+      return updated.sort((a, b) => monthOrder.indexOf(a) - monthOrder.indexOf(b));
     });
   };
 
+  // Khi user thao tác, cập nhật giá trị lên parent nếu khác cũ
   useEffect(() => {
+    if (isSyncingFromProps) return;
     let result = '';
 
     if (monthType === Constants.TYPE_CRONJOB.EVERY) {
-      result = '*'; // Every month
+      result = '*';
     } else if (monthType === Constants.TYPE_CRONJOB.INCREMENT) {
-      result = `${startMonth}/${increment}`; // Increment format: start/step
+      result = `${startMonth}/${increment}`;
     } else if (monthType === Constants.TYPE_CRONJOB.SPECIFIC) {
-      result = specificMonths.length > 0 ? specificMonths.join(',') : 'JAN'; // Specific months
+      result = specificMonths.length > 0 ? specificMonths.join(',') : 'JAN';
     } else if (monthType === Constants.TYPE_CRONJOB.RANGE) {
-      result = `${rangeStart}-${rangeEnd}`; // Range format: start-end
+      result = `${rangeStart}-${rangeEnd}`;
     } else {
       return;
     }
 
-    setMonths(result); // Update the months in the parent component
-  }, [monthType, increment, startMonth, specificMonths, rangeStart, rangeEnd, setMonths]);
+    // Chỉ update nếu khác giá trị cũ
+    if (months !== result) setMonths(result);
 
+  }, [monthType, increment, startMonth, specificMonths, rangeStart, rangeEnd, isSyncingFromProps]);
+
+  // Khi props months đổi, sync lại state, set cờ để chặn loop  
   useEffect(() => {
     if (!months) return;
+    setIsSyncingFromProps(true);
 
     if (months.includes('*')) {
       setMonthType(Constants.TYPE_CRONJOB.EVERY);
@@ -62,7 +70,9 @@ const MonthComponent = ({ months, setMonths }) => {
       setSpecificMonths(months.split(','));
       setMonthType(Constants.TYPE_CRONJOB.SPECIFIC);
     }
+    setTimeout(() => setIsSyncingFromProps(false), 0); 
   }, [months]);
+
   return (
     <div className='custom-tab-pane' id='tabs-5' role='tabpanel'>
       {/* 1. Every Month */}
@@ -79,7 +89,6 @@ const MonthComponent = ({ months, setMonths }) => {
           Every month
         </label>
       </div>
-
       {/* 2. Month Increment */}
       <div className="custom-form-check mb-3">
         <input
@@ -117,16 +126,15 @@ const MonthComponent = ({ months, setMonths }) => {
           ))}
         </select>
       </div>
-
       {/* 3. Specific Months */}
       <div className="custom-form-check mb-3">
         <input
             className="custom-form-check-input"
-          type="radio"
-          id="cronMonthSpecific"
-          name="cronMonth"
-          checked={monthType === 'specific'}
-          onChange={() => setMonthType('specific')}
+            type="radio"
+            id="cronMonthSpecific"
+            name="cronMonth"
+            checked={monthType === 'specific'}
+            onChange={() => setMonthType('specific')}
         />
         <label className="custom-form-check-label" htmlFor="cronMonthSpecific">
           Specific month (choose one or many)
@@ -158,7 +166,6 @@ const MonthComponent = ({ months, setMonths }) => {
           </div>
         </div>
       </div>
-
       {/* 4. Month Range */}
       <div className="custom-form-check mb-3">
         <input

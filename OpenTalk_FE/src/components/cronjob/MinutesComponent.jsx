@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Constants from '../../../../../../constants/Constants';
-
+import Constants from '../common/Constant';
 const MinuteScheduler = ({ minutes, setMinutes }) => {
   const [minuteType, setMinuteType] = useState(''); // Types: 'every', 'increment', 'specific', 'range'
   const [incrementStart, setIncrementStart] = useState('0');

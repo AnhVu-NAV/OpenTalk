@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Constants from '../../../../../../constants/Constants';
-
+import Constants from '../common/Constant';
 const HoursComponent = ({ hours, setHours }) => {
   const [hourType, setHourType] = useState('');
   const [incrementStart, setIncrementStart] = useState('0');
