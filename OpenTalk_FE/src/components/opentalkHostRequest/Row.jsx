@@ -1,7 +1,6 @@
 import { FiInbox } from "react-icons/fi";
 
 function OpenTalkRow({ meeting, onRequestClick, requestCount = 0 }) {
-  // Định dạng ngày nếu cần
   const formatDate = (dateStr) => {
     if (!dateStr) return "-";
     try {
@@ -14,14 +13,16 @@ function OpenTalkRow({ meeting, onRequestClick, requestCount = 0 }) {
 
   return (
     <tr>
-      <td>{meeting.id}</td>
-      <td>{meeting.meetingTitle}</td>
-      <td>{meeting.topic}</td>
-      <td>{meeting.companyBranch}</td>
+      <td>{meeting.meetingTitle || meeting.meetingName || "-"}</td>
+      <td>
+        {meeting.topic?.name || meeting.topic?.title || "-"}
+      </td>
+      <td>
+        {meeting.companyBranch?.name || meeting.companyBranch || "-"}
+      </td>
       <td>{formatDate(meeting.scheduledDate)}</td>
       <td>
         <div className="d-flex align-items-center gap-2 position-relative">
-          {/* Nút request */}
           <button
             className="icon-btn notification-btn"
             title="View Requests"

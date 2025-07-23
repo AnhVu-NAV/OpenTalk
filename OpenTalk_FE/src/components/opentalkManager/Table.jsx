@@ -2,7 +2,7 @@ import Row from './Row';
 
 function Table({ meetings, onView, onEdit, onDelete }) {
   return (
-    <div >
+    <div id="table-meeting-wrapper">
       <table className="table align-middle mb-0 custom-table">
         <thead>
           <tr className="table-header-light">
@@ -14,7 +14,7 @@ function Table({ meetings, onView, onEdit, onDelete }) {
             <th>Scheduled Date</th>
             <th>Meeting URL</th>
             <th>Status</th>
-            <th>Attendance Code</th>
+            <th>Duration</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -32,30 +32,31 @@ function Table({ meetings, onView, onEdit, onDelete }) {
         </tbody>
       </table>
       <style>{`
-      .custom-table thead.table-header-light th {
-      background: #f7f8fa !important;
-      color: #a6948a !important;
-      font-weight: 600 !important;
-      font-size: 15px !important;
-      border-bottom: none !important;
-      letter-spacing: 0.01em;
-    }
+        #table-meeting-wrapper .custom-table thead .table-header-light th {
+          background: #f7f8fa !important;
+          color: #a6948a !important;
+          font-weight: 600 !important;
+          font-size: 15px !important;
+          border-bottom: none !important;
+          letter-spacing: 0.01em;
+        }
 
-    .custom-table th, .custom-table td {
-      border: none !important;
-      padding-top: 18px !important;
-      padding-bottom: 18px !important;
-    }
+        #table-meeting-wrapper .custom-table th,
+        #table-meeting-wrapper .custom-table td {
+          border: none !important;
+          padding-top: 18px !important;
+          padding-bottom: 18px !important;
+        }
 
-    .custom-table tbody tr {
-      background: #fff !important;
-      border-bottom: 1px solid #ececec !important;
-    }
+        #table-meeting-wrapper .custom-table tbody tr {
+          background: #fff !important;
+          border-bottom: 1px solid #ececec !important;
+        }
 
-    .custom-table tbody tr:last-child {
-      border-bottom: none !important;
-    }         
-  `}</style>
+        #table-meeting-wrapper .custom-table tbody tr:last-child {
+          border-bottom: none !important;
+        }
+      `}</style>
     </div>
   );
 }

@@ -1,0 +1,149 @@
+.dynamic-config-container {
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; // Adjusted for vertical stacking
+    align-items: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    .tabs {
+        display: flex;
+        margin-bottom: 20px;
+      
+        .tab-button {
+          padding: 10px 20px;
+          border: none;
+          background: #1CA3AE;
+          color: #fff;
+          cursor: pointer;
+          margin-right: 5px;
+          transition: background-color 0.3s;
+          border-radius: 5px;
+          font-weight: bold;
+      
+          &.active {
+            background: #f1f1f1;
+            font-weight: bold;
+            color: black;
+          }
+      
+          &:hover {
+            background: #f1f1f1;
+            color: black;
+          }
+        }
+      }
+
+    .config-detail-container {
+        width: 100%;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        .accordion-item {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+
+            .accordion-title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                cursor: pointer;
+                padding: 10px;
+                background-color: #f1f1f1;
+                border-radius: 6px;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: #e0e0e0;
+                }
+
+                h3 {
+                    margin: 0;
+                    font-size: 18px;
+                }
+
+                span {
+                    font-size: 24px;
+                }
+            }
+
+            .accordion-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease, padding 0.3s ease;
+                font-size: 16px;
+                background-color: #fafafa;
+                border-radius: 6px;
+                padding: 0 10px;
+            }
+
+            &.open .accordion-content {
+                max-height: 800px; 
+                padding: 10px; 
+            }
+
+            .input-field {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 15px;
+
+                label {
+                    font-size: 14px;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                    color: #555;
+                }
+
+                input {
+                    padding: 10px;
+                    font-size: 14px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    width: 100%;
+                    transition: border-color 0.3s ease;
+
+                    &:focus {
+                        border-color: #1CA3AE;
+                        outline: none;
+                        box-shadow: 0 0 3px rgba(76, 175, 80, 0.3);
+                    }
+                }
+            }
+        }
+    }
+
+    .save-button {
+        padding: 10px 20px;
+        background-color: #1CA3AE;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        margin-top: 20px; // Add margin to separate from the config container
+
+        &:hover {
+            background-color: #1CA3AE;
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+}

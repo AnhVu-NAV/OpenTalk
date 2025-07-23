@@ -1,46 +1,49 @@
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import MeetingMaterialModal from "./MeetingMaterial";
 
-function ViewMeetingDetails({ meeting }) {
-  // meeting: object chứa dữ liệu meeting để view chi tiết
+function formatDateTime(dtStr) {
+  if (!dtStr) return "";
+  const d = new Date(dtStr);
+  return d.toLocaleString("en-GB", { hour12: false });
+}
 
-  // Quản lý modal meeting material
-  const [showMaterial, setShowMaterial] = useState(false);
-  const [files, setFiles] = useState([
-    { name: "Payslips_20 Aug.pdf" },
-    { name: "Payslips_20 Oct.pdf" }
-  ]);
-  const handleShowMaterial = () => setShowMaterial(true);
-  const handleCloseMaterial = () => setShowMaterial(false);
-  const handleFileChange = (e) => {
-    const filesArr = Array.from(e.target.files).map(file => ({ name: file.name }));
-    setFiles((prev) => [...prev, ...filesArr]);
-  };
-  const handleDeleteFile = (idx) => {
-    setFiles((prev) => prev.filter((_, i) => i !== idx));
-  };
-
+function ViewMeetingDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
 
-  // Chuyển sang trang Edit
-  const handleEdit = () => {
-    navigate(`/project/edit-meeting/${id}`);
-  };
+  // Lấy meeting từ navigate state nếu có
+  const meetingFromState = location.state?.meeting;
 
-  // Nếu không truyền prop meeting, mock data để demo
-  const detail = meeting || {
-    title: "Quarterly Update",
-    topic: "Business Review",
-    host: "Alice Johnson",
-    branch: "Main Office",
-    scheduledDate: "2024-08-12",
-    url: "https://meet.zoom.us/qwerty",
-    status: "Ongoing",
-    code: "2H8SKX1R",
-  };
+  // State cho meeting detail (nếu reload hoặc vào trực tiếp từ URL)
+  const [meeting, setMeeting] = useState(meetingFromState || null);
+  const [loading, setLoading] = useState(!meetingFromState);
+
+  // Meeting material (UI only)
+  const [showMaterial, setShowMaterial] = useState(false);
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    // Nếu không có meeting ở state, gọi API lấy detail
+    if (!meeting) {
+      setLoading(true);
+      getMeetingById(id)
+        .then(res => {
+          setMeeting(res.data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    }
+  }, [id, meeting]);
+
+  if (loading || !meeting) return <div className="p-4">Loading...</div>;
+
+  // Mapping object fields
+  const topicLabel = meeting.topic?.name || "";
+  const hostLabel = meeting.host?.fullName || meeting.host?.username || "";
+  const branchLabel = meeting.companyBranch?.name || "";
 
   return (
     <div className="addmeeting-bg-enterprise">
@@ -59,57 +62,63 @@ function ViewMeetingDetails({ meeting }) {
               Back
             </span>
           </div>
+          <div className="d-flex gap-2">
+          {/* Nút Create Poll chỉ hiện khi WAITING_TOPIC */}
+          {meeting.status === "WAITING_TOPIC" && (
+            <Button
+              className="px-4 py-2 rounded-3 btn-warning"
+              style={{ minWidth: 110, fontWeight: 500 }}
+              onClick={() => {
+                // TODO: Gọi API hoặc mở modal tạo poll
+              }}
+            >
+              <i className="bi bi-bar-chart-steps me-2"></i>
+              Create Poll
+            </Button>
+          )}
+          {/* Nút Edit luôn hiện */}
           <Button
             className="px-4 py-2 rounded-3 btn-dark-green"
             style={{ minWidth: 110, fontWeight: 500 }}
-            onClick={handleEdit}
+            onClick={() => navigate(`/meeting/edit-meeting/${id}`, { state: { meeting } })}
           >
             <i className="bi bi-pencil-square me-2"></i>
             Edit
           </Button>
         </div>
+        </div>
         <h2 className="addmeeting-title mb-3">Meeting Details</h2>
         {/* FORM VIEW-ONLY */}
         <Form autoComplete="off" className="addmeeting-form-enterprise">
-          {/* Row 1: Meeting Title + Scheduled Date */}
           <div className="addmeeting-grid-row mb-2">
-            {/* Meeting Title */}
             <Form.Group>
               <Form.Label className="form-label-enterprise">Meeting Title</Form.Label>
               <Form.Control
-                name="title"
-                value={detail.title}
+                name="meetingName"
+                value={meeting.meetingName}
                 readOnly
-                plaintext={false}
                 size="sm"
                 style={{ background: "#f8fafb" }}
               />
             </Form.Group>
-            {/* Scheduled Date */}
             <Form.Group>
               <Form.Label className="form-label-enterprise text-primary">Scheduled Date</Form.Label>
-              <InputGroup>
-                <Form.Control
-                  type="date"
-                  name="scheduledDate"
-                  value={detail.scheduledDate}
-                  readOnly
-                  size="sm"
-                  style={{ background: "#f8fafb" }}
-                />
-                <InputGroup.Text>
-                  <i className="bi bi-calendar-event" style={{ color: "#1976d2" }} />
-                </InputGroup.Text>
-              </InputGroup>
+              <Form.Control
+                type="text"
+                name="scheduledDate"
+                value={formatDateTime(meeting.scheduledDate)}
+                readOnly
+                size="sm"
+                style={{ background: "#f8fafb" }}
+              />
             </Form.Group>
           </div>
           <Form.Group className="mb-2">
             <Form.Label className="form-label-enterprise">Topic</Form.Label>
             <Form.Control
               name="topic"
-              value={detail.topic}
+              value={topicLabel}
               readOnly
-              plaintext={false}
               size="sm"
               style={{ background: "#f8fafb" }}
             />
@@ -118,9 +127,8 @@ function ViewMeetingDetails({ meeting }) {
             <Form.Label className="form-label-enterprise">Host</Form.Label>
             <Form.Control
               name="host"
-              value={detail.host}
+              value={hostLabel}
               readOnly
-              plaintext={false}
               size="sm"
               style={{ background: "#f8fafb" }}
             />
@@ -128,10 +136,9 @@ function ViewMeetingDetails({ meeting }) {
           <Form.Group className="mb-2">
             <Form.Label className="form-label-enterprise">Company Branch</Form.Label>
             <Form.Control
-              name="branch"
-              value={detail.branch}
+              name="companyBranch"
+              value={branchLabel}
               readOnly
-              plaintext={false}
               size="sm"
               style={{ background: "#f8fafb" }}
             />
@@ -139,41 +146,49 @@ function ViewMeetingDetails({ meeting }) {
           <Form.Group className="mb-2">
             <Form.Label className="form-label-enterprise">Meeting URL</Form.Label>
             <Form.Control
-              name="url"
-              value={detail.url}
+              name="meetingLink"
+              value={meeting.meetingLink}
               readOnly
-              plaintext={false}
               size="sm"
               style={{ background: "#f8fafb" }}
             />
           </Form.Group>
           <Form.Group className="mb-2">
             <Form.Label className="form-label-enterprise">Status</Form.Label>
-            <Form.Select name="status" value={detail.status} disabled size="sm">
-              <option value="Upcoming">Upcoming</option>
-              <option value="Ongoing">Ongoing</option>
-              <option value="Finished">Finished</option>
-              <option value="Cancelled">Cancelled</option>
-            </Form.Select>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className="form-label-enterprise">Attendance Code</Form.Label>
             <Form.Control
-              name="code"
-              value={detail.code}
+              name="status"
+              value={meeting.status}
               readOnly
-              plaintext={false}
               size="sm"
               style={{ background: "#f8fafb" }}
             />
           </Form.Group>
-          {/* Only: Manage Meeting Material */}
+          <Form.Group className="mb-2">
+            <Form.Label className="form-label-enterprise">Duration (minutes)</Form.Label>
+            <Form.Control
+              name="duration"
+              value={meeting.duration}
+              readOnly
+              size="sm"
+              style={{ background: "#f8fafb" }}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label className="form-label-enterprise">Attendance Code</Form.Label>
+            <Form.Control
+              name="attendanceCode"
+              value={meeting.attendanceCode || ""}
+              readOnly
+              size="sm"
+              style={{ background: "#f8fafb" }}
+            />
+          </Form.Group>
           <div className="d-flex justify-content-end align-items-center mt-2 gap-3">
             <Button
               className="px-4 py-2 rounded-3 btn-outline-dark-green"
               type="button"
               style={{ minWidth: 200, fontWeight: 500 }}
-              onClick={handleShowMaterial}
+              onClick={() => setShowMaterial(true)}
             >
               <i className="bi bi-folder2-open me-2"></i>
               Manage Meeting Material
@@ -184,12 +199,12 @@ function ViewMeetingDetails({ meeting }) {
       {/* MeetingMaterialModal popup */}
       <MeetingMaterialModal
         show={showMaterial}
-        onHide={handleCloseMaterial}
+        onHide={() => setShowMaterial(false)}
         files={files}
-        onUpload={handleFileChange}
-        onDelete={handleDeleteFile}
+        onUpload={(e) => setFiles([...files, ...Array.from(e.target.files).map(f => ({ name: f.name }))])}
+        onDelete={(idx) => setFiles(files.filter((_, i) => i !== idx))}
       />
-      <style>{`
+      {/* <style>{`
         .addmeeting-bg-enterprise {
           background: #fafbfc;
         }
@@ -253,7 +268,7 @@ function ViewMeetingDetails({ meeting }) {
         .back-text {
           color: #233d29;
         }
-      `}</style>
+      `}</style> */}
       <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"

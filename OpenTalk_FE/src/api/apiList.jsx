@@ -28,3 +28,14 @@ export const createFeedback = async (feedbackDTO) => {
   const res = await axiosClient.post("/feedbacks", feedbackDTO);
   return res.data;
 };
+
+// API CronJob
+export const getListCronjob = async () => {
+  const res = await axiosClient.get(`/cron/all`);
+  return res.data;
+};
+
+export const saveCronjob = async (feedbackDTO) => {
+  const res = await axiosClient.post("/feedbacks", feedbackDTO);
+  return res.data;
+};
