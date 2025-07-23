@@ -108,14 +108,14 @@ const MeetingListPage = () => {
   const paginatedMeetings = filteredMeetings.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="meeting-page">
-      <div className="filters">
-        <div className="search-container">
-          <FaSearch className="search-icon" />
+    <div className="meeting-list-page">
+      <div className="meeting-list-filters">
+        <div className="meeting-list-search-container">
+          <FaSearch className="meeting-list-search-icon" />
           <input
             type="text"
-            className="search-input"
-            placeholder="Search topic"
+            className="meeting-list-search-input"
+            placeholder="Search Meeting"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
@@ -123,9 +123,9 @@ const MeetingListPage = () => {
             }}
           />
         </div>
-        <div className="select-container">
+        <div className="meeting-list-select-container">
           <select
-            className="select"
+            className="meeting-list-select"
             value={branchFilter}
             onChange={(e) => {
               setBranchFilter(e.target.value);
@@ -139,11 +139,11 @@ const MeetingListPage = () => {
               </option>
             ))}
           </select>
-          <FaChevronDown className="select-icon" />
+          <FaChevronDown className="meeting-list-select-icon" />
         </div>
       </div>
 
-      <div className="tabs-header">
+      <div className="meeting-list-tabs-header">
         {tabs.map((t) => (
           <button
             key={t.id}
@@ -151,7 +151,7 @@ const MeetingListPage = () => {
               setActiveTab(t.id);
               setCurrentPage(1);
             }}
-            className={`tab-button ${activeTab === t.id ? 'active' : ''}`}
+            className={`meeting-list-tab-button ${activeTab === t.id ? 'active' : ''}`}
           >
             {t.label}
           </button>
@@ -186,15 +186,15 @@ const MeetingListPage = () => {
         ))}
       </div>
 
-      <div className="pagination">
-        <div className="pagination-info">
+      <div className="meeting-list-pagination">
+        <div className="meeting-list-pagination-info">
           Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredMeetings.length)} of {filteredMeetings.length} results
         </div>
-        <div className="pagination-buttons">
+        <div className="meeting-list-pagination-buttons">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="pagination-btn"
+            className="meeting-list-pagination-btn"
           >
             <FaChevronLeft />
           </button>
@@ -202,7 +202,7 @@ const MeetingListPage = () => {
             <button
               key={i + 1}
               onClick={() => setCurrentPage(i + 1)}
-              className={`pagination-number ${currentPage === i + 1 ? 'active' : ''}`}
+              className={`meeting-list-pagination-number ${currentPage === i + 1 ? 'active' : ''}`}
             >
               {i + 1}
             </button>
@@ -210,7 +210,7 @@ const MeetingListPage = () => {
           <button
             onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
             disabled={currentPage === totalPages}
-            className="pagination-btn"
+            className="meeting-list-pagination-btn"
           >
             <FaChevronRight />
           </button>
