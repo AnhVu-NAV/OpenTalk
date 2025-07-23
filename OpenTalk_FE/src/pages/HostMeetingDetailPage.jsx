@@ -284,21 +284,6 @@ const HostMeetingDetailPage = () => {
                             <span className="host-meeting-value">{meeting.companyBranch.name}</span>
                         </div>
                     </div>
-                    <div className="host-meeting-host-section">
-                        <h3 className="host-meeting-section-title">Host</h3>
-                        {host ? (
-                            renderUserInfo(host)
-                        ) : (
-                            <div className="host-meeting-profile-header">
-                                <img
-                                    src="/placeholder.svg"
-                                    alt="No Host"
-                                    className="host-meeting-profile-avatar"
-                                />
-                                <h2 className="host-meeting-profile-name">No Host</h2>
-                            </div>
-                        )}
-                    </div>
                 </div>
 
                 <div className="host-meeting-topic-content">
@@ -309,6 +294,13 @@ const HostMeetingDetailPage = () => {
                             onClick={() => setActiveTab("general")}
                         >
                             Topic General
+                        </button>
+                        <button
+                            className={`host-meeting-tab-button ${activeTab === "host" ? "active" : ""
+                                }`}
+                            onClick={() => setActiveTab("host")}
+                        >
+                            User Host
                         </button>
                         <button
                             className={`host-meeting-tab-button ${activeTab === "suggest" ? "active" : ""
@@ -343,6 +335,18 @@ const HostMeetingDetailPage = () => {
                                 </div>
                             </>
                         )}
+                        {activeTab === "host" && host ? (
+                            renderUserInfo(host)
+                        ) : activeTab === "host" && !host ? (
+                            <div className="host-meeting-profile-header">
+                                <img
+                                    src="/placeholder.svg"
+                                    alt="No Host"
+                                    className="host-meeting-profile-avatar"
+                                />
+                                <h2 className="host-meeting-profile-name">No Host</h2>
+                            </div>
+                        ) : null}
                         {activeTab === "suggest" && suggestBy && renderUserInfo(suggestBy)}
                         {activeTab === "evaluate" && evaluteBy && renderUserInfo(evaluteBy)}
                     </div>

@@ -284,21 +284,6 @@ const MeetingDetailPage = () => {
               <span className="meeting-detail-value">{meeting.companyBranch.name}</span>
             </div>
           </div>
-          <div className="meeting-detail-host-section">
-            <h3 className="meeting-detail-section-title">Host</h3>
-            {host ? (
-              renderUserInfo(host)
-            ) : (
-              <div className="meeting-detail-profile-header">
-                <img
-                  src="/placeholder.svg"
-                  alt="No Host"
-                  className="meeting-detail-profile-avatar"
-                />
-                <h2 className="meeting-detail-profile-name">No Host</h2>
-              </div>
-            )}
-          </div>
         </div>
 
         <div className="meeting-detail-topic-content">
@@ -309,6 +294,13 @@ const MeetingDetailPage = () => {
               onClick={() => setActiveTab("general")}
             >
               Topic General
+            </button>
+            <button
+              className={`meeting-detail-tab-button ${activeTab === "host" ? "active" : ""
+                }`}
+              onClick={() => setActiveTab("host")}
+            >
+              User Host
             </button>
             <button
               className={`meeting-detail-tab-button ${activeTab === "suggest" ? "active" : ""
@@ -343,6 +335,18 @@ const MeetingDetailPage = () => {
                 </div>
               </>
             )}
+            {activeTab === "host" && host ? (
+              renderUserInfo(host)
+            ) : activeTab === "host" && !host ? (
+              <div className="meeting-detail-profile-header">
+                <img
+                  src="/placeholder.svg"
+                  alt="No Host"
+                  className="meeting-detail-profile-avatar"
+                />
+                <h2 className="meeting-detail-profile-name">No Host</h2>
+              </div>
+            ) : null}
             {activeTab === "suggest" && suggestBy && renderUserInfo(suggestBy)}
             {activeTab === "evaluate" && evaluteBy && renderUserInfo(evaluteBy)}
           </div>
