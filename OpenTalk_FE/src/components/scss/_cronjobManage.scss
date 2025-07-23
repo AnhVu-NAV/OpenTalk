@@ -1,0 +1,312 @@
+.cronjob-container {
+  width: 100%;
+}
+
+.custom-tabs {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: start;
+  width: 100%;
+  background-color: #f1f1f1;
+  margin-left: 38px;
+}
+
+.custom-tab-item {
+  margin-right: 10px;
+}
+
+.custom-tab-link {
+  padding: 12px 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  color: #333;
+  width: 75px;
+}
+
+.custom-tab-link.active {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  border-color: #007bff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.custom-tab-link:hover {
+  background-color: #e7e7e7;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+
+.custom-tab-content {
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 20px;
+  border-radius: 0 5px 5px 5px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.custom-cron-expression {
+  margin-top: 20px;
+  padding: 15px 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  overflow-x: auto;
+}
+
+.cron-expression-table-horizontal {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  margin-bottom: 3px;
+}
+
+.cron-expression-table-horizontal th,
+.cron-expression-table-horizontal td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.cron-expression-table-horizontal th {
+  background-color: #5c616e;
+  color: white;
+  font-weight: bold;
+}
+
+.cron-expression-table-horizontal td {
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 25px;
+}
+
+.custom-checkbox-cronjob {
+  padding: 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.custom-form-check-label {
+  font-size: 14px;
+  width: 80% !important;
+  padding: 0 0;
+  color: #333;
+  user-select: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.custom-tab-pane {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.custom-form-check-input {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+}
+
+.custom-form-check select {
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  margin: 5px 5px 5px 5px;
+}
+
+.custom-form-check input[type="checkbox"] {
+  margin-right: 5px;
+  width: 18px;
+  height: 18px;
+}
+
+.custom-form-check label {
+  margin-right: 15px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.mb-3 {
+  margin-bottom: 1.5rem !important;
+}
+
+.cronjob-select{
+  width: 30% !important;
+}
+
+.custom-col-6p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 10%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.custom-form-check-input[type='checkbox'] {
+  appearance: none;
+  width: 25px !important;
+  height: 15px;
+  border-radius: 4px;
+  border: 2px solid #007bff;
+  background-color: white;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-form-check-input[type='checkbox']:hover {
+  border-color: #0056b3;
+}
+
+.custom-form-check-input[type='checkbox']:checked {
+  background-color: #007bff;
+  border-color: #0056b3;
+}
+
+.custom-form-check-input[type='checkbox']:checked::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  clip-path: polygon(0% 0%, 40% 60%, 100% 20%, 60% 100%, 0% 40%);
+  transition: all 0.3s ease;
+}
+
+.custom-form-check-label:hover {
+  color: #007bff;
+}
+
+.custom-checkbox-cronjob-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.custom-checkbox-cronjob-wrapper.show {
+  max-height: 300px;
+}
+
+.lable-select {
+  font-size: 1rem;
+  color: #333;
+  user-select: none;
+  cursor: pointer;
+  margin-right: 0 !important;
+}
+
+.lable-select-second-left {
+  width: 30% !important;
+}
+
+.lable-select-every {
+  width: 6% !important;
+}
+
+.lable-select-second-increment {
+  width: 28% !important;
+}
+
+.lable-select-range-left {
+  width: 29% !important;
+}
+
+.lable-select-minute-increment {
+  width: 27% !important;
+}
+
+.lable-select-range-right {
+  width: 29% !important;
+}
+
+.lable-select-hour-increment {
+  width: 24% !important;
+}
+
+.lable-select-hour-range-left {
+  width: 25% !important;
+}
+
+.lable-select-hour-range-right {
+  width: 10% !important;
+}
+
+.lable-select-day-right {
+  width: 17% !important;
+}
+
+.lable-select-nth {
+  width: 7% !important;
+}
+
+.lable-select-month-right {
+  width: 19% !important;
+}
+
+.lable-select-month-left {
+  width: 21% !important;
+}
+
+.lable-select-month-and {
+  width: 4% !important;
+}
+
+.cronjob-save {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.cronjob-save button {
+  padding: 10px 15px;
+  background: linear-gradient(90deg, #28a745, #218838);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none !important;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.cronjob-save button:hover {
+  background: linear-gradient(90deg, #218838, #1e7e34);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cronjob-save button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.custom-select-form {
+  width: 60px !important;
+  cursor: pointer;
+}
