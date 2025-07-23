@@ -1,0 +1,391 @@
+/* ===== USER HOME DASHBOARD SCOPED STYLES ===== */
+.userHomeDashboard {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fffe 0%, #ecfdf5 100%);
+    padding: 2rem;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ===== LOADING STATE ===== */
+.dashboardLoadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #10b981;
+}
+
+.dashboardLoadingSpinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #e5f3f0;
+    border-top: 4px solid #10b981;
+    border-radius: 50%;
+    animation: dashboardSpin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes dashboardSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.dashboardLoadingContainer p {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+/* ===== DASHBOARD HEADER ===== */
+.dashboardHeader {
+    margin-bottom: 2rem;
+}
+
+.dashboardWelcomeSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+    border: 2px solid #ecfdf5;
+    margin-bottom: 2rem;
+}
+
+.dashboardUserGreeting {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.dashboardUserAvatarLarge {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #d1fae5;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.dashboardGreetingText h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #065f46;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, #059669, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dashboardGreetingText p {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin: 0 0 1rem 0;
+}
+
+.dashboardCurrentTime {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.dashboardDate {
+    color: #374151;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.dashboardTime {
+    color: #10b981;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.dashboardQuickStatus {
+    display: flex;
+    gap: 1rem;
+}
+
+.dashboardStatusCard {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #d1fae5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 120px;
+}
+
+.dashboardStatusCard.working {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+}
+
+.dashboardStatusIndicator {
+    width: 12px;
+    height: 12px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: dashboardPulseGreen 2s infinite;
+}
+
+@keyframes dashboardPulseGreen {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.dashboardStatusLabel {
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.dashboardStatusValue {
+    font-size: 1rem;
+    color: #059669;
+    font-weight: 700;
+}
+
+/* ===== QUICK ACTIONS GRID ===== */
+.dashboardQuickActionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.dashboardQuickActionBtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.5rem 1rem;
+    background: white;
+    border: 2px solid #d1fae5;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #374151;
+}
+
+.dashboardQuickActionBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+    border-color: #10b981;
+}
+
+.dashboardQuickActionBtn.green {
+    border-color: #10b981;
+}
+.dashboardQuickActionBtn.blue {
+    border-color: #3b82f6;
+}
+.dashboardQuickActionBtn.purple {
+    border-color: #8b5cf6;
+}
+.dashboardQuickActionBtn.orange {
+    border-color: #f59e0b;
+}
+.dashboardQuickActionBtn.teal {
+    border-color: #14b8a6;
+}
+.dashboardQuickActionBtn.pink {
+    border-color: #ec4899;
+}
+
+.dashboardActionIcon {
+    font-size: 2rem;
+}
+
+.dashboardActionTitle {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* ===== DASHBOARD CONTENT ===== */
+.dashboardContent {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.dashboardContentCard {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ecfdf5;
+    transition: all 0.3s ease;
+}
+
+.dashboardContentCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+    border-color: #a7f3d0;
+}
+
+.dashboardCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0fdf4;
+}
+
+.dashboardCardHeader h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #065f46;
+    margin: 0;
+}
+
+.dashboardHeaderActions .dashboardActionBtn,
+.dashboardPeriodSelect {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+    color: #059669;
+    border: 1px solid #d1fae5;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dashboardHeaderActions .dashboardActionBtn:hover,
+.dashboardPeriodSelect:hover {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-color: #059669;
+}
+
+/* ===== TODAY'S OVERVIEW ===== */
+.dashboardTodayStats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.dashboardStatItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.dashboardStatIcon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.dashboardStatIcon.checkin {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+}
+.dashboardStatIcon.break {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+}
+.dashboardStatIcon.location {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+}
+
+.dashboardStatInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboardStatLabel {
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.dashboardStatValue {
+    font-size: 1rem;
+    color: #059669;
+    font-weight: 700;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1200px) {
+    .dashboardContent {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .userHomeDashboard {
+        padding: 1rem;
+    }
+
+    .dashboardWelcomeSection {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .dashboardUserGreeting {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .dashboardGreetingText h1 {
+        font-size: 1.5rem;
+    }
+
+    .dashboardQuickActionsGrid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+
+    .dashboardContent {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboardTodayStats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .userHomeDashboard {
+        padding: 0.5rem;
+    }
+
+    .dashboardContentCard {
+        padding: 1.5rem;
+    }
+
+    .dashboardGreetingText h1 {
+        font-size: 1.25rem;
+    }
+
+    .dashboardQuickActionsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import CronJobComponent from '../components/cronjob/CronjobComponent';
+import "./styles/CronjobManagePage.css"
 
 const CronjobManagePage = () => {
     return (

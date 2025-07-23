@@ -1,0 +1,367 @@
+/* ===== SALARY PAGE SCOPED STYLES ===== */
+.salaryPageContainer {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fffe 0%, #ecfdf5 100%);
+    padding: 2rem;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ===== PAGE HEADER ===== */
+.salaryPageHeader {
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 2px solid #d1fae5;
+}
+
+.salaryPageHeader h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #059669, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.025em;
+}
+
+.salaryPageHeader p {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ===== CONTROLS SECTION ===== */
+.salaryControls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #d1fae5;
+    flex-wrap: wrap;
+}
+
+.salarySearch {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.75rem 1rem;
+    border: 2px solid #d1fae5;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+}
+
+.salarySearch:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    background: white;
+}
+
+.salarySearch::placeholder {
+    color: #9ca3af;
+}
+
+.salaryControls input[type="date"] {
+    padding: 0.75rem 1rem;
+    border: 2px solid #d1fae5;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #f9fafb;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.salaryControls input[type="date"]:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    background: white;
+}
+
+/* ===== BUTTONS ===== */
+.salaryBtnExport,
+.salaryBtnCalculate {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.salaryBtnExport {
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    color: #374151;
+    border: 2px solid #d1d5db;
+}
+
+.salaryBtnExport:hover {
+    background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.salaryBtnCalculate {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: 2px solid #059669;
+}
+
+.salaryBtnCalculate:hover:not(:disabled) {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.salaryBtnCalculate:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ===== TABLE WRAPPER ===== */
+.salaryTableWrapper {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d1fae5;
+}
+
+/* ===== TABLE STYLES ===== */
+.salaryTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.salaryTable thead {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.salaryTable th {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #047857;
+}
+
+.salaryTable tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.salaryTable tbody tr:hover {
+    background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+    transform: scale(1.01);
+}
+
+.salaryTable td {
+    padding: 1.25rem 1rem;
+    vertical-align: middle;
+    color: #374151;
+}
+
+/* ===== EMPLOYEE INFO ===== */
+.salaryEmployeeInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.salaryEmployeeAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #d1fae5;
+    transition: all 0.3s ease;
+}
+
+.salaryEmployeeAvatar:hover {
+    border-color: #10b981;
+    transform: scale(1.1);
+}
+
+.salaryEmployeeInfo span {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* ===== STATUS BADGES ===== */
+.salaryStatusBadge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.salaryStatusBadge.paid {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.salaryStatusBadge.pending {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.salaryStatusBadge.cancelled {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.salaryStatusBadge.draft {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    color: white;
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+/* ===== ACTION BUTTONS ===== */
+.salaryTable button {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.salaryTable button:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* ===== PAGINATION ===== */
+.salaryPaginationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.salaryPaginationControls select {
+    padding: 0.5rem;
+    border: 2px solid #d1fae5;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.salaryPaginationControls select:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.salaryPaginationControls button {
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.25rem;
+    border: 2px solid #d1fae5;
+    background: white;
+    color: #374151;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.salaryPaginationControls button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-color: #059669;
+    transform: translateY(-1px);
+}
+
+.salaryPaginationControls button.active {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-color: #059669;
+}
+
+.salaryPaginationControls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .salaryPageContainer {
+        padding: 1rem;
+    }
+
+    .salaryControls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .salarySearch {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .salaryPageHeader h1 {
+        font-size: 2rem;
+    }
+
+    .salaryTableWrapper {
+        overflow-x: auto;
+    }
+
+    .salaryTable {
+        min-width: 800px;
+    }
+
+    .salaryPaginationControls {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .salaryEmployeeInfo {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .salaryEmployeeAvatar {
+        width: 32px;
+        height: 32px;
+    }
+}

@@ -35,6 +35,7 @@ import UserAttendanceTab from "./pages/UserAttendanceTab";
 import EmployeePage from "./pages/EmployeePage";
 import AddEmployeeNew from "./pages/AddEmployeePage";
 import EditEmployeePage from "./pages/EditEmployeePage";
+// import ExportEmployeePage from "./pages/ExportEmployeePage";
 
 // Suggest / Topics
 import SuggestTopic from "./pages/SuggestTopic";
@@ -49,7 +50,8 @@ import OrganizationListPage from "./pages/OrganizationListPage";
 import SalaryPage from "./pages/SalaryPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import TestPage from "./pages/test";
-import AttendancePage from "./pages/AttendancePage.jsx";
+import UserHomeDashboard from "./pages/UserHomeDashboard.jsx";
+// import AttendancePage from "./pages/AttendancePage.jsx";
 import CronjobManagePage from "./pages/CronjobManagePage";
 import TopicHub from "./pages/TopicHub.jsx";
 
@@ -73,7 +75,7 @@ function App() {
                 <Route element={<AuthGuard />}>
                     <Route element={<Layout />}>
                         {/* Overview / Dashboard */}
-                        <Route path="/" element={<Overview />} />
+                        <Route path="/" element={<UserHomeDashboard />} />
                         <Route path="/dashboard" element={<DashBoard />} />
 
                         {/* Meeting routes */}
@@ -99,11 +101,12 @@ function App() {
                         <Route path="/employee" element={<EmployeePage />} />
                         <Route path="/employee/add" element={<AddEmployeeNew />} />
                         <Route path="/employee/edit/:id" element={<EditEmployeePage />} />
-
+                        {/* <Route path="/employee/export" element={<ExportEmployeePage />} /> */}
 
                         {/* Suggest / Topics */}
                         <Route path="/suggest-topic" element={<SuggestTopic />} />
                         <Route path="/topicProposal" element={<TopicProposalCategory />} />
+                        <Route path="/topic" element={<TopicProposalCategory />} />
                         <Route path="/topic/:id" element={<ProposalDetail />} />
                         <Route path="/topic-proposal-category" element={<TopicProposalCategory />} />
 
@@ -114,13 +117,13 @@ function App() {
                         <Route path="/cronjob" element={<CronjobManagePage />} />
 
                         {/* Others */}
-                        {/* <Route path="/message" element={<Message />} />
-                        <Route path="/ticket" element={<Ticket />} />
-                        <Route path="/notice" element={<Notice />} />
-                        <Route path="/account" element={<Account />} />
-                        <Route path="/settings" element={<Setting />} />
+                        {/*<Route path="/message" element={<Message />} />*/}
+                        {/*<Route path="/ticket" element={<Ticket />} />*/}
+                        {/*<Route path="/notice" element={<Notice />} />*/}
+                        <Route path="/account" element={<UserProfilePage />} />
+                        {/*<Route path="/settings" element={<Setting />} />*/}
                         <Route path="/salary" element={<SalaryPage />} />
-                        <Route path="/test" element={<TestPage />} /> */}
+                        {/*<Route path="/test" element={<TestPage />} />*/}
                     </Route>
                 </Route>
             </Routes>

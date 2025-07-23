@@ -1,5 +1,5 @@
-/* ===== TOPIC PROPOSAL CATEGORY STYLES ===== */
-.topic-proposal-container {
+/* ===== TOPIC PROPOSAL CATEGORY SCOPED STYLES ===== */
+.topicProposalContainer {
     min-height: 100vh;
     background: linear-gradient(135deg, #f8fffe 0%, #ecfdf5 100%);
     padding: 2rem;
@@ -7,8 +7,8 @@
 }
 
 /* ===== LOADING & ERROR STATES ===== */
-.loading-container,
-.error-container {
+.topicLoadingContainer,
+.topicErrorContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,17 +17,17 @@
     text-align: center;
 }
 
-.loading-spinner {
+.topicLoadingSpinner {
     width: 50px;
     height: 50px;
     border: 4px solid #e5f3f0;
     border-top: 4px solid #10b981;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    animation: topicSpin 1s linear infinite;
     margin-bottom: 1rem;
 }
 
-@keyframes spin {
+@keyframes topicSpin {
     0% {
         transform: rotate(0deg);
     }
@@ -36,22 +36,23 @@
     }
 }
 
-.error-container {
+.topicErrorContainer {
     color: #ef4444;
 }
 
-.error-icon {
+.topicErrorIcon {
     font-size: 3rem;
     margin-bottom: 1rem;
+    opacity: 0.7;
 }
 
 /* ===== PAGE HEADER ===== */
-.page-header {
+.topicPageHeader {
     margin-bottom: 2rem;
     text-align: center;
 }
 
-.header-content h1 {
+.topicHeaderContent .pageTitle {
     font-size: 2.5rem;
     font-weight: 700;
     background: linear-gradient(135deg, #059669, #10b981);
@@ -62,7 +63,7 @@
     letter-spacing: -0.025em;
 }
 
-.page-subtitle {
+.topicPageSubtitle {
     color: #6b7280;
     font-size: 1.1rem;
     margin: 0;
@@ -70,14 +71,14 @@
 }
 
 /* ===== STATS GRID ===== */
-.stats-grid {
+.topicStatsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.stat-card {
+.topicStatCard {
     background: white;
     padding: 1.5rem;
     border-radius: 16px;
@@ -89,13 +90,13 @@
     transition: all 0.3s ease;
 }
 
-.stat-card:hover {
+.topicStatCard:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
     border-color: #a7f3d0;
 }
 
-.stat-icon {
+.topicStatIcon {
     font-size: 2rem;
     width: 60px;
     height: 60px;
@@ -107,21 +108,21 @@
     border: 2px solid #a7f3d0;
 }
 
-.stat-content h3 {
+.topicStatContent h3 {
     font-size: 2rem;
     font-weight: 700;
     color: #059669;
     margin: 0;
 }
 
-.stat-content p {
+.topicStatContent p {
     color: #6b7280;
     margin: 0;
     font-weight: 500;
 }
 
 /* ===== ACTION BAR ===== */
-.action-bar {
+.topicActionBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -130,13 +131,13 @@
     flex-wrap: wrap;
 }
 
-.search-container {
+.topicSearchContainer {
     position: relative;
     flex: 1;
     max-width: 400px;
 }
 
-.search-icon {
+.topicSearchIcon {
     position: absolute;
     left: 1rem;
     top: 50%;
@@ -145,7 +146,7 @@
     font-size: 1rem;
 }
 
-.search-input {
+.topicSearchInput {
     width: 100%;
     padding: 0.75rem 1rem 0.75rem 2.5rem;
     border: 2px solid #d1fae5;
@@ -155,19 +156,19 @@
     transition: all 0.3s ease;
 }
 
-.search-input:focus {
+.topicSearchInput:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.action-buttons {
+.topicActionButtons {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.btn {
+.topicBtn {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 12px;
@@ -180,19 +181,19 @@
     gap: 0.5rem;
 }
 
-.btn-primary {
+.topicBtnPrimary {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.btn-primary:hover {
+.topicBtnPrimary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
     background: linear-gradient(135deg, #059669, #047857);
 }
 
-.filter-group {
+.topicFilterGroup {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -202,12 +203,12 @@
     border: 2px solid #d1fae5;
 }
 
-.filter-icon {
+.topicFilterIcon {
     color: #10b981;
     font-size: 1rem;
 }
 
-.status-filter {
+.topicStatusFilter {
     border: none;
     background: transparent;
     font-size: 1rem;
@@ -217,7 +218,7 @@
 }
 
 /* ===== PROPOSALS GRID ===== */
-.proposals-grid {
+.topicProposalsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1.5rem;
@@ -225,7 +226,7 @@
 }
 
 /* ===== EMPTY STATE ===== */
-.empty-state {
+.topicEmptyState {
     text-align: center;
     padding: 4rem 2rem;
     background: white;
@@ -234,25 +235,25 @@
     border: 2px dashed #d1fae5;
 }
 
-.empty-icon {
+.topicEmptyIcon {
     font-size: 4rem;
     margin-bottom: 1rem;
     opacity: 0.7;
 }
 
-.empty-state h3 {
+.topicEmptyState h3 {
     font-size: 1.5rem;
     color: #374151;
     margin-bottom: 0.5rem;
 }
 
-.empty-state p {
+.topicEmptyState p {
     color: #6b7280;
     font-size: 1rem;
 }
 
 /* ===== PAGINATION ===== */
-.pagination-container {
+.topicPaginationContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -261,19 +262,19 @@
     gap: 1rem;
 }
 
-.pagination-info {
+.topicPaginationInfo {
     color: #6b7280;
     font-weight: 500;
 }
 
-.pagination-controls {
+.topicPaginationControls {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.pagination-btn,
-.pagination-number {
+.topicPaginationBtn,
+.topicPaginationNumber {
     padding: 0.5rem 0.75rem;
     border: 2px solid #d1fae5;
     background: white;
@@ -284,155 +285,64 @@
     font-weight: 600;
 }
 
-.pagination-btn:hover:not(:disabled),
-.pagination-number:hover {
+.topicPaginationBtn:hover:not(:disabled),
+.topicPaginationNumber:hover {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border-color: #059669;
     transform: translateY(-1px);
 }
 
-.pagination-number.active {
+.topicPaginationNumber.active {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border-color: #059669;
 }
 
-.pagination-btn:disabled {
+.topicPaginationBtn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-/* ===== MODAL STYLES ===== */
-.reject-modal .modal-content {
-    border-radius: 16px;
-    border: none;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-.reject-modal .modal-header {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    border-bottom: 1px solid #fecaca;
-    border-radius: 16px 16px 0 0;
-}
-
-.reject-modal .modal-title {
-    color: #dc2626;
-    font-weight: 600;
-}
-
-.reject-modal .form-label {
-    font-weight: 600;
-    color: #374151;
-}
-
-.reject-modal .required {
-    color: #dc2626;
-}
-
-.reject-modal .form-control {
-    border: 2px solid #d1d5db;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.reject-modal .form-control:focus {
-    border-color: #dc2626;
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-}
-
-.reject-modal .alert-danger {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #dc2626;
-    border-radius: 8px;
-}
-
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1024px) {
-    .topic-proposal-container {
+    .topicProposalContainer {
         padding: 1rem;
     }
 
-    .stats-grid {
+    .topicStatsGrid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 
-    .proposals-grid {
+    .topicProposalsGrid {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 }
 
 @media (max-width: 768px) {
-    .header-content h1 {
+    .topicHeaderContent .pageTitle {
         font-size: 2rem;
     }
 
-    .action-bar {
+    .topicActionBar {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .search-container {
+    .topicSearchContainer {
         max-width: none;
     }
 
-    .action-buttons {
+    .topicActionButtons {
         justify-content: center;
     }
 
-    .pagination-container {
+    .topicPaginationContainer {
         flex-direction: column;
         text-align: center;
     }
 
-    .proposals-grid {
+    .topicProposalsGrid {
         grid-template-columns: 1fr;
     }
-}
-
-@media (max-width: 480px) {
-    .topic-proposal-container {
-        padding: 0.5rem;
-    }
-
-    .stat-card {
-        padding: 1rem;
-    }
-
-    .stat-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-
-    .stat-content h3 {
-        font-size: 1.5rem;
-    }
-}
-
-/* ===== FOCUS STYLES ===== */
-.btn:focus,
-.pagination-btn:focus,
-.pagination-number:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
-}
-
-/* ===== LOADING ANIMATION ===== */
-@keyframes pulse {
-    0%,
-    100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-.loading-container p {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    color: #10b981;
-    font-weight: 600;
-    margin-top: 1rem;
 }

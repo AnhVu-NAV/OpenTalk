@@ -9,6 +9,7 @@ import {
   deleteMeeting,
   getCompanyBranches
 } from "../services/opentalkManagerService";
+import "./styles/OpenTalkManager.css"
 
 const statuses = [
   "WAITING_TOPIC",

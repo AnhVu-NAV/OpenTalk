@@ -1,0 +1,207 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f8fafc;
+}
+
+.cronjob-manage-page-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fafc 0%, #ecfdf5 100%);
+    padding: 24px;
+}
+
+.cronjob-content-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 32px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.cronjob-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #f1f5f9;
+    position: relative;
+}
+
+.cronjob-header::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 1px;
+}
+
+.cronjob-title {
+    font-weight: 700;
+    font-size: 28px;
+    color: #1e293b;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cronjob-subtitle {
+    font-size: 16px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Component Container */
+.cronjob-component-container {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Status Indicators */
+.cronjob-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.cronjob-status.active {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.cronjob-status.inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.cronjob-status.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* Action Buttons */
+.cronjob-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.cronjob-btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cronjob-btn-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.cronjob-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.cronjob-btn-secondary {
+    background: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.cronjob-btn-secondary:hover {
+    background: #f9fafb;
+    border-color: #10b981;
+}
+
+/* Loading States */
+.cronjob-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #64748b;
+}
+
+.cronjob-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #e2e8f0;
+    border-top: 2px solid #10b981;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 12px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cronjob-manage-page-container {
+        padding: 16px;
+    }
+
+    .cronjob-content-wrapper {
+        margin: 20px auto;
+        padding: 24px;
+    }
+
+    .cronjob-title {
+        font-size: 24px;
+    }
+
+    .cronjob-component-container {
+        padding: 20px;
+    }
+
+    .cronjob-actions {
+        flex-direction: column;
+    }
+
+    .cronjob-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cronjob-content-wrapper {
+        padding: 20px;
+    }
+
+    .cronjob-title {
+        font-size: 22px;
+    }
+
+    .cronjob-component-container {
+        padding: 16px;
+    }
+}

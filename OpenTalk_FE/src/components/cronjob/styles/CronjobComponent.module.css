@@ -1,0 +1,232 @@
+/* Cronjob Component Styles */
+.cronjobContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(46, 125, 50, 0.1);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.cronjobContainerSelection {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #c8e6c9;
+    box-shadow: 0 4px 16px rgba(46, 125, 50, 0.08);
+}
+
+.cronjobSelectWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cronjobSelectContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 300px;
+}
+
+.cronjobSelect {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2e7d32;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.cronjobSelectDropdown {
+    padding: 0.75rem 1rem;
+    border: 2px solid #a5d6a7;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    color: #2e7d32;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.cronjobSelectDropdown:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+.cronjobSelectDropdown:hover {
+    border-color: #66bb6a;
+}
+
+/* Tabs Styles */
+.customTabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(46, 125, 50, 0.08);
+}
+
+.customTabItem {
+    flex: 1;
+}
+
+.customTabLink {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: #f1f8e9;
+    border: none;
+    border-right: 1px solid #c8e6c9;
+    color: #2e7d32;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.customTabLink:last-child {
+    border-right: none;
+}
+
+.customTabLink:hover {
+    background: #e8f5e8;
+    color: #1b5e20;
+}
+
+.customTabLink.active {
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+    color: white;
+    font-weight: 600;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tab Content */
+.customTabContent {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(46, 125, 50, 0.08);
+    border: 2px solid #c8e6c9;
+}
+
+/* Save Button */
+.cronjobSave {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.saveButton {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+}
+
+.saveButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.saveButton:active {
+    transform: translateY(0);
+}
+
+/* Cron Expression Display */
+.customCronExpression {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f1f8e9;
+    border-radius: 12px;
+    border: 2px solid #c8e6c9;
+}
+
+.customCronExpression h5 {
+    color: #2e7d32;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.cronExpressionTableHorizontal {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
+}
+
+.cronExpressionTableHorizontal th,
+.cronExpressionTableHorizontal td {
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid #c8e6c9;
+}
+
+.cronExpressionTableHorizontal th {
+    background: #4caf50;
+    color: white;
+    font-weight: 600;
+}
+
+.cronExpressionTableHorizontal td {
+    background: #f9f9f9;
+    color: #2e7d32;
+    font-weight: 500;
+}
+
+.expressionDescription {
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 2px solid #a5d6a7;
+    color: #2e7d32;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cronjobContainer {
+        padding: 1rem;
+    }
+
+    .customTabs {
+        flex-direction: column;
+    }
+
+    .customTabLink {
+        border-right: none;
+        border-bottom: 1px solid #c8e6c9;
+    }
+
+    .customTabLink:last-child {
+        border-bottom: none;
+    }
+
+    .customTabContent {
+        padding: 1rem;
+    }
+
+    .cronExpressionTableHorizontal {
+        font-size: 0.85rem;
+    }
+
+    .cronExpressionTableHorizontal th,
+    .cronExpressionTableHorizontal td {
+        padding: 0.5rem;
+    }
+}

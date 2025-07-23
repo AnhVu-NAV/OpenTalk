@@ -1,0 +1,296 @@
+/* OpenTalk Host Request Styles */
+.opentalk-host-request-page {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.opentalk-host-request-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+    border: 1px solid #d1fae5;
+    overflow: hidden;
+}
+
+.opentalk-host-request-header {
+    padding: 2rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.opentalk-host-request-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.opentalk-host-request-subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.opentalk-host-request-content {
+    padding: 2rem;
+}
+
+.opentalk-host-request-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    color: #6b7280;
+    font-size: 1.1rem;
+}
+
+.opentalk-host-request-error {
+    padding: 2rem;
+    text-align: center;
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.opentalk-host-request-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.opentalk-host-request-table th {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #065f46;
+    border-bottom: 2px solid #10b981;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.opentalk-host-request-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+.opentalk-host-request-table tr:hover {
+    background: #f9fafb;
+}
+
+.opentalk-host-request-meeting-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.opentalk-host-request-meeting-name {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1rem;
+}
+
+.opentalk-host-request-meeting-date {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.opentalk-host-request-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.opentalk-host-request-status-waiting {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fbbf24;
+}
+
+.opentalk-host-request-status-approved {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.opentalk-host-request-status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #f87171;
+}
+
+.opentalk-host-request-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.opentalk-host-request-action-btn {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+}
+
+.opentalk-host-request-action-btn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.opentalk-host-request-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.opentalk-host-request-pagination-btn {
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6b7280;
+}
+
+.opentalk-host-request-pagination-btn:hover:not(:disabled) {
+    background: #10b981;
+    color: white;
+    border-color: #10b981;
+}
+
+.opentalk-host-request-pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.opentalk-host-request-pagination-number {
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6b7280;
+    min-width: 40px;
+    text-align: center;
+}
+
+.opentalk-host-request-pagination-number:hover {
+    background: #10b981;
+    color: white;
+    border-color: #10b981;
+}
+
+.opentalk-host-request-pagination-number.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #10b981;
+}
+
+/* Modal Styles */
+.opentalk-host-request-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.opentalk-host-request-modal {
+    background: white;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.opentalk-host-request-modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-radius: 16px 16px 0 0;
+}
+
+.opentalk-host-request-modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.opentalk-host-request-modal-content {
+    padding: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .opentalk-host-request-page {
+        padding: 1rem 0.5rem;
+    }
+
+    .opentalk-host-request-container {
+        border-radius: 12px;
+    }
+
+    .opentalk-host-request-header {
+        padding: 1.5rem;
+    }
+
+    .opentalk-host-request-title {
+        font-size: 1.5rem;
+    }
+
+    .opentalk-host-request-content {
+        padding: 1rem;
+    }
+
+    .opentalk-host-request-table {
+        font-size: 0.875rem;
+    }
+
+    .opentalk-host-request-table th,
+    .opentalk-host-request-table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .opentalk-host-request-pagination {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}

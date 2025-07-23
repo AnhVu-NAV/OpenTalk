@@ -1,0 +1,45 @@
+1.Authentication (Giáp)
+- Login
+- Register
+2. OpenTalk Management
+- Opentalk Manager: (Tuấn Phú Xuyên)
+  + CRUD OpenTalk Meeting
+  + Manage Meeting Material (User host)
+  + Automatically select host
+  + Manage request host
+  + Generate meeting code
+-User: (Giáp)
+  + Register host (Bá Minh)
+  + Mark attendance (include rating)
+  + Comment to OpenTalk meeting (anonymous/identified)
+  + Download Meeting Material (Only host import) 
+  + View OpenTalk meeting list(Bá Minh)
+  + View OpenTalk meeting detail (Bá Minh)
+  + Join OpenTalk meeting(Bá Minh)
+  + User Activity
+  + View attendance
+3. Company Management (Bá Minh)
+  + CRUD CompanyBranch
+4. Human Resource (Vũ)
+  + CRUD Employee
+  + Export Employee
+  + Host Frequency Report
+  + Manage attendance
+  + Caculate salary
+5. Admin Tool (Tùng)
+  + View Statistic 
+  + Config Cron Scheduler
+  + Export Report Result
+6. Topic Management (Tùng)
+  - OpenTalk Manager
+    + Create Topic meeting poll (from Topic Pool) //đã có cố định trong kho dữ liệu
+	+ Select Topic for meeting from poll
+	+ Manage Topic pool
+	+ Manage Topic Proposal (đề xuất để thêm vào Topic pool) 
+  - User
+    + Vote topic meeting
+	+ Suggest topic meeting
+7. System (Giáp)
+	+ Send reminder mail 
+	+ Assign host
+	+ Process idea session

@@ -1,0 +1,454 @@
+/* OpenTalk Manager Styles */
+.opentalk-manager-page {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.opentalk-manager-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+    border: 1px solid #d1fae5;
+    overflow: hidden;
+}
+
+.opentalk-manager-header {
+    padding: 2rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.opentalk-manager-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.opentalk-manager-subtitle {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.opentalk-manager-controls {
+    padding: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.opentalk-manager-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.opentalk-manager-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.opentalk-manager-filter-label {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+.opentalk-manager-filter-input,
+.opentalk-manager-filter-select {
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.opentalk-manager-filter-input:focus,
+.opentalk-manager-filter-select:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.opentalk-manager-filter-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.opentalk-manager-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.opentalk-manager-btn-primary {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.opentalk-manager-btn-primary:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.opentalk-manager-btn-secondary {
+    background: white;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
+}
+
+.opentalk-manager-btn-secondary:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateY(-1px);
+}
+
+.opentalk-manager-btn-add {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+}
+
+.opentalk-manager-btn-add:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.opentalk-manager-content {
+    padding: 2rem;
+}
+
+.opentalk-manager-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    color: #6b7280;
+    font-size: 1.1rem;
+}
+
+.opentalk-manager-error {
+    padding: 2rem;
+    text-align: center;
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.opentalk-manager-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.opentalk-manager-table th {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #065f46;
+    border-bottom: 2px solid #10b981;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.opentalk-manager-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+.opentalk-manager-table tr:hover {
+    background: #f9fafb;
+}
+
+.opentalk-manager-table tr:last-child td {
+    border-bottom: none;
+}
+
+.opentalk-manager-meeting-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.opentalk-manager-meeting-name {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1rem;
+}
+
+.opentalk-manager-meeting-topic {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.opentalk-manager-meeting-date {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-family: "Monaco", "Menlo", monospace;
+}
+
+.opentalk-manager-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.opentalk-manager-status-waiting-topic {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fbbf24;
+}
+
+.opentalk-manager-status-waiting-host-register {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #3b82f6;
+}
+
+.opentalk-manager-status-upcoming {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.opentalk-manager-status-ongoing {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #f59e0b;
+}
+
+.opentalk-manager-status-completed {
+    background: #e5e7eb;
+    color: #374151;
+    border: 1px solid #9ca3af;
+}
+
+.opentalk-manager-status-cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #f87171;
+}
+
+.opentalk-manager-branch-info {
+    font-weight: 500;
+    color: #374151;
+}
+
+.opentalk-manager-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.opentalk-manager-action-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+}
+
+.opentalk-manager-view-btn {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.opentalk-manager-view-btn:hover {
+    background: #1d4ed8;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+.opentalk-manager-delete-btn {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.opentalk-manager-delete-btn:hover {
+    background: #dc2626;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.opentalk-manager-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.opentalk-manager-pagination-btn {
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6b7280;
+}
+
+.opentalk-manager-pagination-btn:hover:not(:disabled) {
+    background: #10b981;
+    color: white;
+    border-color: #10b981;
+}
+
+.opentalk-manager-pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.opentalk-manager-pagination-number {
+    padding: 0.5rem 0.75rem;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6b7280;
+    min-width: 40px;
+    text-align: center;
+}
+
+.opentalk-manager-pagination-number:hover {
+    background: #10b981;
+    color: white;
+    border-color: #10b981;
+}
+
+.opentalk-manager-pagination-number.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #10b981;
+}
+
+/* Empty State */
+.opentalk-manager-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6b7280;
+}
+
+.opentalk-manager-empty-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: #9ca3af;
+}
+
+.opentalk-manager-empty-state h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 0.5rem 0;
+}
+
+.opentalk-manager-empty-state p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .opentalk-manager-filters {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .opentalk-manager-table {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .opentalk-manager-page {
+        padding: 1rem 0.5rem;
+    }
+
+    .opentalk-manager-container {
+        border-radius: 12px;
+    }
+
+    .opentalk-manager-header {
+        padding: 1.5rem;
+    }
+
+    .opentalk-manager-title {
+        font-size: 1.5rem;
+    }
+
+    .opentalk-manager-controls {
+        padding: 1rem;
+    }
+
+    .opentalk-manager-filters {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .opentalk-manager-filter-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .opentalk-manager-content {
+        padding: 1rem;
+        overflow-x: auto;
+    }
+
+    .opentalk-manager-table {
+        min-width: 600px;
+    }
+
+    .opentalk-manager-table th,
+    .opentalk-manager-table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .opentalk-manager-pagination {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
