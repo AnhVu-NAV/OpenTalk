@@ -1,13 +1,12 @@
 import React from "react";
 import Row from "./Row";
 
-function Table({ meetings, onView, onEdit, onDelete, onRequestClick }) {
+function Table({ meetings, requestCounts = {}, onView, onEdit, onDelete, onRequestClick }) {
   return (
     <div>
       <table className="table align-middle mb-0 custom-table">
         <thead>
           <tr className="table-header-light">
-            <th>ID</th>
             <th>Meeting Title</th>
             <th>Topic</th>
             <th>Company Branch</th>
@@ -23,14 +22,13 @@ function Table({ meetings, onView, onEdit, onDelete, onRequestClick }) {
               onView={onView}
               onEdit={onEdit}
               onDelete={onDelete}
-              requestCount={meeting.requestCount || 0}
+              requestCount={requestCounts[meeting.id] || 0}
               onRequestClick={() => onRequestClick(meeting)}
               isLast={idx === meetings.length - 1}
             />
           ))}
         </tbody>
       </table>
-
       <style>{`
         .custom-table thead.table-header-light th {
           background: #f7f8fa !important;
