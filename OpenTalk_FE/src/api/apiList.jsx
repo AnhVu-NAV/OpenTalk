@@ -39,13 +39,3 @@ export const saveCronjob = async (feedbackDTO) => {
   const res = await axiosClient.post("/feedbacks", feedbackDTO);
   return res.data;
 };
-
-export const getConfig = async (meetingId) => {
-  const res = await axiosClient.get(`/feedbacks/${meetingId}`);
-  return res.data;
-};
-
-export const updateConfig = async (feedbackDTO) => {
-  const res = await axiosClient.post("/feedbacks", feedbackDTO);
-  return res.data;
-};
