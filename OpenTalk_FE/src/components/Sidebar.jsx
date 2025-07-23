@@ -1,27 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {NavLink, useNavigate} from "react-router-dom";
 import {
     FaHome, FaVideo, FaEnvelope, FaProjectDiagram, FaTicketAlt, FaUsers,
     FaRegCalendarCheck, FaRegNewspaper, FaFileAlt, FaBuilding, FaUserCircle,
-    FaCog, FaSignOutAlt,FaRegLightbulb
+    FaCog, FaSignOutAlt, FaRegLightbulb
 } from "react-icons/fa";
-import { getCurrentUser, clearTokens } from "../helper/auth";
+import {getCurrentUser, clearTokens} from "../helper/auth";
 
 const menuItems = [
-    { label: "Overview", icon: <FaHome />, path: "/" },
-    { label: "Meeting", icon: <FaVideo />, path: "/meeting" },
-    { label: "Message", icon: <FaEnvelope />, path: "/message" },
-    { label: "Project", icon: <FaProjectDiagram />, path: "/project" },
-    { label: "Ticket", icon: <FaTicketAlt />, path: "/ticket" },
-    { label: "Employee", icon: <FaUsers />, path: "/employee" },
+    // 1. Dashboard / Overview
+    { label: "Dashboard", icon: <FaHome />, path: "/" },            // HR, MEETING_MANAGER
+    { label: "Overview", icon: <FaHome />, path: "/" },             // USER
+
+    // 2. Meetings
+    { label: "Meetings", icon: <FaVideo />, path: "/meeting" },
+    { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/detail/:id" },
+    { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request" },
+    { label: "OpenTalk Manager", icon: <FaEnvelope />, path: "/opentalk/manager" },
+    { label: "Poll Meeting", icon: <FaProjectDiagram />, path: "/poll-meeting" },
+    { label: "Create Poll", icon: <FaProjectDiagram />, path: "/poll/create" },
+
+    // 3. Attendance
     { label: "Attendance", icon: <FaRegCalendarCheck />, path: "/attendance" },
-    { label: "Suggest", icon: <FaRegNewspaper />, path: "/suggestTopic" },
+    { label: "Attendance (Admin)", icon: <FaRegCalendarCheck />, path: "/attendance/admin" },
+    { label: "User Attendance", icon: <FaRegCalendarCheck />, path: "/attendance/user/:id" },
+
+    // 4. Employee
+    { label: "Employee", icon: <FaUsers />, path: "/employee" },
+
+    // 5. Suggest / Topics
+    { label: "Suggest Topic", icon: <FaRegNewspaper />, path: "/suggest-topic" },
+    { label: "Topic Hub", icon: <FaRegLightbulb />, path: "/topic" },
     { label: "Topic Proposal", icon: <FaRegLightbulb />, path: "/topicProposal" },
-    { label: "HostFrequencyReport", icon: <FaFileAlt />, path: "/hostfrequencyreport" },
+    { label: "Topic Proposal Category", icon: <FaRegLightbulb />, path: "/topic-proposal-category" },
+
+    // 6. Reports / Management
+    { label: "Host Frequency Report", icon: <FaFileAlt />, path: "/hostfrequencyreport" },
     { label: "Organization", icon: <FaBuilding />, path: "/organization" },
+
+    // 8. Salary / Ticket / Message / Test
+    { label: "Salary", icon: <FaCog />, path: "/salary" },
+    { label: "Ticket", icon: <FaTicketAlt />, path: "/ticket" },
+    { label: "Message", icon: <FaEnvelope />, path: "/message" },
+    { label: "Test Page", icon: <FaCog />, path: "/test" },
+
+    // 7. User / Account / Settings
+    // { label: "User Profile", icon: <FaUserCircle />, path: "/user/:id" },
     { label: "Account", icon: <FaUserCircle />, path: "/account" },
-    { label: "Setting", icon: <FaCog />, path: "/setting" },
-    { label: "Test", icon: <FaCog />, path: "/test" },
+    { label: "Settings", icon: <FaCog />, path: "/settings" },
+
+
 ];
 
 const activeStyle = {
@@ -46,32 +74,52 @@ function Sidebar() {
 
     const roleMap = {
         1: "ADMIN",
-        2: "USER"
+        2: "USER",
+        3: "HR",
+        4: "MEETING_MANAGER"
     };
 
     const visibleMenuItems = menuItems.filter(({ label }) => {
-        const role = roleMap[user?.role];
+        const role = roleMap[user?.role]; // ví dụ: "HR", "USER", "MEETING_MANAGER"
 
-        if (role === "ADMIN") {
-            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance"].includes(label);
-        }
+        const accessMap = {
+            ADMIN: [
+                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Employee",
+                "HostFrequencyReport", "Organization", "User Profile",
+                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test"
+            ],
+            HR: [
+                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Employee","Suggest Topic",
+                "HostFrequencyReport", "Organization", "User Profile",
+                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test"
+            ],
+            USER: [
+                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "User Profile",
+                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test"
+            ],
+            MEETING_MANAGER: [
+                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "HostFrequencyReport", "Poll Meeting",
+                "User Profile",
+                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test"
+            ]
+        };
 
-        if (role === "USER") {
-            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance"].includes(label);
-        }
-
-        return false;
+        return accessMap[role]?.includes(label);
     });
 
     return (
-        <div className="d-flex flex-column bg-light vh-100 p-3" style={{ width: 250 }}>
+        <div className="d-flex flex-column bg-light vh-100 p-3" style={{width: 250}}>
             <nav className="nav flex-column">
-                {visibleMenuItems.map(({ label, icon, path }) => (
+                {visibleMenuItems.map(({label, icon, path}) => (
                     <NavLink
                         to={path}
                         key={label}
                         className="nav-link d-flex align-items-center gap-2 text-start rounded mb-1"
-                        style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
+                        style={({isActive}) => (isActive ? activeStyle : inactiveStyle)}
                     >
                         <span>{icon}</span>
                         <span>{label}</span>

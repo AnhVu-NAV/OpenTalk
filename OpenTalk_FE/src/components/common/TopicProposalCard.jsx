@@ -1,5 +1,5 @@
 import React from 'react';
-import '/src/css/TopicProposalCard.css';
+import '/src/pages/styles/TopicProposalCard.css';
 import {FaBars} from 'react-icons/fa';
 
 const statusStyles = {
@@ -16,7 +16,7 @@ const TopicProposalCard = ({ id, title, description, authorName, date, avatarUrl
         <div className="proposal-card">
             <div className="proposal-card__content">
                 <h3 className="proposal-card__title">{title}</h3>
-                <div className="proposal-card__excerpt">{description}</div>
+                <div className="proposal-card__excerpt" dangerouslySetInnerHTML={{ __html: description }}></div>
                 {status && (
                     <div className={`proposal-card__status ${statusClass}`}>{statusLabel}</div>
                 )}

@@ -1,0 +1,120 @@
+.filter-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.filter-popup {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    width: 420px;
+    max-width: 90%;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.filter-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #dcdfe6;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.2s;
+    margin-bottom: 20px;
+}
+
+.search-input:focus {
+    border-color: #1abc9c;
+    box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.1);
+}
+
+.filter-section {
+    margin-bottom: 24px;
+}
+
+.filter-section strong {
+    display: block;
+    font-size: 14px;
+    color: #34495e;
+    margin-bottom: 8px;
+}
+
+.department-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.checkbox-label,
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.checkbox-label input,
+.radio-label input {
+    accent-color: #1abc9c;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-cancel,
+.btn-apply {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-cancel {
+    background: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.btn-cancel:hover {
+    background: #e6e6e6;
+}
+
+.btn-apply {
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+}
+
+.btn-apply:hover {
+    background-color: #16a085;
+}

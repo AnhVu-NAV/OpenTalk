@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CustomTextEditor from "../components/textEdit/RichTextEditor.jsx";
-import '../css/SuggestTopic.css'
+import './styles/SuggestTopic.css'
 import {getCurrentUser, getAccessToken} from "../helper/auth.jsx";
 import axios from '/src/api/axiosClient.jsx';
 
