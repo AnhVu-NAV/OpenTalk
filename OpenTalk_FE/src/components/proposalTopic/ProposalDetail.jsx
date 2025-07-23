@@ -5,7 +5,7 @@ import { getAccessToken, getCurrentUser } from "../../helper/auth.jsx"
 import axios from "/src/api/axiosClient.jsx"
 import { Modal, Button, Form, Spinner } from "react-bootstrap"
 
-const ProposalDetail = ({ id, poll, onClose, showToast, onOpenRejectModal }) => {
+const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal }) => {
     const [data, setData] = useState(null)
     const [successMsg, setSuccessMsg] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
@@ -21,6 +21,8 @@ const ProposalDetail = ({ id, poll, onClose, showToast, onOpenRejectModal }) => 
 
     const fetchData = useCallback(async () => {
         try {
+            console.log("Fetching data in ProposalDetail...")
+            console.log(pollId)
             const res = await axios.get(`/topic-idea/${id}`, {
                 headers: { Authorization: `Bearer ${getAccessToken()}` },
             })
@@ -107,16 +109,14 @@ const ProposalDetail = ({ id, poll, onClose, showToast, onOpenRejectModal }) => 
         }
     }
 
-    const handleAdd = async (topic) => {
+    const handleAdd = async (topicId, pollId) => {
         try {
+            console.log("Start adding topic to poll"+pollId)
+            const params = { topicId, pollId };
             await axios.post(
-                `/topic-poll/`,
-                {
-                    topic: topic,
-                    poll: poll
-                },
-                { headers: { Authorization: `Bearer ${getAccessToken()}` } },
-            )
+                `/topic-poll`,
+                params
+             )
         } catch (err) {
             console.error(err)
             setErrorMsg("Đã có lỗi khi thêm mới lưạ chọn.")
@@ -273,7 +273,7 @@ const ProposalDetail = ({ id, poll, onClose, showToast, onOpenRejectModal }) => 
 
             {data?.status === "approved" && (
                 <div className="action-buttons">
-                    <button className="btn btn-approve" onClick={handleAdd(data.id)} disabled={rejectSubmitting || approveSubmitting}>
+                    <button className="btn btn-approve" onClick={() => handleAdd(1, 2)}>
                         {approveSubmitting ? (
                             <Spinner animation="border" size="sm" />
                         ) : (

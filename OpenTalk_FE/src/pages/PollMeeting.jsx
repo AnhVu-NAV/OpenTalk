@@ -20,7 +20,7 @@ const PollApp = (meeting) => {
     useEffect(() => {
         const fetchPoll = async () => {
             try {
-
+                console.log(meeting)
                 const response = await axios.get(`/poll/${meetingId}`,
                     { headers: { Authorization: `Bearer ${getAccessToken()}` }});
                 setPoll(response.data);
@@ -44,6 +44,7 @@ const PollApp = (meeting) => {
         }
         const fetchTopicPolls = async () => {
             try {
+                console.log("Poll: ");
                 const response = await axios.get(`/topic-poll/${pollId}`,
                     { headers: { Authorization: `Bearer ${getAccessToken()}` }});
                 setPollOption(response.data);
@@ -74,11 +75,11 @@ const PollApp = (meeting) => {
             }
         }
         fetchResults()
-    }, [vote])
+    }, [vote, pollId])
 
     const fetchVote = async (topicPollid) => {
         try {
-            await axios.post(`/topic-vote/`,
+            await axios.post(`/topic-vote`,
                 {
                     voter: getCurrentUser(),
                     topicPollId: topicPollid
@@ -96,6 +97,8 @@ const PollApp = (meeting) => {
 
     const fetchAvailableToVote = async () => {
         try {
+            console.log("Start checking------------------------------------");
+            console.log("UserId: "+getCurrentUser().id);
             const response = await axios.get(`/topic-vote/check/`,
                 {params:{
                         userId: getCurrentUser().id,
@@ -108,6 +111,7 @@ const PollApp = (meeting) => {
             setHasVoted(response.data)
             console.log("After: "+hasVoted)
         } catch (err) {
+            console.error("Đã có lỗi xảy ra");
             setError(err);
         } finally {
             setLoading(false);
@@ -164,7 +168,7 @@ const PollApp = (meeting) => {
                     <div className="poll-content">
                         <div className="poll-question">
                             <span className="poll-question-emoji"><FaQuestion /></span>
-                            <h2 className="poll-question-text">{`Voting discussion for ${meeting.meetingName}`}</h2>
+                            <h2 className="poll-question-text">{`Voting discussion for ${meeting.meeting.meetingName}`}</h2>
                         </div>
 
                         <div className="poll-options">
@@ -192,7 +196,7 @@ const PollApp = (meeting) => {
                                     </div>
                                     <button
                                         onClick={() => handleVote(option.id)}
-                                        disabled={!hasVoted}
+                                        disabled={!hasVoted&&poll.isEnabled}
                                         className="poll-vote-button"
                                     >
                                         Vote

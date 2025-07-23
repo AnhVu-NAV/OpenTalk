@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import MeetingMaterialModal from "./MeetingMaterial";
+import axios from "../../api/axiosClient.jsx";
+import {getAccessToken, getCurrentUser} from "../../helper/auth.jsx";
 
 function formatDateTime(dtStr) {
   if (!dtStr) return "";
@@ -13,6 +15,7 @@ function ViewMeetingDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
+  const[error, setError] = useState(null);
 
   // Lấy meeting từ navigate state nếu có
   const meetingFromState = location.state?.meeting;
@@ -45,6 +48,23 @@ function ViewMeetingDetails() {
   const hostLabel = meeting.host?.fullName || meeting.host?.username || "";
   const branchLabel = meeting.companyBranch?.name || "";
 
+
+
+  const handleCreatePoll = async (id) => {
+    try {
+      console.log(id);
+      navigate(`/poll/create/${id}`);
+      await axios.post(`/poll/${id}`,
+          { headers: { Authorization: `Bearer ${getAccessToken()}` }},
+      );
+
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="addmeeting-bg-enterprise">
       <div className="addmeeting-container py-3">
@@ -68,9 +88,7 @@ function ViewMeetingDetails() {
             <Button
               className="px-4 py-2 rounded-3 btn-warning"
               style={{ minWidth: 110, fontWeight: 500 }}
-              onClick={() => {
-                // TODO: Gọi API hoặc mở modal tạo poll
-              }}
+              onClick={() => {handleCreatePoll(id)}}
             >
               <i className="bi bi-bar-chart-steps me-2"></i>
               Create Poll

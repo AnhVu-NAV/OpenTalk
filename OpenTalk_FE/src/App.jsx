@@ -35,7 +35,6 @@ import UserAttendanceTab from "./pages/UserAttendanceTab";
 import EmployeePage from "./pages/EmployeePage";
 import AddEmployeeNew from "./pages/AddEmployeePage";
 import EditEmployeePage from "./pages/EditEmployeePage";
-// import ExportEmployeePage from "./pages/ExportEmployeePage";
 
 // Suggest / Topics
 import SuggestTopic from "./pages/SuggestTopic";
@@ -50,6 +49,7 @@ import OrganizationListPage from "./pages/OrganizationListPage";
 import SalaryPage from "./pages/SalaryPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import TestPage from "./pages/test";
+import TopicHub from "./pages/TopicHub.jsx";
 
 // Optional Pages
 function Message() { return <h2>Message Page</h2>; }
@@ -76,11 +76,11 @@ function App() {
 
                         {/* Meeting routes */}
                         <Route path="/meeting" element={<MeetingListPage />} />
-                        <Route path="/meeting/:id" element={<MeetingDetailPage />} />
+                        <Route path="/detail/:id" element={<MeetingDetailPage />} />
                         <Route path="/host-meeting" element={<HostMeetingListPage />} />
                         <Route path="/host-meeting/:id" element={<HostMeetingDetailPage />} />
-                        {/*<Route path="/poll-meeting" element={<PollApp />} />*/}
-                        {/*<Route path="/poll/create" element={<CreatePoll />} />*/}
+                        <Route path="/poll-meeting" element={<TopicHub />} />
+                        <Route path="/poll/create/:id" element={<CreatePoll />} />
                         <Route path="/opentalk/manager" element={<OpenTalkManagerPage />} />
                         <Route path="/opentalk/request" element={<OpenTalkHostRequestPage />} />
                         <Route path="/meeting/add-meeting" element={<AddNewMeeting />} />
@@ -97,12 +97,11 @@ function App() {
                         <Route path="/employee" element={<EmployeePage />} />
                         <Route path="/employee/add" element={<AddEmployeeNew />} />
                         <Route path="/employee/edit/:id" element={<EditEmployeePage />} />
-                        {/* <Route path="/employee/export" element={<ExportEmployeePage />} /> */}
+
 
                         {/* Suggest / Topics */}
                         <Route path="/suggest-topic" element={<SuggestTopic />} />
                         <Route path="/topicProposal" element={<TopicProposalCategory />} />
-                        <Route path="/topic" element={<TopicProposalCategory />} />
                         <Route path="/topic/:id" element={<ProposalDetail />} />
                         <Route path="/topic-proposal-category" element={<TopicProposalCategory />} />
 

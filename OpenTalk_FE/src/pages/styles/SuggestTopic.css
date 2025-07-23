@@ -262,6 +262,7 @@
     gap: 24px;
     position: relative;
     z-index: 1;
+    width: 100%;
 }
 
 /* Empty State */
