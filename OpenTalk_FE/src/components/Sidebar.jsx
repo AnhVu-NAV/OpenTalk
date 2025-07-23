@@ -86,7 +86,7 @@ function Sidebar() {
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "Employee",
                 "HostFrequencyReport", "Organization", "User Profile",
-                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test"
+                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests"
             ],
             HR: [
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
@@ -103,7 +103,7 @@ function Sidebar() {
                 "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "HostFrequencyReport", "Poll Meeting",
                 "User Profile",
-                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test"
+                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests"
             ]
         };
 

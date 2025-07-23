@@ -139,7 +139,7 @@ const handleConfirmGenerate = async () => {
   };
   const handleSuccessClose = () => {
     setShowSuccess(false);
-    navigate("/project");
+    navigate("/meeting-manager");
   };
 
   
