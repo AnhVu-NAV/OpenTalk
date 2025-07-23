@@ -16,6 +16,8 @@ function Overview() {
 // Meetings
 import MeetingListPage from "./pages/MeetingListPage";
 import MeetingDetailPage from "./pages/MeetingDetailPage";
+import HostMeetingListPage from "./pages/HostMeetingListPage";
+import HostMeetingDetailPage from "./pages/HostMeetingDetailPage";
 import PollApp from "./pages/PollMeeting";
 import CreatePoll from "./pages/CreatePoll";
 import OpenTalkManagerPage from "./pages/OpenTalkManager";
@@ -25,6 +27,7 @@ import EditMeeting from "./components/opentalkManager/EditMeeting";
 import ViewMeetingDetails from "./components/opentalkManager/MeetingDetail";
 
 // Attendance
+import AttendancePage from "./pages/AttendancePage";
 import AttendanceAdminPage from "./pages/AttendanceAdminPage";
 import UserAttendanceTab from "./pages/UserAttendanceTab";
 
@@ -75,7 +78,9 @@ function App() {
 
                         {/* Meeting routes */}
                         <Route path="/meeting" element={<MeetingListPage />} />
-                        <Route path="/meeting/detail/:id" element={<MeetingDetailPage />} />
+                        <Route path="/meeting/:id" element={<MeetingDetailPage />} />
+                        <Route path="/host-meeting" element={<HostMeetingListPage />} />
+                        <Route path="/host-meeting/:id" element={<HostMeetingDetailPage />} />
                         {/*<Route path="/poll-meeting" element={<PollApp />} />*/}
                         {/*<Route path="/poll/create" element={<CreatePoll />} />*/}
                         <Route path="/opentalk/manager" element={<OpenTalkManagerPage />} />
