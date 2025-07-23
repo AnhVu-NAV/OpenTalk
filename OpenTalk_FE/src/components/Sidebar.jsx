@@ -10,6 +10,7 @@ import { getCurrentUser, clearTokens } from "../helper/auth";
 const menuItems = [
     { label: "Overview", icon: <FaHome />, path: "/" },
     { label: "Meeting", icon: <FaVideo />, path: "/meeting" },
+    { label: "Meeting Host", icon: <FaVideo />, path: "/host-meeting" },
     { label: "Message", icon: <FaEnvelope />, path: "/message" },
     { label: "Project", icon: <FaProjectDiagram />, path: "/project" },
     { label: "Ticket", icon: <FaTicketAlt />, path: "/ticket" },
@@ -45,7 +46,7 @@ function Sidebar() {
     }, []);
 
     const roleMap = {
-        1: "ADMIN",
+        1: "MEETING_MANAGER",
         2: "USER"
     };
 
@@ -56,8 +57,8 @@ function Sidebar() {
             return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance"].includes(label);
         }
 
-        if (role === "USER") {
-            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance"].includes(label);
+        if (role === "MEETING_MANAGER") {
+            return ["Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance", "Organization", "Meeting Host"].includes(label);
         }
 
         return false;

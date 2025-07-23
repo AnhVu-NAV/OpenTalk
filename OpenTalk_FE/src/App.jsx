@@ -8,7 +8,7 @@ import AuthGuard from "./components/common/AuthGuard";
 import MeetingList from "./pages/test.jsx";
 import OpenTalkManagerPage from "./pages/OpenTalkManager";
 import OpenTalkHostRequestPage from "./pages/OpenTalkHostRequest";
-import AddMeeting from "./components/opentalkManager/AddNewMeeting.jsx"; 
+import AddMeeting from "./components/opentalkManager/AddNewMeeting.jsx";
 import MeetingDetail from "./components/opentalkManager/MeetingDetail.jsx";
 import EditMeeting from "./components/opentalkManager/EditMeeting.jsx";
 import CustomTextEditor from "./components/textEdit/RichTextEditor.jsx";
@@ -28,13 +28,15 @@ import TopicProposalCategory from "./pages/TopicProposalCategory.jsx";
 import SuggestTopic from "./pages/SuggestTopic.jsx";
 import AttendancePage from "./pages/AttendancePage.jsx";
 import TopicHub from "./pages/TopicHub.jsx";
+import HostMeetingListPage from "./pages/HostMeetingListPage.jsx";
+import HostMeetingDetailPage from "./pages/HostMeetingDetailPage.jsx";
 
 // Tạo các component placeholder tương ứng từng route
 function Overview() {
     return <h2>Overview Page</h2>;
 }
 function Meeting() {
-    return <MeetingListPage/>;
+    return <MeetingListPage />;
 }
 
 function Message() {
@@ -50,7 +52,7 @@ function Ticket() {
 }
 
 function Employee() {
-  return <EmployeePage />;
+    return <EmployeePage />;
 }
 
 function Attendance() {
@@ -59,15 +61,15 @@ function Attendance() {
 
 function Notice() {
 
-   return <SuggestTopic />;
+    return <SuggestTopic />;
 }
 
 function HostFrequency() {
-  return <HostFrequencyReport />;
+    return <HostFrequencyReport />;
 }
 
 function Organization() {
-  return <h2>Organization Page</h2>;
+    return <h2>Organization Page</h2>;
 }
 
 function Account() {
@@ -79,20 +81,20 @@ function Setting() {
 }
 
 function Test() {
-  const handleEdit = () => alert("Edit clicked!");
-  const handleDelete = () => alert("Deleted!");
-  return (
-      <div style={{ padding: "40px" }}>
-        <NoticeCard
-            title="Notice Title"
-            author="Name"
-            date="29/8/2023"
-            content="Lorem Ipsum is simply dummy text of the printing and typesetting industry..."
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-        />
-      </div>
-  );
+    const handleEdit = () => alert("Edit clicked!");
+    const handleDelete = () => alert("Deleted!");
+    return (
+        <div style={{ padding: "40px" }}>
+            <NoticeCard
+                title="Notice Title"
+                author="Name"
+                date="29/8/2023"
+                content="Lorem Ipsum is simply dummy text of the printing and typesetting industry..."
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+            />
+        </div>
+    );
 }
 
 
@@ -101,36 +103,38 @@ function App() {
         <Router>
             <Routes>
                 {/* public */}
-                <Route path="/login" element={<LoginForm />}/>
-                <Route path="/register" element={<RegisterForm />}/>
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
 
                 {/* protected */}
-                <Route element={<AuthGuard/>}>
-                    <Route element={<Layout/>}>
-                        <Route path="/" element={<Overview/>}/>
-                        <Route path="/setting" element={<Setting/>}/>
-                        <Route path="/dashboard" element={<DashBoard/>}/>
-                        <Route path="/meeting" element={<Meeting/>}/>
+                <Route element={<AuthGuard />}>
+                    <Route element={<Layout />}>
+                        <Route path="/" element={<Overview />} />
+                        <Route path="/setting" element={<Setting />} />
+                        <Route path="/dashboard" element={<DashBoard />} />
+                        <Route path="/meeting" element={<Meeting />} />
                         <Route path="/meeting/:id" element={<MeetingDetailPage />} />
-                        <Route path="/message" element={<Message/>}/>
-                        <Route path="/project" element={<Project/>}/>
-                        <Route path="/ticket" element={<Ticket/>}/>
-                        <Route path="/topicProposal" element={<TopicProposalCategory/>}/>
-                        <Route path="/employee" element={<Employee/>}/>
-                        <Route path="/employee/add" element={<AddEmployeeNew/>}/>
-                        <Route path="/employee/edit/:id" element={<EditEmployeePage/>}/>
-                        <Route path="/attendance" element={<Attendance/>}/>
-                        <Route path="/notice" element={<Notice/>}/>
+                        <Route path="/host-meeting" element={<HostMeetingListPage />} />
+                        <Route path="/host-meeting/:id" element={<HostMeetingDetailPage />} />
+                        <Route path="/message" element={<Message />} />
+                        <Route path="/project" element={<Project />} />
+                        <Route path="/ticket" element={<Ticket />} />
+                        <Route path="/topicProposal" element={<TopicProposalCategory />} />
+                        <Route path="/employee" element={<Employee />} />
+                        <Route path="/employee/add" element={<AddEmployeeNew />} />
+                        <Route path="/employee/edit/:id" element={<EditEmployeePage />} />
+                        <Route path="/attendance" element={<Attendance />} />
+                        <Route path="/notice" element={<Notice />} />
                         <Route path="/hostfrequencyreport" element={<HostFrequency />} />
-                        <Route path="/organization" element={<OrganizationListPage/>}/>
-                        <Route path="/suggestTopic" element={<SuggestTopic/>}/>
-                        <Route path="/account" element={<Account/>}/>
-                        <Route path="/topic/:id" element={<ProposalDetail/>}/>
+                        <Route path="/organization" element={<OrganizationListPage />} />
+                        <Route path="/suggestTopic" element={<SuggestTopic />} />
+                        <Route path="/account" element={<Account />} />
+                        <Route path="/topic/:id" element={<ProposalDetail />} />
                         <Route path="/test" element={<TopicHub />} />
                         <Route path="/createPoll" element={<CreatePoll />} />
                         <Route path="/project/new-meeting" element={<AddMeeting />} />
-                    <Route path="/project/meeting-details/:id" element={<MeetingDetail />} />
-                    <Route path="/project/edit-meeting/:id" element={<EditMeeting />} />
+                        <Route path="/project/meeting-details/:id" element={<MeetingDetail />} />
+                        <Route path="/project/edit-meeting/:id" element={<EditMeeting />} />
                     </Route>
                 </Route>
             </Routes>
