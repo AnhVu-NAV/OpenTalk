@@ -5,7 +5,7 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-.page-header {
+.meeting-detail-page-header {
     display: flex;
     align-items: center;
     margin-bottom: 32px;
@@ -17,7 +17,7 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.download-button {
+.meeting-detail-download-button {
     margin-left: auto;
     padding: 12px 24px;
     border: none;
@@ -31,12 +31,12 @@
     box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
 }
 
-.download-button:hover {
+.meeting-detail-download-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
 }
 
-.back-button {
+.meeting-detail-back-button {
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -53,7 +53,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-.back-button:hover {
+.meeting-detail-back-button:hover {
     background: #10b981;
     border-color: #10b981;
     color: white;
@@ -61,7 +61,7 @@
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
 
-.page-title {
+.meeting-detail-page-title {
     font-size: 28px;
     font-weight: 700;
     color: #1f2937;
@@ -72,13 +72,13 @@
     background-clip: text;
 }
 
-.content-grid {
+.meeting-detail-content-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 32px;
 }
 
-.profile-card {
+.meeting-detail-profile-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -89,17 +89,17 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.profile-card:hover {
+.meeting-detail-profile-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
-.profile-header {
+.meeting-detail-profile-header {
     text-align: center;
     margin-bottom: 32px;
 }
 
-.profile-avatar {
+.meeting-detail-profile-avatar {
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -110,12 +110,12 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.profile-avatar:hover {
+.meeting-detail-profile-avatar:hover {
     transform: scale(1.05);
     border-color: #10b981;
 }
 
-.profile-name {
+.meeting-detail-profile-name {
     font-size: 22px;
     font-weight: 700;
     color: #1f2937;
@@ -126,18 +126,18 @@
     background-clip: text;
 }
 
-.profile-title {
+.meeting-detail-profile-title {
     color: #64748b;
     margin: 0 0 16px 0;
     font-size: 16px;
     font-weight: 500;
 }
 
-.contact-info {
+.meeting-detail-contact-info {
     margin-bottom: 32px;
 }
 
-.contact-item {
+.meeting-detail-contact-item {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -151,18 +151,18 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.contact-item:hover {
+.meeting-detail-contact-item:hover {
     background: rgba(16, 185, 129, 0.1);
     transform: translateX(4px);
 }
 
-.contact-icon {
+.meeting-detail-contact-icon {
     width: 20px;
     height: 20px;
     color: #10b981;
 }
 
-.meeting-highlight {
+.meeting-detail-meeting-highlight {
     margin-bottom: 32px;
     padding: 24px;
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
@@ -170,7 +170,7 @@
     border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-.meeting-name {
+.meeting-detail-meeting-name {
     text-align: center;
     font-size: 24px;
     font-weight: 700;
@@ -181,7 +181,7 @@
     background-clip: text;
 }
 
-.section-title {
+.meeting-detail-section-title {
     font-size: 20px;
     font-weight: 700;
     color: #1f2937;
@@ -192,11 +192,11 @@
     background-clip: text;
 }
 
-.host-section .section-title {
+.meeting-detail-host-section .meeting-detail-section-title {
     text-align: center;
 }
 
-.topic-content {
+.meeting-detail-topic-content {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -206,19 +206,19 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.topic-content:hover {
+.meeting-detail-topic-content:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
-.tabs-header {
+.meeting-detail-tabs-header {
     display: flex;
     background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
     border-bottom: 1px solid rgba(226, 232, 240, 0.5);
     padding: 8px;
 }
 
-.tab-button {
+.meeting-detail-tab-button {
     padding: 16px 28px;
     border: none;
     background: transparent;
@@ -233,24 +233,24 @@
     margin: 0 4px;
 }
 
-.tab-button.active {
+.meeting-detail-tab-button.active {
     color: white;
     background: linear-gradient(135deg, #10b981, #059669);
     box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
     transform: translateY(-2px);
 }
 
-.tab-button:hover:not(.active) {
+.meeting-detail-tab-button:hover:not(.active) {
     color: #10b981;
     background: rgba(16, 185, 129, 0.1);
     transform: translateY(-1px);
 }
 
-.tab-content {
+.meeting-detail-tab-content {
     padding: 40px;
 }
 
-.detail-row {
+.meeting-detail-detail-row {
     display: flex;
     margin-bottom: 20px;
     padding: 16px;
@@ -259,38 +259,38 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.detail-row:hover {
+.meeting-detail-detail-row:hover {
     background: rgba(16, 185, 129, 0.1);
     transform: translateX(4px);
 }
 
-.label {
+.meeting-detail-label {
     width: 180px;
     font-weight: 600;
     color: #475569;
     font-size: 15px;
 }
 
-.value {
+.meeting-detail-value {
     color: #1f2937;
     font-weight: 500;
     font-size: 15px;
 }
 
-.link {
+.meeting-detail-link {
     color: #10b981;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.link:hover {
+.meeting-detail-link:hover {
     color: #059669;
     text-decoration: underline;
     transform: translateX(4px);
 }
 
-.feedback-section {
+.meeting-detail-feedback-section {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -301,12 +301,12 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.feedback-section:hover {
+.meeting-detail-feedback-section:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
-.feedback-content {
+.meeting-detail-feedback-content {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -315,25 +315,25 @@
     padding-right: 8px;
 }
 
-.feedback-content::-webkit-scrollbar {
+.meeting-detail-feedback-content::-webkit-scrollbar {
     width: 8px;
 }
 
-.feedback-content::-webkit-scrollbar-track {
+.meeting-detail-feedback-content::-webkit-scrollbar-track {
     background: rgba(16, 185, 129, 0.1);
     border-radius: 8px;
 }
 
-.feedback-content::-webkit-scrollbar-thumb {
+.meeting-detail-feedback-content::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #10b981, #059669);
     border-radius: 8px;
 }
 
-.feedback-content::-webkit-scrollbar-thumb:hover {
+.meeting-detail-feedback-content::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #059669, #047857);
 }
 
-.feedback-section .feedback-input {
+.meeting-detail-feedback-section .meeting-detail-feedback-input {
     position: sticky;
     top: 0;
     background: rgba(255, 255, 255, 0.95);
@@ -344,14 +344,14 @@
     margin-bottom: 8px;
 }
 
-.feedback-list {
+.meeting-detail-feedback-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 @media (max-width: 1024px) {
-    .content-grid {
+    .meeting-detail-content-grid {
         grid-template-columns: 1fr;
         gap: 24px;
     }
@@ -360,44 +360,44 @@
         padding: 20px;
     }
     
-    .page-header {
+    .meeting-detail-page-header {
         padding: 20px;
         margin-bottom: 24px;
     }
     
-    .profile-card,
-    .topic-content,
-    .feedback-section {
+    .meeting-detail-profile-card,
+    .meeting-detail-topic-content,
+    .meeting-detail-feedback-section {
         padding: 24px;
     }
 }
 
 @media (max-width: 768px) {
-    .tabs-header {
+    .meeting-detail-tabs-header {
         flex-direction: column;
         gap: 8px;
     }
     
-    .tab-button {
+    .meeting-detail-tab-button {
         padding: 12px 20px;
         margin: 0;
     }
     
-    .page-title {
+    .meeting-detail-page-title {
         font-size: 24px;
     }
     
-    .meeting-name {
+    .meeting-detail-meeting-name {
         font-size: 20px;
     }
     
-    .profile-avatar {
+    .meeting-detail-profile-avatar {
         width: 100px;
         height: 100px;
     }
 }
 
-.pagination {
+.meeting-detail-pagination {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -410,19 +410,19 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.pagination-info {
+.meeting-detail-pagination-info {
     font-size: 15px;
     color: #475569;
     font-weight: 500;
 }
 
-.pagination-buttons {
+.meeting-detail-pagination-buttons {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.pagination-btn {
+.meeting-detail-pagination-btn {
     padding: 10px 12px;
     border: 2px solid rgba(226, 232, 240, 0.8);
     border-radius: 10px;
@@ -434,7 +434,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.pagination-btn:hover:not(:disabled) {
+.meeting-detail-pagination-btn:hover:not(:disabled) {
     background: #10b981;
     border-color: #10b981;
     color: white;
@@ -442,13 +442,13 @@
     box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
 }
 
-.pagination-btn:disabled {
+.meeting-detail-pagination-btn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
     transform: none;
 }
 
-.pagination-number {
+.meeting-detail-pagination-number {
     padding: 10px 16px;
     border-radius: 10px;
     font-size: 15px;
@@ -462,7 +462,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.pagination-number.active {
+.meeting-detail-pagination-number.active {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border-color: #10b981;
@@ -470,11 +470,11 @@
     transform: translateY(-2px);
 }
 
-.pagination-number:not(.active) {
+.meeting-detail-pagination-number:not(.active) {
     color: #475569;
 }
 
-.pagination-number:not(.active):hover {
+.meeting-detail-pagination-number:not(.active):hover {
     background: rgba(16, 185, 129, 0.1);
     border-color: rgba(16, 185, 129, 0.3);
     color: #10b981;
