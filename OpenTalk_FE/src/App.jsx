@@ -76,7 +76,7 @@ function App() {
                         <Route path="/meeting" element={<MeetingListPage />} />
                         <Route path="/meeting/detail/:id" element={<MeetingDetailPage />} />
                         <Route path="/poll-meeting" element={<TopicHub />} />
-                        {/*<Route path="/poll/create" element={<CreatePoll />} />*/}
+                        <Route path="/poll/create/:id" element={<CreatePoll />} />
                         <Route path="/opentalk/manager" element={<OpenTalkManagerPage />} />
                         <Route path="/opentalk/request" element={<OpenTalkHostRequestPage />} />
                         <Route path="/meeting/add-meeting" element={<AddNewMeeting />} />
