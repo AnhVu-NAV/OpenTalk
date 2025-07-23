@@ -81,14 +81,14 @@ const HostMeetingListPage = () => {
     const paginatedMeetings = filteredMeetings.slice(startIndex, startIndex + itemsPerPage);
 
     return (
-        <div className="meeting-page">
-            <div className="filters">
-                <div className="search-container">
-                    <FaSearch className="search-icon" />
+        <div className="host-meeting-page">
+            <div className="host-meeting-filters">
+                <div className="host-meeting-search-container">
+                    <FaSearch className="host-meeting-search-icon" />
                     <input
                         type="text"
-                        className="search-input"
-                        placeholder="Search topic"
+                        className="host-meeting-search-input"
+                        placeholder="Search Meeting"
                         value={searchTerm}
                         onChange={(e) => {
                             setSearchTerm(e.target.value);
@@ -96,9 +96,9 @@ const HostMeetingListPage = () => {
                         }}
                     />
                 </div>
-                <div className="select-container">
+                <div className="host-meeting-select-container">
                     <select
-                        className="select"
+                        className="host-meeting-select"
                         value={branchFilter}
                         onChange={(e) => {
                             setBranchFilter(e.target.value);
@@ -112,11 +112,11 @@ const HostMeetingListPage = () => {
                             </option>
                         ))}
                     </select>
-                    <FaChevronDown className="select-icon" />
+                    <FaChevronDown className="host-meeting-select-icon" />
                 </div>
             </div>
 
-            <div className="tabs-header">
+            <div className="host-meeting-tabs-header">
                 {tabs.map((t) => (
                     <button
                         key={t.id}
@@ -124,14 +124,14 @@ const HostMeetingListPage = () => {
                             setActiveTab(t.id);
                             setCurrentPage(1);
                         }}
-                        className={`tab-button ${activeTab === t.id ? 'active' : ''}`}
+                        className={`host-meeting-tab-button ${activeTab === t.id ? 'active' : ''}`}
                     >
                         {t.label}
                     </button>
                 ))}
             </div>
 
-            <div className="meeting-list-container">
+            <div className="host-meeting-list-container">
                 {paginatedMeetings.map((m) => (
                     <MeetingCard
                         key={m.id}
@@ -148,15 +148,15 @@ const HostMeetingListPage = () => {
                 ))}
             </div>
 
-            <div className="pagination">
-                <div className="pagination-info">
+            <div className="host-meeting-pagination">
+                <div className="host-meeting-pagination-info">
                     Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredMeetings.length)} of {filteredMeetings.length} results
                 </div>
-                <div className="pagination-buttons">
+                <div className="host-meeting-pagination-buttons">
                     <button
                         onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                         disabled={currentPage === 1}
-                        className="pagination-btn"
+                        className="host-meeting-pagination-btn"
                     >
                         <FaChevronLeft />
                     </button>
@@ -164,7 +164,7 @@ const HostMeetingListPage = () => {
                         <button
                             key={i + 1}
                             onClick={() => setCurrentPage(i + 1)}
-                            className={`pagination-number ${currentPage === i + 1 ? 'active' : ''}`}
+                            className={`host-meeting-pagination-number ${currentPage === i + 1 ? 'active' : ''}`}
                         >
                             {i + 1}
                         </button>
@@ -172,7 +172,7 @@ const HostMeetingListPage = () => {
                     <button
                         onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                         disabled={currentPage === totalPages}
-                        className="pagination-btn"
+                        className="host-meeting-pagination-btn"
                     >
                         <FaChevronRight />
                     </button>

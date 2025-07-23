@@ -115,7 +115,7 @@ const MeetingListPage = () => {
           <input
             type="text"
             className="search-input"
-            placeholder="Search topic"
+            placeholder="Search Meeting"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);

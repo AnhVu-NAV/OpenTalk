@@ -28,8 +28,6 @@ import TopicProposalCategory from "./pages/TopicProposalCategory.jsx";
 import SuggestTopic from "./pages/SuggestTopic.jsx";
 import AttendancePage from "./pages/AttendancePage.jsx";
 import TopicHub from "./pages/TopicHub.jsx";
-import HostMeetingListPage from "./pages/HostMeetingListPage.jsx";
-import HostMeetingDetailPage from "./pages/HostMeetingDetailPage.jsx";
 
 // Tạo các component placeholder tương ứng từng route
 function Overview() {
@@ -114,8 +112,6 @@ function App() {
                         <Route path="/dashboard" element={<DashBoard />} />
                         <Route path="/meeting" element={<Meeting />} />
                         <Route path="/meeting/:id" element={<MeetingDetailPage />} />
-                        <Route path="/host-meeting" element={<HostMeetingListPage />} />
-                        <Route path="/host-meeting/:id" element={<HostMeetingDetailPage />} />
                         <Route path="/message" element={<Message />} />
                         <Route path="/project" element={<Project />} />
                         <Route path="/ticket" element={<Ticket />} />

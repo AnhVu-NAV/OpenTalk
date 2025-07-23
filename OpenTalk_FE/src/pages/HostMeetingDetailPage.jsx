@@ -149,7 +149,7 @@ const HostMeetingDetailPage = () => {
         fetchData();
     }, [id]);
 
-    if (!meeting) return <div className="meeting-detail-page" />;
+    if (!meeting) return <div className="host-meeting-detail-page" />;
 
     const host = meeting.host;
     const suggestBy = meeting.topic.suggestBy;
@@ -164,25 +164,25 @@ const HostMeetingDetailPage = () => {
 
     const renderUserInfo = (user) => (
         <>
-            <div className="profile-header">
+            <div className="host-meeting-profile-header">
                 <img
                     src="/placeholder.svg"
                     alt={user.fullName}
-                    className="profile-avatar"
+                    className="host-meeting-profile-avatar"
                 />
-                <h2 className="profile-name">{user.fullName}</h2>
-                <p className="profile-title">{user.username}</p>
+                <h2 className="host-meeting-profile-name">{user.fullName}</h2>
+                <p className="host-meeting-profile-title">{user.username}</p>
             </div>
-            <div className="contact-info">
-                <div className="contact-item">
-                    <FaEnvelope className="contact-icon" />
+            <div className="host-meeting-contact-info">
+                <div className="host-meeting-contact-item">
+                    <FaEnvelope className="host-meeting-contact-icon" />
                     <span>{user.email}</span>
                 </div>
-                <div className="contact-item">
-                    <FaPhone className="contact-icon" />
+                <div className="host-meeting-contact-item">
+                    <FaPhone className="host-meeting-contact-icon" />
                     <span>000-000-0000</span>
                 </div>
-                <div className="contact-item">
+                <div className="host-meeting-contact-item">
                     <span>Branch: {user.companyBranch.name}</span>
                 </div>
             </div>
@@ -191,27 +191,27 @@ const HostMeetingDetailPage = () => {
 
     const renderFeedBackCards = () => {
         return (
-            <div className="feedback-section">
-                <h2 className="section-title">FeedBack</h2>
-                <div className="feedback-content">
+            <div className="host-meeting-feedback-section">
+                <h2 className="host-meeting-section-title">FeedBack</h2>
+                <div className="host-meeting-feedback-content">
                     <FeedBackCardInput onSubmit={handleSubmitFeedback} />
-                    <div className="feedback-list">
+                    <div className="host-meeting-feedback-list">
                         {paginatedFeedbacks.map((fb) => (
                             <FeedBackCard key={fb.id} feedback={fb} />
                         ))}
                     </div>
                 </div>
-                <div className="pagination">
-                    <div className="pagination-info">
+                <div className="host-meeting-pagination">
+                    <div className="host-meeting-pagination-info">
                         Showing {startIndex + 1} to{" "}
                         {Math.min(startIndex + itemsPerPage, feedbacks.length)} of{" "}
                         {feedbacks.length} results
                     </div>
-                    <div className="pagination-buttons">
+                    <div className="host-meeting-pagination-buttons">
                         <button
                             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                             disabled={currentPage === 1}
-                            className="pagination-btn"
+                            className="host-meeting-pagination-btn"
                         >
                             <FaChevronLeft />
                         </button>
@@ -219,7 +219,7 @@ const HostMeetingDetailPage = () => {
                             <button
                                 key={i + 1}
                                 onClick={() => setCurrentPage(i + 1)}
-                                className={`pagination-number ${currentPage === i + 1 ? "active" : ""
+                                className={`host-meeting-pagination-number ${currentPage === i + 1 ? "active" : ""
                                     }`}
                             >
                                 {i + 1}
@@ -230,7 +230,7 @@ const HostMeetingDetailPage = () => {
                                 setCurrentPage(Math.min(totalPages, currentPage + 1))
                             }
                             disabled={currentPage === totalPages}
-                            className="pagination-btn"
+                            className="host-meeting-pagination-btn"
                         >
                             <FaChevronRight />
                         </button>
@@ -241,84 +241,84 @@ const HostMeetingDetailPage = () => {
     };
 
     return (
-        <div className="meeting-detail-page">
-            <div className="page-header">
-                <button onClick={() => navigate("/host-meeting")} className="back-button">
+        <div className="host-meeting-detail-page">
+            <div className="host-meeting-page-header">
+                <button onClick={() => navigate("/host-meeting")} className="host-meeting-back-button">
                     <FaArrowLeft size={16} />
                 </button>
-                <h1 className="page-title">Meeting Detail</h1>
-                <button className="download-button" onClick={handleDownloadMaterial}>
+                <h1 className="host-meeting-page-title">Meeting Detail</h1>
+                <button className="host-meeting-download-button" onClick={handleDownloadMaterial}>
                     Download material
                 </button>
             </div>
 
-            <div className="content-grid">
-                <div className="profile-card">
-                    <div className="meeting-highlight">
-                        <h2 className="meeting-name">{meeting.meetingName}</h2>
-                        <div className="detail-row">
-                            <span className="label">Date:</span>
-                            <span className="value">{date}</span>
+            <div className="host-meeting-content-grid">
+                <div className="host-meeting-profile-card">
+                    <div className="host-meeting-highlight">
+                        <h2 className="host-meeting-name">{meeting.meetingName}</h2>
+                        <div className="host-meeting-detail-row">
+                            <span className="host-meeting-label">Date:</span>
+                            <span className="host-meeting-value">{date}</span>
                         </div>
-                        <div className="detail-row">
-                            <span className="label">Time:</span>
-                            <span className="value">{time}</span>
+                        <div className="host-meeting-detail-row">
+                            <span className="host-meeting-label">Time:</span>
+                            <span className="host-meeting-value">{time}</span>
                         </div>
-                        <div className="detail-row">
-                            <span className="label">Meeting Link:</span>
+                        <div className="host-meeting-detail-row">
+                            <span className="host-meeting-label">Meeting Link:</span>
                             <a
                                 href={meeting.meetingLink}
-                                className="value link"
+                                className="host-meeting-value host-meeting-link"
                                 target="_blank"
                                 rel="noreferrer"
                             >
                                 {meeting.meetingLink}
                             </a>
                         </div>
-                        <div className="detail-row">
-                            <span className="label">Status:</span>
-                            <span className="value">{meeting.status}</span>
+                        <div className="host-meeting-detail-row">
+                            <span className="host-meeting-label">Status:</span>
+                            <span className="host-meeting-value">{meeting.status}</span>
                         </div>
-                        <div className="detail-row">
-                            <span className="label">Branch:</span>
-                            <span className="value">{meeting.companyBranch.name}</span>
+                        <div className="host-meeting-detail-row">
+                            <span className="host-meeting-label">Branch:</span>
+                            <span className="host-meeting-value">{meeting.companyBranch.name}</span>
                         </div>
                     </div>
-                    <div className="host-section">
-                        <h3 className="section-title">Host</h3>
+                    <div className="host-meeting-host-section">
+                        <h3 className="host-meeting-section-title">Host</h3>
                         {host ? (
                             renderUserInfo(host)
                         ) : (
-                            <div className="profile-header">
+                            <div className="host-meeting-profile-header">
                                 <img
                                     src="/placeholder.svg"
                                     alt="No Host"
-                                    className="profile-avatar"
+                                    className="host-meeting-profile-avatar"
                                 />
-                                <h2 className="profile-name">No Host</h2>
+                                <h2 className="host-meeting-profile-name">No Host</h2>
                             </div>
                         )}
                     </div>
                 </div>
 
-                <div className="topic-content">
-                    <div className="tabs-header">
+                <div className="host-meeting-topic-content">
+                    <div className="host-meeting-tabs-header">
                         <button
-                            className={`tab-button ${activeTab === "general" ? "active" : ""
+                            className={`host-meeting-tab-button ${activeTab === "general" ? "active" : ""
                                 }`}
                             onClick={() => setActiveTab("general")}
                         >
                             Topic General
                         </button>
                         <button
-                            className={`tab-button ${activeTab === "suggest" ? "active" : ""
+                            className={`host-meeting-tab-button ${activeTab === "suggest" ? "active" : ""
                                 }`}
                             onClick={() => setActiveTab("suggest")}
                         >
                             Suggested By
                         </button>
                         <button
-                            className={`tab-button ${activeTab === "evaluate" ? "active" : ""
+                            className={`host-meeting-tab-button ${activeTab === "evaluate" ? "active" : ""
                                 }`}
                             onClick={() => setActiveTab("evaluate")}
                         >
@@ -326,20 +326,20 @@ const HostMeetingDetailPage = () => {
                         </button>
                     </div>
 
-                    <div className="tab-content">
+                    <div className="host-meeting-tab-content">
                         {activeTab === "general" && (
                             <>
-                                <div className="detail-row">
-                                    <span className="label">Title:</span>
-                                    <span className="value">{meeting.topic.title}</span>
+                                <div className="host-meeting-detail-row">
+                                    <span className="host-meeting-label">Title:</span>
+                                    <span className="host-meeting-value">{meeting.topic.title}</span>
                                 </div>
-                                <div className="detail-row">
-                                    <span className="label">Description:</span>
-                                    <span className="value">{meeting.topic.description}</span>
+                                <div className="host-meeting-detail-row">
+                                    <span className="host-meeting-label">Description:</span>
+                                    <span className="host-meeting-value">{meeting.topic.description}</span>
                                 </div>
-                                <div className="detail-row">
-                                    <span className="label">Remark:</span>
-                                    <span className="value">{meeting.topic.remark}</span>
+                                <div className="host-meeting-detail-row">
+                                    <span className="host-meeting-label">Remark:</span>
+                                    <span className="host-meeting-value">{meeting.topic.remark}</span>
                                 </div>
                             </>
                         )}

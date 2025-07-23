@@ -1,11 +1,11 @@
-.meeting-detail-page {
+.host-meeting-detail-page {
     padding: 32px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-.page-header {
+.host-meeting-page-header {
     display: flex;
     align-items: center;
     margin-bottom: 32px;
@@ -17,7 +17,7 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.download-button {
+.host-meeting-download-button {
     margin-left: auto;
     padding: 12px 24px;
     border: none;
@@ -31,12 +31,12 @@
     box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
 }
 
-.download-button:hover {
+.host-meeting-download-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
 }
 
-.back-button {
+.host-meeting-back-button {
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -53,7 +53,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-.back-button:hover {
+.host-meeting-back-button:hover {
     background: #10b981;
     border-color: #10b981;
     color: white;
@@ -61,7 +61,7 @@
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
 
-.page-title {
+.host-meeting-page-title {
     font-size: 28px;
     font-weight: 700;
     color: #1f2937;
@@ -72,13 +72,13 @@
     background-clip: text;
 }
 
-.content-grid {
+.host-meeting-content-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 32px;
 }
 
-.profile-card {
+.host-meeting-profile-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -89,17 +89,17 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.profile-card:hover {
+.host-meeting-profile-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
-.profile-header {
+.host-meeting-profile-header {
     text-align: center;
     margin-bottom: 32px;
 }
 
-.profile-avatar {
+.host-meeting-profile-avatar {
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -110,12 +110,12 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.profile-avatar:hover {
+.host-meeting-profile-avatar:hover {
     transform: scale(1.05);
     border-color: #10b981;
 }
 
-.profile-name {
+.host-meeting-profile-name {
     font-size: 22px;
     font-weight: 700;
     color: #1f2937;
@@ -126,18 +126,18 @@
     background-clip: text;
 }
 
-.profile-title {
+.host-meeting-profile-title {
     color: #64748b;
     margin: 0 0 16px 0;
     font-size: 16px;
     font-weight: 500;
 }
 
-.contact-info {
+.host-meeting-contact-info {
     margin-bottom: 32px;
 }
 
-.contact-item {
+.host-meeting-contact-item {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -151,18 +151,18 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.contact-item:hover {
+.host-meeting-contact-item:hover {
     background: rgba(16, 185, 129, 0.1);
     transform: translateX(4px);
 }
 
-.contact-icon {
+.host-meeting-contact-icon {
     width: 20px;
     height: 20px;
     color: #10b981;
 }
 
-.meeting-highlight {
+.host-meeting-highlight {
     margin-bottom: 32px;
     padding: 24px;
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
@@ -170,259 +170,283 @@
     border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-.meeting-name {
+.host-meeting-name {
     text-align: center;
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 20px;
-    background: linear-gradient(135deg, #10b981, #059669);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
-.section-title {
-    font-size: 20px;
+.host-meeting-section-title {
+    font-size: 18px;
     font-weight: 700;
     color: #1f2937;
     margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(16, 185, 129, 0.2);
     background: linear-gradient(135deg, #667eea, #764ba2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.host-section .section-title {
-    text-align: center;
+.host-meeting-host-section .host-meeting-section-title {
+    color: #059669;
+    background: linear-gradient(135deg, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-.topic-content {
+.host-meeting-topic-content {
+    padding: 24px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 32px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.topic-content:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+.host-meeting-topic-content:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-.tabs-header {
+.host-meeting-tabs-header {
     display: flex;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-    border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    margin-bottom: 32px;
+    border-radius: 16px;
     padding: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.tab-button {
-    padding: 16px 28px;
+.host-meeting-tab-button {
+    padding: 16px 24px;
     border: none;
     background: transparent;
+    cursor: pointer;
     font-size: 15px;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 12px;
     color: #64748b;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     flex: 1;
     text-align: center;
-    margin: 0 4px;
+    position: relative;
+    overflow: hidden;
 }
 
-.tab-button.active {
+.host-meeting-tab-button.active {
     color: white;
     background: linear-gradient(135deg, #10b981, #059669);
     box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
-.tab-button:hover:not(.active) {
+.host-meeting-tab-button:hover:not(.active) {
     color: #10b981;
     background: rgba(16, 185, 129, 0.1);
     transform: translateY(-1px);
 }
 
-.tab-content {
-    padding: 40px;
-}
-
-.detail-row {
-    display: flex;
-    margin-bottom: 20px;
-    padding: 16px;
-    background: rgba(16, 185, 129, 0.05);
-    border-radius: 12px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.detail-row:hover {
-    background: rgba(16, 185, 129, 0.1);
-    transform: translateX(4px);
-}
-
-.label {
-    width: 180px;
-    font-weight: 600;
-    color: #475569;
-    font-size: 15px;
-}
-
-.value {
-    color: #1f2937;
-    font-weight: 500;
-    font-size: 15px;
-}
-
-.link {
-    color: #10b981;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.link:hover {
-    color: #059669;
-    text-decoration: underline;
-    transform: translateX(4px);
-}
-
-.feedback-section {
+.host-meeting-tab-content {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     padding: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.host-meeting-detail-row {
+    display: flex;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.host-meeting-detail-row:hover {
+    background: rgba(16, 185, 129, 0.02);
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 8px;
+}
+
+.host-meeting-label {
+    font-weight: 600;
+    color: #374151;
+    width: 140px;
+    flex-shrink: 0;
+}
+
+.host-meeting-value {
+    color: #4b5563;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.host-meeting-link {
+    color: #10b981;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.host-meeting-link:hover {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+    text-decoration: underline;
+}
+
+.host-meeting-feedback-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    padding: 32px;
+    margin-top: 32px;
     grid-column: span 2;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.feedback-section:hover {
-    transform: translateY(-4px);
+.host-meeting-feedback-section:hover {
+    transform: translateY(-2px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
-.feedback-content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-height: 500px;
+.host-meeting-feedback-content {
+    max-height: 400px;
     overflow-y: auto;
-    padding-right: 8px;
+    padding-right: 12px;
 }
 
-.feedback-content::-webkit-scrollbar {
+.host-meeting-feedback-content::-webkit-scrollbar {
     width: 8px;
 }
 
-.feedback-content::-webkit-scrollbar-track {
-    background: rgba(16, 185, 129, 0.1);
-    border-radius: 8px;
+.host-meeting-feedback-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
 }
 
-.feedback-content::-webkit-scrollbar-thumb {
+.host-meeting-feedback-content::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #10b981, #059669);
-    border-radius: 8px;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-.feedback-content::-webkit-scrollbar-thumb:hover {
+.host-meeting-feedback-content::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #059669, #047857);
 }
 
-.feedback-section .feedback-input {
-    position: sticky;
-    top: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 1;
-    padding-bottom: 12px;
-    border-radius: 16px;
-    margin-bottom: 8px;
+.host-meeting-feedback-section .host-meeting-feedback-input {
+    margin-top: 24px;
 }
 
-.feedback-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.host-meeting-feedback-list {
+    margin-top: 24px;
 }
 
 @media (max-width: 1024px) {
-    .content-grid {
+    .host-meeting-content-grid {
         grid-template-columns: 1fr;
         gap: 24px;
     }
-    
-    .meeting-detail-page {
-        padding: 20px;
-    }
-    
-    .page-header {
-        padding: 20px;
-        margin-bottom: 24px;
-    }
-    
-    .profile-card,
-    .topic-content,
-    .feedback-section {
-        padding: 24px;
+
+    .host-meeting-feedback-section {
+        grid-column: span 1;
     }
 }
 
 @media (max-width: 768px) {
-    .tabs-header {
+    .host-meeting-detail-page {
+        padding: 20px;
+    }
+
+    .host-meeting-page-header {
+        padding: 20px;
         flex-direction: column;
-        gap: 8px;
+        gap: 16px;
+        text-align: center;
     }
-    
-    .tab-button {
-        padding: 12px 20px;
-        margin: 0;
+
+    .host-meeting-download-button {
+        margin-left: 0;
     }
-    
-    .page-title {
+
+    .host-meeting-back-button {
+        margin-right: 0;
+        margin-bottom: 16px;
+    }
+
+    .host-meeting-page-title {
         font-size: 24px;
     }
-    
-    .meeting-name {
-        font-size: 20px;
+
+    .host-meeting-tabs-header {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
     }
-    
-    .profile-avatar {
-        width: 100px;
-        height: 100px;
+
+    .host-meeting-tab-button {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .host-meeting-profile-card,
+    .host-meeting-tab-content,
+    .host-meeting-feedback-section {
+        padding: 20px;
+    }
+
+    .host-meeting-detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .host-meeting-label {
+        width: auto;
     }
 }
 
-.pagination {
+.host-meeting-pagination {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 24px 32px;
+    margin-top: 32px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 16px;
-    margin-top: 32px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.pagination-info {
+.host-meeting-pagination-info {
     font-size: 15px;
     color: #475569;
     font-weight: 500;
 }
 
-.pagination-buttons {
+.host-meeting-pagination-buttons {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.pagination-btn {
+.host-meeting-pagination-btn {
     padding: 10px 12px;
     border: 2px solid rgba(226, 232, 240, 0.8);
     border-radius: 10px;
@@ -434,7 +458,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.pagination-btn:hover:not(:disabled) {
+.host-meeting-pagination-btn:hover:not(:disabled) {
     background: #10b981;
     border-color: #10b981;
     color: white;
@@ -442,13 +466,13 @@
     box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
 }
 
-.pagination-btn:disabled {
+.host-meeting-pagination-btn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
     transform: none;
 }
 
-.pagination-number {
+.host-meeting-pagination-number {
     padding: 10px 16px;
     border-radius: 10px;
     font-size: 15px;
@@ -462,7 +486,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.pagination-number.active {
+.host-meeting-pagination-number.active {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border-color: #10b981;
@@ -470,11 +494,11 @@
     transform: translateY(-2px);
 }
 
-.pagination-number:not(.active) {
+.host-meeting-pagination-number:not(.active) {
     color: #475569;
 }
 
-.pagination-number:not(.active):hover {
+.host-meeting-pagination-number:not(.active):hover {
     background: rgba(16, 185, 129, 0.1);
     border-color: rgba(16, 185, 129, 0.3);
     color: #10b981;
