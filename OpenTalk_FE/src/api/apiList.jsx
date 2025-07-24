@@ -44,3 +44,34 @@ export const saveCronjob = async ({ cronjobKey, cronjobValue }) => {
   const res = await axiosClient.put(`/cron/update?${params}`);
   return res.data;
 };
+
+
+// API Material
+export const uploadMaterial = async (file, userId, meetingId) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('userId', userId);
+  formData.append('meetingId', meetingId);
+
+  const response = await axiosClient.post('/files/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  
+  return response.data;
+};
+
+export const getMaterials = async (meetingId) => {
+  const response = await axiosClient.get(`/materials`, {
+    params: { meetingId },
+  });
+  
+  return response.data;
+};
+
+export const deleteMaterial = async (materialId) => {
+  const response = await axiosClient.delete(`/materials/${materialId}`);
+  
+  return response.data;
+};
