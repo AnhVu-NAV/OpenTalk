@@ -79,3 +79,22 @@ export const getCheckinCode = (meetingId) => {
         },
     });
 };
+
+export const getTopics = (params = {}) => {
+    const token = getAccessToken();
+    return axiosClient.get('/topic-idea', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        params,
+    });
+};
+
+export const autoSelectHost = (meetingId) => {
+    const token = getAccessToken();
+    return axiosClient.get(`/hosts/auto-select-host/${meetingId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+};

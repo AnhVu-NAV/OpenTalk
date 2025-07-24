@@ -52,7 +52,7 @@ function RequestsModal({ show, onHide, meetingId, meetingTitle, onAfterAction })
   return (
     <>
       <Modal show={show} onHide={onHide} centered size="lg">
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Requests for “{meetingTitle}”</Modal.Title>
         </Modal.Header>
         <Modal.Body>
