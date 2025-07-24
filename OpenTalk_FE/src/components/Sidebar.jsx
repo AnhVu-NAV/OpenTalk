@@ -1,173 +1,220 @@
-import React, {useEffect, useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
+"use client"
+
+import { useEffect, useState } from "react"
+import { NavLink, useNavigate } from "react-router-dom"
 import {
-    FaHome, FaVideo, FaEnvelope, FaProjectDiagram, FaTicketAlt, FaUsers,
-    FaRegCalendarCheck, FaRegNewspaper, FaFileAlt, FaBuilding, FaUserCircle,
-    FaCog, FaSignOutAlt, FaRegLightbulb, FaPoll
-} from "react-icons/fa";
-import {getCurrentUser, clearTokens} from "../helper/auth";
+    FaHome,
+    FaVideo,
+    FaEnvelope,
+    FaProjectDiagram,
+    FaTicketAlt,
+    FaUsers,
+    FaRegCalendarCheck,
+    FaRegNewspaper,
+    FaFileAlt,
+    FaBuilding,
+    FaUserCircle,
+    FaCog,
+    FaRegLightbulb,
+    FaPoll,
+    FaChevronDown,
+    FaChevronRight,
+} from "react-icons/fa"
+import { getCurrentUser } from "../helper/auth"
+import styles from "./Sidebar.module.css"
 
-const menuItems = [
-    // 1. Dashboard / Overview
-    { label: "Dashboard", icon: <FaHome />, path: "/" },            // HR, MEETING_MANAGER
-    { label: "Overview", icon: <FaHome />, path: "/" },             // USER
+const menuSections = [
+    {
+        title: "Dashboard",
+        items: [
+            { label: "Dashboard", icon: <FaHome />, path: "/", roles: ["HR", "MEETING_MANAGER"] },
+            { label: "Overview", icon: <FaHome />, path: "/", roles: ["USER"] },
+        ],
+    },
+    {
+        title: "Meetings",
+        items: [
+            { label: "Meetings", icon: <FaVideo />, path: "/meeting", roles: ["HR", "USER", "MEETING_MANAGER"] },
+            { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting", roles: ["HR", "USER", "MEETING_MANAGER"] },
+            { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request", roles: ["HR", "MEETING_MANAGER"] },
+            { label: "OpenTalk Manager", icon: <FaVideo />, path: "/opentalk/manager", roles: ["HR", "MEETING_MANAGER"] },
+            {
+                label: "Poll Meeting",
+                icon: <FaProjectDiagram />,
+                path: "/poll-meeting",
+                roles: ["HR", "USER", "MEETING_MANAGER"],
+            },
+            { label: "Create Poll", icon: <FaProjectDiagram />, path: "/poll/create", roles: ["HR", "MEETING_MANAGER"] },
+        ],
+    },
+    {
+        title: "Attendance",
+        items: [
+            {
+                label: "Attendance",
+                icon: <FaRegCalendarCheck />,
+                path: "/attendance",
+                roles: ["HR", "USER", "MEETING_MANAGER"],
+            },
+            {
+                label: "Attendance (Admin)",
+                icon: <FaRegCalendarCheck />,
+                path: "/attendance/admin",
+                roles: ["HR", "MEETING_MANAGER"],
+            },
+        ],
+    },
+    {
+        title: "People & Organization",
+        items: [
+            { label: "Employee", icon: <FaUsers />, path: "/employee", roles: ["HR", "MEETING_MANAGER"] },
+            { label: "Organization", icon: <FaBuilding />, path: "/organization", roles: ["HR", "MEETING_MANAGER"] },
+        ],
+    },
+    {
+        title: "Topics & Suggestions",
+        items: [
+            {
+                label: "Suggest Topic",
+                icon: <FaRegNewspaper />,
+                path: "/suggest-topic",
+                roles: ["HR", "USER", "MEETING_MANAGER"],
+            },
+            { label: "Topic Hub", icon: <FaPoll />, path: "/topic", roles: ["HR", "USER", "MEETING_MANAGER"] },
+            {
+                label: "Topic Proposal",
+                icon: <FaRegLightbulb />,
+                path: "/topicProposal",
+                roles: ["HR", "USER", "MEETING_MANAGER"],
+            },
+        ],
+    },
+    {
+        title: "Reports & Management",
+        items: [
+            {
+                label: "Host Frequency Report",
+                icon: <FaFileAlt />,
+                path: "/hostfrequencyreport",
+                roles: ["HR", "MEETING_MANAGER"],
+            },
+            { label: "Salary", icon: <FaCog />, path: "/salary", roles: ["HR"] },
+            { label: "Ticket", icon: <FaTicketAlt />, path: "/ticket", roles: ["HR", "MEETING_MANAGER"] },
+        ],
+    },
+    {
+        title: "Account",
+        items: [{ label: "Account", icon: <FaUserCircle />, path: "/account", roles: ["HR", "USER", "MEETING_MANAGER"] }],
+    },
+]
 
-    // 2. Meetings
-    { label: "Meetings", icon: <FaVideo />, path: "/meeting" },
-    // { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/:id" },
-    { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting" },
-    // { label: "Host Meeting Detail", icon: <FaVideo />, path: "/host-meeting/:id" },
-    // { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/detail/:id" },
-    { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request" },
-    { label: "OpenTalk Manager", icon: <FaVideo />, path: "/opentalk/manager" },
-    { label: "Poll Meeting", icon: <FaProjectDiagram />, path: "/poll-meeting" },
-    { label: "Create Poll", icon: <FaProjectDiagram />, path: "/poll/create" },
-
-    // 3. Attendance
-    { label: "Attendance", icon: <FaRegCalendarCheck />, path: "/attendance" },
-    { label: "Attendance (Admin)", icon: <FaRegCalendarCheck />, path: "/attendance/admin" },
-    { label: "User Attendance", icon: <FaRegCalendarCheck />, path: "/attendance/user/:id" },
-
-    // 4. Employee
-    { label: "Employee", icon: <FaUsers />, path: "/employee" },
-
-    // 5. Suggest / Topics
-    { label: "Suggest Topic", icon: <FaRegNewspaper />, path: "/suggest-topic" },
-    { label: "Topic Hub", icon: <FaPoll  />, path: "/topic" },
-    { label: "Topic Proposal", icon: <FaRegLightbulb />, path: "/topicProposal" },
-
-    // 6. Reports / Management
-    { label: "Host Frequency Report", icon: <FaFileAlt />, path: "/hostfrequencyreport" },
-    { label: "Organization", icon: <FaBuilding />, path: "/organization" },
-
-    // 8. Salary / Ticket / Message / Test
-    { label: "Salary", icon: <FaCog />, path: "/salary" },
-    { label: "Ticket", icon: <FaTicketAlt />, path: "/ticket" },
-
-
-    // 7. User / Account / Settings
-    // { label: "User Profile", icon: <FaUserCircle />, path: "/user/:id" },
-    { label: "Account", icon: <FaUserCircle />, path: "/account" },
-
-
-
-];
-
-const activeStyle = {
-    backgroundColor: "#001B12",
-    color: "white",
-    fontWeight: "600",
-    textDecoration: "none",
-};
-
-const inactiveStyle = {
-    color: "#6c757d",
-    textDecoration: "none",
-};
-
-function Sidebar() {
-    const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+function Sidebar({ collapsed, onToggle }) {
+    const navigate = useNavigate()
+    const [user, setUser] = useState(null)
+    const [expandedSections, setExpandedSections] = useState({})
 
     useEffect(() => {
-        setUser(getCurrentUser());
-    }, []);
+        const current = getCurrentUser()
+        console.log("User role:", current?.role)
+        setUser(current)
 
-    useEffect(() => {
-        const user = getCurrentUser();
-        console.log("User role:", user?.role);
-        console.log("Resolved role name:", roleMap[user?.role]);
-        setUser(user);
-    }, []);
-
+        // Initialize expanded sections
+        const initialExpanded = {}
+        menuSections.forEach((section, index) => {
+            initialExpanded[index] = true // Start with all sections expanded
+        })
+        setExpandedSections(initialExpanded)
+    }, [])
 
     const roleMap = {
-        1: "HR",
+        1: "MEETING_MANAGER",
         2: "USER",
-        3: "MEETING_MANAGER",
-        4: "ADMIN"
-    };
+        3: "HR",
+    }
 
-    const visibleMenuItems = menuItems.filter(({ label }) => {
-        const role = roleMap[user?.role];// Ex: "USER", "HR", "MEETING_MANAGER"
+    const toggleSection = (sectionIndex) => {
+        if (collapsed) return // Don't toggle when sidebar is collapsed
 
-        const accessMap = {
-            ADMIN: [
-                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
-                "Employee",
-                "HostFrequencyReport", "Organization", "User Profile",
-                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting"
+        setExpandedSections((prev) => ({
+            ...prev,
+            [sectionIndex]: !prev[sectionIndex],
+        }))
+    }
 
-            ],
-            HR: [
-                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
-                "Employee","Suggest Topic",
-                "HostFrequencyReport", "Organization", "User Profile",
-                "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test",
-                "Host Meeting"
-            ],
-            USER: [
-                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
-                "User Profile",
-                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test",
-                "Host Meeting",
-                "Overview", "Meeting Detail", "Poll Meeting",
-                "Attendance", "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
-                "Message", "Account", "Settings", "Test Page"
-            ],
-            HR: [
-                "Dashboard", "Meetings", "Meeting Detail", "Attendance", "Attendance (Admin)",
-                "Employee", "Host Frequency Report", "Organization", "Salary",
-                "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
-                "Message", "Account", "Settings", "Test Page"
-            ],
-            MEETING_MANAGER: [
-                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
-                "HostFrequencyReport", "Poll Meeting",
-                "User Profile",
-                "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting",
-                "Dashboard", "Meeting Detail", "Poll Meeting", "Create Poll",
-                "OpenTalk Manager", "OpenTalk Requests", "Attendance", "Attendance (Admin)",
-                "Host Frequency Report", "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
-                "Message", "Account", "Settings", "Test Page", "Topic Poll"
-            ],
-            ADMIN: [  // full quyền (tuỳ hệ thống)
-                ...menuItems.map(item => item.label) // tất cả
-            ]
-        };
-
-        return accessMap[role]?.includes(label);
-    });
+    const userRole = roleMap[user?.role]
 
     return (
-        <div className="d-flex flex-column bg-light vh-100 p-3" style={{width: 250}}>
-            <nav className="nav flex-column">
-                {visibleMenuItems.map(({label, icon, path}) => (
-                    <NavLink
-                        to={path}
-                        key={label}
-                        className="nav-link d-flex align-items-center gap-2 text-start rounded mb-1"
-                        style={({isActive}) => (isActive ? activeStyle : inactiveStyle)}
-                    >
-                        <span>{icon}</span>
-                        <span>{label}</span>
-                    </NavLink>
-                ))}
+        <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
+            {/* Sidebar Header */}
+            <div className={styles.sidebarHeader}>
+                <div className={styles.logoContainer}>
+                    <div className={styles.logoIcon}></div>
+                    {!collapsed && <span className={styles.logoText}>OpenTalk</span>}
+                </div>
+
+                {!collapsed && (
+                    <div className={styles.userInfo}>
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User avatar" className={styles.userAvatar} />
+                        <div className={styles.userDetails}>
+                            <span className={styles.userNameSidebar}>{user?.fullName || user?.username || "Unknown"}</span>
+                            <span className={styles.userRole}>{userRole || "User"}</span>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Navigation Menu */}
+            <nav className={styles.navigation}>
+                {menuSections.map((section, sectionIndex) => {
+                    const visibleItems = section.items.filter((item) => item.roles.includes(userRole))
+
+                    if (visibleItems.length === 0) return null
+
+                    return (
+                        <div key={sectionIndex} className={styles.menuSection}>
+                            {!collapsed && (
+                                <button className={styles.sectionHeader} onClick={() => toggleSection(sectionIndex)}>
+                                    <span className={styles.sectionTitle}>{section.title}</span>
+                                    {expandedSections[sectionIndex] ? (
+                                        <FaChevronDown className={styles.sectionIcon} />
+                                    ) : (
+                                        <FaChevronRight className={styles.sectionIcon} />
+                                    )}
+                                </button>
+                            )}
+
+                            <div
+                                className={`${styles.menuItems} ${
+                                    collapsed || expandedSections[sectionIndex] ? styles.expanded : styles.collapsed
+                                }`}
+                            >
+                                {visibleItems.map((item) => (
+                                    <NavLink
+                                        key={item.label}
+                                        to={item.path}
+                                        className={({ isActive }) => `${styles.menuItem} ${isActive ? styles.active : ""}`}
+                                        title={collapsed ? item.label : ""}
+                                    >
+                                        <span className={styles.menuIcon}>{item.icon}</span>
+                                        {!collapsed && <span className={styles.menuLabel}>{item.label}</span>}
+                                    </NavLink>
+                                ))}
+                            </div>
+                        </div>
+                    )
+                })}
             </nav>
 
-            {/*<button*/}
-            {/*    className="btn btn-outline-danger mt-auto d-flex align-items-center gap-2"*/}
-            {/*    style={{ width: "100%" }}*/}
-            {/*    onClick={() => {*/}
-            {/*        clearTokens();*/}
-            {/*        navigate("/login");*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    <FaSignOutAlt />*/}
-            {/*    Logout*/}
-            {/*</button>*/}
-        </div>
-    );
+            {/* Collapse Toggle Button */}
+            <button
+                className={styles.collapseButton}
+                onClick={onToggle}
+                title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+                <FaChevronRight className={`${styles.collapseIcon} ${collapsed ? styles.rotated : ""}`} />
+            </button>
+        </aside>
+    )
 }
 
-export default Sidebar;
+export default Sidebar
