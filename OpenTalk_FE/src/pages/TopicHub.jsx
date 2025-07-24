@@ -13,12 +13,11 @@ const TopicHub = () => {
 
     const fetchMeeting = async () => {
         try {
-            const res = await axios.get("/opentalk-meeting", {
-                params: {name: meetingName,
-                         pageNo},
+            const res = await axios.get("/opentalk-meeting/all", {
+                params: {name: meetingName},
                 headers: { Authorization: `Bearer ${getAccessToken()}` },
             })
-            setCategories(res.data.content || [])
+            setCategories(res.data || [])
 
         } catch (err) {
             console.error(err)
