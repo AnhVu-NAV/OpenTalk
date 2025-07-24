@@ -8,6 +8,7 @@ import { OpenTalkMeetingStatus } from "../constants/enums/openTalkMeetingStatus"
 import meetingMockData from "../api/__mocks__/data/meetingMockData"
 import styles from "./styles/module/MeetingListPage.module.css"
 import { getCurrentUser } from "../helper/auth"
+import SuccessToast from '../components/SuccessToast/SuccessToast';
 
 const mockBranches = [
   { id: 1, name: "Branch A" },
@@ -26,12 +27,24 @@ const MeetingListPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 8
 
+    // Toast state
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
+
   const tabs = [
     { id: OpenTalkMeetingStatus.COMPLETED, label: "History" },
     { id: OpenTalkMeetingStatus.WAITING_HOST_REGISTER, label: "Waiting Host To Register" },
     { id: OpenTalkMeetingStatus.UPCOMING, label: "Upcoming" },
     { id: OpenTalkMeetingStatus.ONGOING, label: "Ongoing" },
   ]
+
+  // Function to show toast message
+  const showToast = (message, type = "success") => {
+    setToastMessage(message);
+    setToastType(type);
+    setToastVisible(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,23 +75,27 @@ const MeetingListPage = () => {
     }
   }
 
-  const handleRegisterHost = (meetingId) => {
-    const currentUserInfo = getCurrentUser()
-    if (currentUserInfo) {
+  const handleRegisterHost = (meeting) => {
+    const currentUserInfo = getCurrentUser();
+    if (currentUserInfo && currentUserInfo.companyBranch?.name === meeting.companyBranch?.name) {
       registerHost({
         user: currentUserInfo,
         meeting: {
-          id: meetingId,
-        },
-      })
+          id: meeting.id
+        }
+      });
       setMeetings((prevMeetings) => {
         return prevMeetings.map((m) => {
-          if (m.id === meetingId) {
-            return { ...m, registeredHostUserIds: [...m.registeredHostUserIds, currentUserInfo.id] }
+          if (m.id === meeting.id) {
+            return { ...m, registeredHostUserIds: [...m.registeredHostUserIds, currentUserInfo.id] };
           }
-          return m
-        })
-      })
+          return m;
+        });
+      });
+
+      showToast(`Successfully registered as host for  ${meeting.meetingName}  meeting!`, "success");
+    } else {
+      showToast(`You need to be logged in or your current company branch need to be ${meeting.companyBranch?.name}`, "error");
     }
   }
 
@@ -175,8 +192,7 @@ const MeetingListPage = () => {
                     if (activeTab === OpenTalkMeetingStatus.ONGOING) {
                       handleJoin(m.meetingLink)
                     } else if (activeTab === OpenTalkMeetingStatus.WAITING_HOST_REGISTER) {
-                      handleRegisterHost(m.id)
-                      alert("Your host request has been sent successfully.")
+                      handleRegisterHost(m)
                     }
                   }}
                   onView={() => navigate(`/meeting/${m.id}`, { state: { meetingList: meetings, onTab: activeTab } })}
@@ -215,6 +231,13 @@ const MeetingListPage = () => {
             </button>
           </div>
         </div>
+
+        <SuccessToast
+        message={toastMessage}
+        isVisible={toastVisible}
+        type={toastType}
+        onClose={() => setToastVisible(false)}
+      />
       </div>
   )
 }

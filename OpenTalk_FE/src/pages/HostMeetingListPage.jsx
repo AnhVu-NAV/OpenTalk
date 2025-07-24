@@ -10,19 +10,10 @@ import styles from "./styles/module/HostMeetingListPage.module.css"
 import { getCurrentUser } from "../helper/auth"
 import { getMeetingDetailsForHost } from "../api/meeting"
 
-const mockBranches = [
-    { id: 1, name: "Branch A" },
-    { id: 2, name: "Branch B" },
-    { id: 3, name: "Branch C" },
-    { id: 4, name: "Branch D" },
-]
-
 const HostMeetingListPage = () => {
     const navigate = useNavigate()
     const [meetings, setMeetings] = useState([])
-    const [branches, setBranches] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
-    const [branchFilter, setBranchFilter] = useState("")
     const [activeTab, setActiveTab] = useState(OpenTalkMeetingStatus.COMPLETED)
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 8
@@ -36,31 +27,17 @@ const HostMeetingListPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getMeetingDetailsForHost(searchTerm, branchFilter, getCurrentUser()?.username)
+                const data = await getMeetingDetailsForHost(searchTerm, getCurrentUser()?.username)
                 console.log("Fetched host meetings:", data)
                 setMeetings(Array.isArray(data) ? data : meetingMockData)
             } catch (e) {
                 console.error(e)
                 setMeetings(meetingMockData)
             }
-
-            try {
-                const branchData = await getCompanyBranches()
-                setBranches(Array.isArray(branchData) ? branchData : mockBranches)
-            } catch (e) {
-                console.error(e)
-                setBranches(mockBranches)
-            }
         }
 
         fetchData()
-    }, [searchTerm, branchFilter])
-
-    const handleJoin = (link) => {
-        if (link) {
-            window.open(link, "_blank")
-        }
-    }
+    }, [searchTerm])
 
     const filteredMeetings = meetings.filter((m) => {
         switch (activeTab) {
@@ -94,24 +71,6 @@ const HostMeetingListPage = () => {
                             setCurrentPage(1)
                         }}
                     />
-                </div>
-                <div className={styles.hostMeetingSelectContainer}>
-                    <select
-                        className={styles.hostMeetingSelect}
-                        value={branchFilter}
-                        onChange={(e) => {
-                            setBranchFilter(e.target.value)
-                            setCurrentPage(1)
-                        }}
-                    >
-                        <option value="">All Branches</option>
-                        {branches.map((b) => (
-                            <option key={b.id ?? b.name} value={b.id}>
-                                {b.name}
-                            </option>
-                        ))}
-                    </select>
-                    <FaChevronDown className={styles.hostMeetingSelectIcon} />
                 </div>
             </div>
 
