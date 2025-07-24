@@ -12,7 +12,9 @@ const authApi = {
         headers: {
             Authorization: `Bearer ${refreshToken}`
         }
-    })
+    }),
+    forgetPassword: (email) => axiosClient.post('/auth/forgot-password', { email }),
+    resetPassword: (data) => axiosClient.post('/auth/reset-password', data)
 };
 
 export default authApi;

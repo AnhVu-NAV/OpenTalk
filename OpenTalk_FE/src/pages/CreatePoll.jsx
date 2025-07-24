@@ -9,7 +9,7 @@ import TopicProposal from "../components/common/TopicProposalCard.jsx"
 import { useParams } from "react-router-dom"
 import ProposalDetail from "../components/proposalTopic/ProposalDetail.jsx"
 import CustomModal from "../components/CustomModal/CustomModal.jsx"
-import DeleteModal from "../components/DeleteModal/DeleteModal"
+import DeleteModal from "../components/deleteModal/DeleteModal"
 import {} from "reactstrap" // Import DeleteModal
 
 const CreatePoll = () => {
