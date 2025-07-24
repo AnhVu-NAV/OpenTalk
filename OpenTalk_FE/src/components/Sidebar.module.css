@@ -1,0 +1,334 @@
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    border-right: 1px solid rgba(16, 185, 129, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebarHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.logoIcon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(45deg, #ec4899, #10b981);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.logoIcon::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 3s infinite;
+}
+
+.logoText {
+    font-weight: 700;
+    font-size: 1.25rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    white-space: nowrap;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.userAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(16, 185, 129, 0.2);
+    flex-shrink: 0;
+}
+
+.userDetails {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.userNameSidebar {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1f2937;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userRole {
+    font-size: 0.75rem;
+    color: #10b981;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.navigation {
+    flex: 1;
+    padding: 1rem 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.navigation::-webkit-scrollbar {
+    width: 4px;
+}
+
+.navigation::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.navigation::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.2);
+    border-radius: 2px;
+}
+
+.navigation::-webkit-scrollbar-thumb:hover {
+    background: rgba(16, 185, 129, 0.3);
+}
+
+.menuSection {
+    margin-bottom: 0.5rem;
+}
+
+.sectionHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #6b7280;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sectionHeader:hover {
+    background: rgba(16, 185, 129, 0.05);
+    color: #10b981;
+}
+
+.sectionTitle {
+    flex: 1;
+    text-align: left;
+}
+
+.sectionIcon {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.menuItems {
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menuItems.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+.menuItems.expanded {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    color: #6b7280;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 0.125rem 0.75rem;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.menuItem::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 10px 0 0 10px;
+    transition: width 0.3s ease;
+}
+
+.menuItem:hover {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    transform: translateX(4px);
+}
+
+.menuItem:hover::before {
+    width: 3px;
+}
+
+.menuItem.active {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1));
+    color: #10b981;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.menuItem.active::before {
+    width: 3px;
+}
+
+.menuIcon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.menuItem:hover .menuIcon {
+    transform: scale(1.1);
+}
+
+.menuLabel {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.collapseButton {
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: white;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.collapseButton:hover {
+    background: #10b981;
+    border-color: #10b981;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.collapseButton:hover .collapseIcon {
+    color: white;
+}
+
+.collapseIcon {
+    font-size: 0.7rem;
+    color: #10b981;
+    transition: all 0.3s ease;
+}
+
+.collapseIcon.rotated {
+    transform: rotate(180deg);
+}
+
+/* Collapsed state adjustments */
+.sidebar.collapsed .sidebarHeader {
+    padding: 1rem;
+}
+
+.sidebar.collapsed .logoContainer {
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.sidebar.collapsed .menuItem {
+    justify-content: center;
+    padding: 0.75rem;
+    margin: 0.125rem 0.5rem;
+}
+
+.sidebar.collapsed .menuItem::before {
+    display: none;
+}
+
+.sidebar.collapsed .menuItem:hover {
+    transform: none;
+}
+
+/* Animations */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -280px;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .sidebar.collapsed {
+        left: -80px;
+    }
+
+    .sidebar.collapsed.show {
+        left: 0;
+        width: 80px;
+    }
+}
