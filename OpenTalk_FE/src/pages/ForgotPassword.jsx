@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import authApi from '../api/authApi';
-import { saveAuthTokens } from '../helper/auth';
 import SuccessToast from '../components/SuccessToast/SuccessToast';
 
-export default function Login() {
-  const [form, setForm] = useState({ email: '', password: '' });
-
-  // State cho toast
+export default function ForgotPassword() {
+  const [email, setEmail] = useState('');
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
@@ -17,21 +14,17 @@ export default function Login() {
     setToastVisible(true);
   };
 
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setEmail(e.target.value);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await authApi.login(form);
-      const data = res.data.result;
-      saveAuthTokens(data);
-      showToast('Login successful!', 'success');
-      setTimeout(() => window.location.href = '/dashboard', 1000);
+      const res = await authApi.forgetPassword(email);
+      showToast(res.data.message, 'success');
     } catch (err) {
-      const msg = err.response?.data?.message
-        || 'Login failed. Please try again!';
+      const msg = err.response?.data?.message || 'Something went wrong. Please try again!';
       showToast(msg, 'error');
       console.error(err);
     }
@@ -42,9 +35,9 @@ export default function Login() {
       <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
         <div className="bg-white p-5 shadow rounded" style={{ width: '100%', maxWidth: 400 }}>
           <div className="text-center mb-4">
-            <h5 className="fw-bold">Welcome Back</h5>
+            <h5 className="fw-bold">Forgot Password</h5>
             <p className="text-muted" style={{ fontSize: 14 }}>
-              Login to your account to continue
+              Enter your email to receive a password reset link
             </p>
           </div>
 
@@ -56,40 +49,21 @@ export default function Login() {
                 Email<span className="text-danger">*</span>
               </label>
               <input
-                type="text"
+                type="email"
                 name="email"
                 className="form-control"
                 placeholder="Enter your email"
-                value={form.email}
+                value={email}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            <div className="mb-3">
-              <label className="form-label">
-                Password<span className="text-danger">*</span>
-              </label>
-              <input
-                type="password"
-                name="password"
-                className="form-control"
-                placeholder="Enter your password"
-                value={form.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3 text-end">
-              <a href="/forget-password" className="text-decoration-none small">Forgot password?</a>
-            </div>
-
-            <button type="submit" className="btn btn-dark w-100">Login</button>
+            <button type="submit" className="btn btn-dark w-100">Send Reset Link</button>
           </form>
 
           <p className="text-center mt-3 small">
-            Don’t have an account? <a href="/register">Register now.</a>
+            Remember your password? <a href="/login">Back to login</a>
           </p>
         </div>
       </div>

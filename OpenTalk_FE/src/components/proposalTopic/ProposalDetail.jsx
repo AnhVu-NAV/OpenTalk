@@ -6,7 +6,7 @@ import axios from "/src/api/axiosClient.jsx"
 import { Modal, Button, Form, Spinner } from "react-bootstrap"
 import {useNavigate} from "react-router-dom";
 
-const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, meetingId, needAdd }) => {
+const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, meetingId, needAdd, needReject }) => {
     const [data, setData] = useState(null)
     const [successMsg, setSuccessMsg] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
@@ -53,9 +53,10 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
             return
         }
         try {
+            console.log()
             setRejectSubmitting(true)
             await axios.put(
-                `/topic-idea/decision`,
+                `/topic-idea/admin/decision`,
                 {
                     decision: "rejected",
                     remark: rejectNote.trim(),
@@ -86,7 +87,7 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
         try {
             setApproveSubmitting(true)
             await axios.put(
-                `/topic-idea/decision`,
+                `/topic-idea/admin/decision`,
                 {
                     decision: "approved",
                     remark: null,
@@ -240,7 +241,7 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
                 <div className="description-card">
                     <div className="author-info">
                         <img
-                            src="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"
+                            src={data.suggestedBy.avatar}
                             alt={data.suggestedBy.fullName}
                             className="author-avatar"
                         />
@@ -256,13 +257,26 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
                 </div>
             </div>
 
+            {/* Remark */}
+            {data?.status === "rejected" && (
+            <div className="description-section">
+                <h3 className="section-title">Reject reason</h3>
+                <div className="description-card">
+                    <div className="author-info">
+                        <div className="author-details">
+                            <h4>{data.remark}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            )}
             {/* Action Buttons */}
-            {data?.status === "pending" && (
                 <div className="action-buttons">
-                    <button className="btn btn-reject" onClick={onOpenRejectModal} disabled={approveSubmitting}>
+                    {needReject && (<button className="btn btn-reject" onClick={onOpenRejectModal} disabled={approveSubmitting}>
                         <FaTimes />
                         Reject
-                    </button>
+                    </button>)}
+                    {data?.status === "pending" && (
                     <button className="btn btn-approve" onClick={handleApprove} disabled={rejectSubmitting || approveSubmitting}>
                         {approveSubmitting ? (
                             <Spinner animation="border" size="sm" />
@@ -272,9 +286,8 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
                                 Approve
                             </>
                         )}
-                    </button>
+                    </button>)}
                 </div>
-            )}
 
             {needAdd && (
                 <div className="action-buttons">

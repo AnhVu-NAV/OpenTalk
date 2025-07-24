@@ -1,41 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams to get the route params
-import ProposalDetail from "/src/components/proposalTopic/ProposalDetail.jsx";
-import axios from '/src/api/axiosClient.jsx';
-import {getAccessToken} from "../helper/auth.jsx";
-import "./styles/TopicDetail.css"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import ProposalDetail from "/src/components/proposalTopic/ProposalDetail.jsx"
+import axios from "/src/api/axiosClient.jsx"
+import { getAccessToken } from "../helper/auth.jsx"
+import styles from "./styles/module/TopicDetail.module.css"
 
 const TopicDetail = () => {
-    const { id } = useParams(); // Extract 'id' from the URL params
-    const [data, setData] = useState(null); // State to hold the data
+    const { id } = useParams()
+    const [data, setData] = useState(null)
 
-    // Fetch data when the component mounts or when 'id' changes
     useEffect(() => {
-        // Example: Fetch data from an API based on the 'id' parameter
         const fetchData = async () => {
             try {
-                // Replace the URL with your actual API endpoint
-                const response = await axios.get(`/topic-idea/${id}`,{
-                    headers: { Authorization: `Bearer ${getAccessToken()}` }
-                });
-                setData(response.data); // Set the data received from API
+                const response = await axios.get(`/topic-idea/${id}`, {
+                    headers: { Authorization: `Bearer ${getAccessToken()}` },
+                })
+                setData(response.data)
             } catch (error) {
-                console.error("Error fetching topic details:", error);
+                console.error("Error fetching topic details:", error)
             }
-        };
+        }
 
-        fetchData();
-    }, []);
+        fetchData()
+    }, [id])
 
     if (!data) {
-        return <div>Loading...</div>;
+        return (
+            <div className={styles.topicDetailContainer}>
+                <div className={styles.loadingContainer}>
+                    <div className={styles.loadingSpinner}></div>
+                    <p>Loading...</p>
+                </div>
+            </div>
+        )
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 py-10">
-            <ProposalDetail {} />
+        <div className={styles.topicDetailContainer}>
+            <div className={styles.detailWrapper}>
+                <div className={styles.detailHeader}>
+                    <h1 className={styles.detailTitle}>Topic Details</h1>
+                    <p className={styles.detailSubtitle}>View and manage topic proposal</p>
+                </div>
+                <div className={styles.detailContent}>
+                    <ProposalDetail />
+                </div>
+            </div>
         </div>
-    );
-};
+    )
+}
 
-export default TopicDetail;
+export default TopicDetail

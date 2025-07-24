@@ -9,7 +9,7 @@ body {
     background-color: #f8fafc;
 }
 
-.attendance-page {
+.attendancePage {
     min-height: 100vh;
     position: relative;
     display: flex;
@@ -19,7 +19,7 @@ body {
 }
 
 /* Background */
-.attendance-background {
+.attendanceBackground {
     position: fixed;
     top: 0;
     left: 0;
@@ -29,7 +29,7 @@ body {
     z-index: -2;
 }
 
-.background-pattern {
+.backgroundPattern {
     position: absolute;
     top: 0;
     left: 0;
@@ -52,7 +52,7 @@ body {
 }
 
 /* Main Container */
-.attendance-container {
+.attendanceContainer {
     width: 100%;
     max-width: 1200px;
     display: grid;
@@ -62,7 +62,7 @@ body {
 }
 
 /* Attendance Card */
-.attendance-card {
+.attendanceCard {
     background: white;
     border-radius: 20px;
     padding: 40px;
@@ -72,7 +72,7 @@ body {
     overflow: hidden;
 }
 
-.attendance-card::before {
+.attendanceCard::before {
     content: "";
     position: absolute;
     top: 0;
@@ -83,12 +83,12 @@ body {
 }
 
 /* Header */
-.attendance-header {
+.attendanceHeader {
     text-align: center;
     margin-bottom: 40px;
 }
 
-.header-icon {
+.headerIcon {
     width: 80px;
     height: 80px;
     background: linear-gradient(135deg, #10b981, #059669);
@@ -102,7 +102,7 @@ body {
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
 
-.attendance-title {
+.attendanceTitle {
     font-size: 32px;
     font-weight: 700;
     color: #1e293b;
@@ -113,18 +113,18 @@ body {
     background-clip: text;
 }
 
-.attendance-subtitle {
+.attendanceSubtitle {
     font-size: 16px;
     color: #64748b;
     margin: 0;
 }
 
 /* Form Section */
-.form-section {
+.formSection {
     margin-bottom: 32px;
 }
 
-.form-label {
+.formLabel {
     display: block;
     font-size: 16px;
     font-weight: 600;
@@ -132,11 +132,11 @@ body {
     margin-bottom: 12px;
 }
 
-.code-input-container {
+.codeInputContainer {
     position: relative;
 }
 
-.code-input {
+.codeInput {
     width: 100%;
     padding: 16px 20px;
     border: 2px solid #e2e8f0;
@@ -150,21 +150,21 @@ body {
     text-transform: uppercase;
 }
 
-.code-input:focus {
+.codeInput:focus {
     outline: none;
     border-color: #10b981;
     background: white;
     box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
 }
 
-.code-input::placeholder {
+.codeInput::placeholder {
     color: #9ca3af;
     font-weight: 400;
     letter-spacing: 1px;
 }
 
 /* Submit Button */
-.submit-button {
+.submitButton {
     width: 100%;
     padding: 16px 24px;
     background: linear-gradient(135deg, #10b981, #059669);
@@ -182,22 +182,22 @@ body {
     margin-bottom: 32px;
 }
 
-.submit-button:hover:not(:disabled) {
+.submitButton:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
 
-.submit-button:disabled {
+.submitButton:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
 }
 
-.submit-button.submitting {
+.submitButton.submitting {
     background: #6b7280;
 }
 
-.submit-spinner {
+.submitSpinner {
     width: 20px;
     height: 20px;
     border: 2px solid rgba(255, 255, 255, 0.3);
@@ -216,13 +216,13 @@ body {
 }
 
 /* Info Section */
-.info-section {
+.infoSection {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.info-item {
+.infoItem {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -232,18 +232,18 @@ body {
     border: 1px solid #e2e8f0;
 }
 
-.info-icon {
+.infoIcon {
     font-size: 20px;
 }
 
-.info-item p {
+.infoItem p {
     margin: 0;
     color: #64748b;
     font-size: 14px;
 }
 
 /* Recent Sessions */
-.recent-sessions {
+.recentSessions {
     background: white;
     border-radius: 20px;
     padding: 32px;
@@ -252,7 +252,7 @@ body {
     height: fit-content;
 }
 
-.recent-title {
+.recentTitle {
     font-size: 24px;
     font-weight: 700;
     color: #1e293b;
@@ -262,7 +262,7 @@ body {
     position: relative;
 }
 
-.recent-title::after {
+.recentTitle::after {
     content: "";
     position: absolute;
     bottom: -2px;
@@ -272,13 +272,13 @@ body {
     background: linear-gradient(135deg, #10b981, #059669);
 }
 
-.sessions-list {
+.sessionsList {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.session-item {
+.sessionItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -289,108 +289,48 @@ body {
     transition: all 0.3s ease;
 }
 
-.session-item:hover {
+.sessionItem:hover {
     background: #ecfdf5;
     border-color: #10b981;
     transform: translateY(-1px);
 }
 
-.session-info h4 {
+.sessionInfo h4 {
     font-size: 16px;
     font-weight: 600;
     color: #1e293b;
     margin-bottom: 4px;
 }
 
-.session-info p {
+.sessionInfo p {
     font-size: 14px;
     color: #64748b;
     margin: 0;
 }
 
-.session-status {
+.sessionStatus {
     flex-shrink: 0;
 }
 
-.status-badge {
+.statusBadge {
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 500;
 }
 
-.status-badge.completed {
+.statusBadge.completed {
     background: #d1fae5;
     color: #065f46;
 }
 
-.status-badge.pending {
+.statusBadge.pending {
     background: #fef3c7;
     color: #92400e;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .attendance-container {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .recent-sessions {
-        order: -1;
-    }
-}
-
-@media (max-width: 768px) {
-    .attendance-page {
-        padding: 16px;
-    }
-
-    .attendance-card {
-        padding: 32px 24px;
-    }
-
-    .recent-sessions {
-        padding: 24px;
-    }
-
-    .attendance-title {
-        font-size: 28px;
-    }
-
-    .header-icon {
-        width: 64px;
-        height: 64px;
-        font-size: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .attendance-card {
-        padding: 24px 20px;
-    }
-
-    .recent-sessions {
-        padding: 20px;
-    }
-
-    .attendance-title {
-        font-size: 24px;
-    }
-
-    .session-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .session-status {
-        align-self: flex-end;
-    }
-}
-
 /* Admin Attendance Page Styles */
-.attendance-wrapper {
+.attendanceWrapper {
     background: white;
     border-radius: 16px;
     padding: 32px;
@@ -399,12 +339,12 @@ body {
     margin: 24px;
 }
 
-.search-box {
+.searchBox {
     position: relative;
     max-width: 300px;
 }
 
-.search-box .form-control {
+.searchBox .form-control {
     padding-left: 40px;
     border: 2px solid #e2e8f0;
     border-radius: 12px;
@@ -412,12 +352,12 @@ body {
     transition: all 0.3s ease;
 }
 
-.search-box .form-control:focus {
+.searchBox .form-control:focus {
     border-color: #10b981;
     box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
 }
 
-.search-icon {
+.searchIcon {
     position: absolute;
     left: 12px;
     top: 50%;
@@ -426,30 +366,30 @@ body {
     z-index: 2;
 }
 
-.custom-table {
+.customTable {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.custom-table thead {
+.customTable thead {
     background: linear-gradient(135deg, #f8fafc 0%, #ecfdf5 100%);
 }
 
-.custom-table th {
+.customTable th {
     font-weight: 600;
     color: #374151;
     border: none;
     padding: 16px;
 }
 
-.custom-table td {
+.customTable td {
     border: none;
     padding: 16px;
     border-bottom: 1px solid #f1f5f9;
 }
 
-.custom-table tbody tr:hover {
+.customTable tbody tr:hover {
     background-color: #f8fafc;
 }
 
@@ -459,4 +399,64 @@ body {
 
 .badge.bg-danger {
     background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .attendanceContainer {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .recentSessions {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .attendancePage {
+        padding: 16px;
+    }
+
+    .attendanceCard {
+        padding: 32px 24px;
+    }
+
+    .recentSessions {
+        padding: 24px;
+    }
+
+    .attendanceTitle {
+        font-size: 28px;
+    }
+
+    .headerIcon {
+        width: 64px;
+        height: 64px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .attendanceCard {
+        padding: 24px 20px;
+    }
+
+    .recentSessions {
+        padding: 20px;
+    }
+
+    .attendanceTitle {
+        font-size: 24px;
+    }
+
+    .sessionItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .sessionStatus {
+        align-self: flex-end;
+    }
 }
