@@ -33,7 +33,7 @@ function OpenTalkRow({ meeting, onView, onEdit, onDelete }) {
       <td>{meeting.meetingName || "-"}</td>
       <td>
         {/* Có thể chỉ có topic id hoặc null, sẽ load sau */}
-        {meeting.topic?.name || "-"}
+        {meeting.topic?.title || "-"}
       </td>
       <td>
         {/* Có thể chỉ có host id hoặc null, sẽ load sau */}

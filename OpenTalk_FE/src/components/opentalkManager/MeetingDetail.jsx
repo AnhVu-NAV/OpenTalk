@@ -12,6 +12,14 @@ function formatDateTime(dtStr) {
   return d.toLocaleString("en-GB", { hour12: false });
 }
 
+const editableStatuses = [
+  "WAITING_TOPIC",
+  "WAITING_HOST_REGISTER",
+  "WAITING_HOST_SELECTION",
+  "UPCOMING",
+  "ONGOING"
+];
+
 function ViewMeetingDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -76,7 +84,7 @@ function ViewMeetingDetails() {
   if (loading || !meeting) return <div className="p-4">Loading...</div>;
 
   // Mapping object fields
-  const topicLabel = meeting.topic?.name || "";
+  const topicLabel = meeting.topic?.title || "";
   const hostLabel = meeting.host?.fullName || meeting.host?.username || "";
   const branchLabel = meeting.companyBranch?.name || "";
 
@@ -127,14 +135,16 @@ function ViewMeetingDetails() {
             </Button>
           )}
           {/* Nút Edit luôn hiện */}
-          <Button
-            className="px-4 py-2 rounded-3 btn-dark-green"
-            style={{ minWidth: 110, fontWeight: 500 }}
-            onClick={() => navigate(`/meeting/edit-meeting/${id}`, { state: { meeting } })}
-          >
-            <i className="bi bi-pencil-square me-2"></i>
-            Edit
-          </Button>
+          {editableStatuses.includes(meeting.status) && (
+            <Button
+              className="px-4 py-2 rounded-3 btn-dark-green"
+              style={{ minWidth: 110, fontWeight: 500 }}
+              onClick={() => navigate(`/meeting/edit-meeting/${id}`, { state: { meeting } })}
+            >
+              <i className="bi bi-pencil-square me-2"></i>
+              Edit
+            </Button>
+          )}
         </div>
         </div>
         <h2 className="addmeeting-title mb-3">Meeting Details</h2>

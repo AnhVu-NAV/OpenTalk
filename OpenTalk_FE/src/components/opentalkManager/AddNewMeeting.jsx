@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import MeetingMaterialModal from "./MeetingMaterial";
-import { createMeeting, getCompanyBranches  } from "../../services/opentalkManagerService"; 
+import { createMeeting, getCompanyBranches, getTopics } from "../../services/opentalkManagerService";
 import SuccessDialog from "./SuccessModal";
 
 function AddMeeting() {
@@ -10,7 +10,7 @@ function AddMeeting() {
     meetingName: "",
     scheduledDate: "",
     meetingLink: "",
-    status: "",
+    status: "WAITING_TOPIC",  // Luôn mặc định WAITING_TOPIC
     topic: "",
     host: "",
     duration: "",
@@ -18,23 +18,19 @@ function AddMeeting() {
     attendanceCode: "",
   });
 
-  // Material files (UI only, không gửi backend ở bước này)
   const [showMaterial, setShowMaterial] = useState(false);
-  const [files, setFiles] = useState([]); // [{ name: "file1.pdf" }, ...]
-
-  // State cho lookup company branches
+  const [files, setFiles] = useState([]);
   const [branches, setBranches] = useState([]);
   const [branchesLoading, setBranchesLoading] = useState(true);
-
   const [showSuccess, setShowSuccess] = useState(false);
+  const [topicEditable, setTopicEditable] = useState(false);
+  const [topics, setTopics] = useState([]);
+  const [topicsLoading, setTopicsLoading] = useState(false); 
 
-  // Topic, host giữ nguyên (mock)
-  const topics = [];
   const hosts = [];
 
   const navigate = useNavigate();
 
-  // Fetch company branches khi load page
   useEffect(() => {
     setBranchesLoading(true);
     getCompanyBranches()
@@ -46,14 +42,19 @@ function AddMeeting() {
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
-  // Attendance code generator
-  const handleGenerateCode = () => {
-    const random = Math.random().toString(36).substr(2, 8).toUpperCase();
-    setForm((prev) => ({ ...prev, attendanceCode: random }));
-  };
-
-  // Meeting Material handlers (upload/delete)
+    const handleManualChooseTopic = async () => {
+    setTopicEditable(true);
+    setTopicsLoading(true);
+    try {
+      const res = await getTopics({ status: "approved" });
+      setTopics(res.data.content || []);
+    } catch (err) {
+      setTopics([]);
+    } finally {
+      setTopicsLoading(false);
+    }
+  };                                
+  // Meeting Material handlers
   const handleFileChange = (e) => {
     const filesArr = Array.from(e.target.files).map(file => ({ name: file.name }));
     setFiles((prev) => [...prev, ...filesArr]);
@@ -140,20 +141,36 @@ function AddMeeting() {
 
           {/* Topic */}
           <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Topic</Form.Label>
-            <Form.Select
-              name="topic"
-              value={form.topic}
-              onChange={handleChange}
-              required
-              disabled={topics.length === 0}
+          <Form.Label className="form-label-enterprise">Topic</Form.Label>
+          <Form.Select
+            name="topic"
+            value={form.topic}
+            onChange={handleChange}
+            required
+            disabled={!topicEditable || topicsLoading || topics.length === 0}
+            style={{ background: !topicEditable ? '#e9ecef' : undefined }}
+          >
+            <option value="">-- Topic will be assigned later --</option>
+            {topics.map(topic => (
+              <option key={topic.id} value={topic.id}>{topic.title}</option>
+            ))}
+          </Form.Select>
+          {!topicEditable && (
+            <Button
+              variant="outline-secondary"
+              size="sm"
+              style={{ marginTop: 8, marginLeft: 4 }}
+              onClick={handleManualChooseTopic}
             >
-              <option value="">-- Select Topic --</option>
-              {topics.map(topic => (
-                <option key={topic.id} value={topic.id}>{topic.name}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
+              <i className="bi bi-pencil-square"></i> Manual Choose Topic
+            </Button>
+          )}
+          {topicsLoading && topicEditable && (
+            <div style={{ fontSize: 13, marginTop: 4, color: "#999" }}>
+              Loading topics...
+            </div>
+          )}
+        </Form.Group>
           {/* Host */}
           <Form.Group className="mb-2">
             <Form.Label className="form-label-enterprise">Host</Form.Label>
@@ -164,7 +181,7 @@ function AddMeeting() {
               required
               disabled={hosts.length === 0}
             >
-              <option value="">-- Select Host --</option>
+              <option value="">-- Host will be assigned later --</option>
               {hosts.map(user => (
                 <option key={user.id} value={user.id}>{user.fullName || user.username}</option>
               ))}
@@ -200,20 +217,15 @@ function AddMeeting() {
           </Form.Group>
           {/* Status */}
           <Form.Group className="mb-2">
-          <Form.Label className="form-label-enterprise">Status</Form.Label>
-          <Form.Select name="status" value={form.status} onChange={handleChange} size="sm" required>
-            <option value="">-- Select Status --</option>
-            <option value="WAITING_TOPIC">WAITING_TOPIC</option>
-            <option value="WAITING_HOST_REGISTER">WAITING_HOST_REGISTER</option>
-            <option value="WAITING_HOST_SELECTION">WAITING_HOST_SELECTION</option>
-            <option value="UPCOMING">UPCOMING</option>
-            <option value="ONGOING">ONGOING</option>
-            <option value="COMPLETED">COMPLETED</option>
-            <option value="CANCELLED">CANCELLED</option>
-            <option value="POSTPONED">POSTPONED</option>
-          </Form.Select>
-        </Form.Group>
-
+            <Form.Label className="form-label-enterprise">Status</Form.Label>
+            <Form.Control
+              name="status"
+              value={form.status}
+              type="text"
+              size="sm"
+              disabled
+            />
+          </Form.Group>
           {/* Duration */}
           <Form.Group className="mb-3">
             <Form.Label className="form-label-enterprise">Duration (hours)</Form.Label>

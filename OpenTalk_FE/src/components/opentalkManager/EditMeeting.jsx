@@ -8,6 +8,8 @@ import {
   getCompanyBranches,
   generateCheckinCode,
   getCheckinCode,
+  getTopics,
+  autoSelectHost
 } from "../../services/opentalkManagerService";
 import SuccessDialog from "./SuccessModal";
 
@@ -40,6 +42,11 @@ function EditMeeting() {
   const [genCodeLoading, setGenCodeLoading] = useState(false);
   const [attendanceCodeInfo, setAttendanceCodeInfo] = useState({ code: "", expiresAt: "" });
   const [attendanceCodeLoading, setAttendanceCodeLoading] = useState(true);
+  const [topicEditable, setTopicEditable] = useState(false);
+  const [topics, setTopics] = useState([]);
+  const [topicsLoading, setTopicsLoading] = useState(false); 
+  const [autoHostInfo, setAutoHostInfo] = useState(null);
+  const [autoHostLoading, setAutoHostLoading] = useState(false);
 
   const codeTimeout = useRef(null);
 
@@ -47,9 +54,7 @@ function EditMeeting() {
   const [showMaterial, setShowMaterial] = useState(false);
   const [files, setFiles] = useState([]);
 
-  // Topic, host giữ nguyên (mock)
-  const topics = [];
-  const hosts = [];
+  const [hosts, setHosts] = useState([]);
 
   // --- Attendance code: Fetch & setup auto-clear ---
   const fetchAttendanceCode = useCallback(async () => {
@@ -72,6 +77,28 @@ function EditMeeting() {
       setAttendanceCodeLoading(false);
     }
   }, [id]);
+
+  const handleAutoChooseHost = async () => {
+  setAutoHostLoading(true);
+  setAutoHostInfo(null);
+  try {
+    const res = await autoSelectHost(id);
+    const host = res.data;
+    setForm(prev => ({
+      ...prev,
+      host: host.id
+    }));
+    if (!hosts.some(u => u.id === host.id)) {
+      setHosts(prev => [...prev, host]);
+    }
+  } catch (err) {
+    setAutoHostInfo("No host found or error occurred!");
+  } finally {
+    setAutoHostLoading(false);
+  }
+};
+
+
 
   const setupExpireTimeout = (expiresAtStr) => {
     if (codeTimeout.current) clearTimeout(codeTimeout.current);
@@ -127,6 +154,19 @@ function EditMeeting() {
 
   // Khi generate code, show modal
   const handleGenerateCode = () => setShowExpireModal(true);
+
+   const handleManualChooseTopic = async () => {
+      setTopicEditable(true);
+      setTopicsLoading(true);
+      try {
+        const res = await getTopics({ status: "approved" });
+        setTopics(res.data.content || []);
+      } catch (err) {
+        setTopics([]);
+      } finally {
+        setTopicsLoading(false);
+      }
+    };   
 
   // Khi xác nhận generate, gọi API generate xong gọi lại GET để update UI
   const handleConfirmGenerate = async () => {
@@ -233,29 +273,69 @@ function EditMeeting() {
               value={form.topic}
               onChange={handleChange}
               required
-              disabled={topics.length === 0}
+              disabled={!topicEditable || topicsLoading}
+              style={{ background: !topicEditable ? '#e9ecef' : undefined }}
             >
-              <option value="">-- Select Topic --</option>
-              {topics.map(topic => (
-                <option key={topic.id} value={topic.id}>{topic.name}</option>
-              ))}
+              {!topicEditable && form.topic && (
+                // Nếu chưa chọn manual, hiển thị topic hiện tại (từ meeting)
+                <option value={form.topic}>
+                  {meetingFromState?.topic?.title || meeting?.topic?.title || "Current Topic"}
+                </option>
+              )}
+              {topicEditable ? (
+                // Nếu manual, render tất cả topics đã fetch
+                <>
+                  <option value="">-- Select Topic --</option>
+                  {topics.map(topic => (
+                    <option key={topic.id} value={topic.id}>{topic.title}</option>
+                  ))}
+                </>
+              ) : (
+                // Nếu không manual, chỉ hiển thị 1 option hoặc thông báo nếu chưa có topic
+                !form.topic && <option value="">-- Topic will be assigned later --</option>
+              )}
             </Form.Select>
+            {!topicEditable && !form.topic && (
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                style={{ marginTop: 8, marginLeft: 4 }}
+                onClick={handleManualChooseTopic}
+              >
+                <i className="bi bi-pencil-square"></i> Manual Choose Topic
+              </Button>
+            )}
+            {topicsLoading && topicEditable && (
+              <div style={{ fontSize: 13, marginTop: 4, color: "#999" }}>
+                Loading topics...
+              </div>
+            )}
           </Form.Group>
+
           {/* Host */}
           <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Host</Form.Label>
-            <Form.Select
-              name="host"
-              value={form.host}
-              onChange={handleChange}
-              required
-              disabled={hosts.length === 0}
-            >
-              <option value="">-- Select Host --</option>
-              {hosts.map(user => (
-                <option key={user.id} value={user.id}>{user.fullName || user.username}</option>
-              ))}
-            </Form.Select>
+              <Form.Label className="form-label-enterprise">Host</Form.Label>
+              <Form.Control
+                type="text"
+                value={
+                  hosts.find(u => u.id === form.host)?.fullName ||
+                  hosts.find(u => u.id === form.host)?.username ||
+                  ""
+                }
+                readOnly
+                disabled
+                style={{ background: "#e9ecef" }}
+                placeholder="-- Host will be assigned automatically --"
+              />
+              <Button
+                variant="outline-primary"
+                size="sm"
+                style={{ marginTop: 8, marginLeft: 4 }}
+                onClick={handleAutoChooseHost}
+                disabled={autoHostLoading}
+              >
+                <i className="bi bi-shuffle"></i> {autoHostLoading ? "Selecting..." : "Automatically Choose Host"}
+              </Button>
           </Form.Group>
           {/* Company Branch */}
           <Form.Group className="mb-2">
