@@ -1,11 +1,11 @@
 /* Organization List Page Styles */
-.organization-page {
+.organizationPage {
     min-height: 100vh;
     background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
     padding: 2rem 1rem;
 }
 
-.page-header {
+.pageHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,13 +17,13 @@
     border: 1px solid #d1fae5;
 }
 
-.header-content {
+.headerContent {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-.header-icon {
+.headerIcon {
     width: 60px;
     height: 60px;
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
@@ -35,26 +35,26 @@
     font-size: 1.5rem;
 }
 
-.header-text {
+.headerText {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
 }
 
-.page-title {
+.pageTitle {
     font-size: 1.75rem;
     font-weight: 700;
     color: #065f46;
     margin: 0;
 }
 
-.page-subtitle {
+.pageSubtitle {
     font-size: 1rem;
     color: #6b7280;
     margin: 0;
 }
 
-.add-branch-btn {
+.addBranchBtn {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -69,22 +69,22 @@
     font-size: 0.875rem;
 }
 
-.add-branch-btn:hover {
+.addBranchBtn:hover {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
 }
 
-.search-section {
+.searchSection {
     margin-bottom: 2rem;
 }
 
-.search-container {
+.searchContainer {
     position: relative;
     max-width: 400px;
 }
 
-.search-icon {
+.searchIcon {
     position: absolute;
     left: 1rem;
     top: 50%;
@@ -93,7 +93,7 @@
     font-size: 1rem;
 }
 
-.search-input {
+.searchInput {
     width: 100%;
     padding: 0.75rem 1rem 0.75rem 2.5rem;
     border: 2px solid #e5e7eb;
@@ -103,13 +103,13 @@
     background: white;
 }
 
-.search-input:focus {
+.searchInput:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.branches-container {
+.branchesContainer {
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
@@ -117,13 +117,13 @@
     padding: 2rem;
 }
 
-.empty-state {
+.emptyState {
     text-align: center;
     padding: 4rem 2rem;
     color: #6b7280;
 }
 
-.empty-icon {
+.emptyIcon {
     width: 80px;
     height: 80px;
     background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
@@ -136,19 +136,19 @@
     color: #9ca3af;
 }
 
-.empty-state h3 {
+.emptyState h3 {
     font-size: 1.25rem;
     font-weight: 600;
     color: #374151;
     margin: 0 0 0.5rem 0;
 }
 
-.empty-state p {
+.emptyState p {
     font-size: 1rem;
     margin: 0 0 1.5rem 0;
 }
 
-.empty-action-btn {
+.emptyActionBtn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -163,19 +163,19 @@
     font-size: 0.875rem;
 }
 
-.empty-action-btn:hover {
+.emptyActionBtn:hover {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
 }
 
-.branches-grid {
+.branchesGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
-.branch-card {
+.branchCard {
     background: white;
     border: 2px solid #f3f4f6;
     border-radius: 12px;
@@ -185,7 +185,7 @@
     overflow: hidden;
 }
 
-.branch-card::before {
+.branchCard::before {
     content: "";
     position: absolute;
     top: 0;
@@ -195,20 +195,20 @@
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
-.branch-card:hover {
+.branchCard:hover {
     border-color: #10b981;
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
 }
 
-.branch-card-header {
+.branchCardHeader {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 1rem;
 }
 
-.branch-icon {
+.branchIcon {
     width: 48px;
     height: 48px;
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
@@ -220,12 +220,12 @@
     font-size: 1.2rem;
 }
 
-.branch-actions {
+.branchActions {
     display: flex;
     gap: 0.5rem;
 }
 
-.action-btn {
+.actionBtn {
     width: 36px;
     height: 36px;
     border: none;
@@ -238,44 +238,44 @@
     font-size: 0.875rem;
 }
 
-.edit-btn {
+.editBtn {
     background: #dbeafe;
     color: #1d4ed8;
 }
 
-.edit-btn:hover {
+.editBtn:hover {
     background: #1d4ed8;
     color: white;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
 }
 
-.delete-btn {
+.deleteBtn {
     background: #fee2e2;
     color: #dc2626;
 }
 
-.delete-btn:hover {
+.deleteBtn:hover {
     background: #dc2626;
     color: white;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
-.branch-content {
+.branchContent {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.branch-name {
+.branchName {
     font-size: 1.125rem;
     font-weight: 600;
     color: #1f2937;
     margin: 0;
 }
 
-.branch-id {
+.branchId {
     font-size: 0.875rem;
     color: #6b7280;
     font-family: "Monaco", "Menlo", monospace;
@@ -290,18 +290,18 @@
     border-top: 1px solid #e5e7eb;
 }
 
-.pagination-info {
+.paginationInfo {
     font-size: 0.875rem;
     color: #6b7280;
 }
 
-.pagination-buttons {
+.paginationButtons {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.pagination-btn {
+.paginationBtn {
     width: 36px;
     height: 36px;
     border: 1px solid #d1d5db;
@@ -315,18 +315,18 @@
     color: #6b7280;
 }
 
-.pagination-btn:hover:not(:disabled) {
+.paginationBtn:hover:not(:disabled) {
     background: #10b981;
     color: white;
     border-color: #10b981;
 }
 
-.pagination-btn:disabled {
+.paginationBtn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.pagination-number {
+.paginationNumber {
     width: 36px;
     height: 36px;
     border: 1px solid #d1d5db;
@@ -341,13 +341,13 @@
     font-weight: 500;
 }
 
-.pagination-number:hover {
+.paginationNumber:hover {
     background: #10b981;
     color: white;
     border-color: #10b981;
 }
 
-.pagination-number.active {
+.paginationNumber.active {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border-color: #10b981;
@@ -355,31 +355,31 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .organization-page {
+    .organizationPage {
         padding: 1rem 0.5rem;
     }
 
-    .page-header {
+    .pageHeader {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
         padding: 1.5rem;
     }
 
-    .header-content {
+    .headerContent {
         flex-direction: column;
         text-align: center;
     }
 
-    .page-title {
+    .pageTitle {
         font-size: 1.5rem;
     }
 
-    .branches-container {
+    .branchesContainer {
         padding: 1rem;
     }
 
-    .branches-grid {
+    .branchesGrid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
@@ -389,7 +389,7 @@
         gap: 1rem;
     }
 
-    .pagination-buttons {
+    .paginationButtons {
         flex-wrap: wrap;
         justify-content: center;
     }

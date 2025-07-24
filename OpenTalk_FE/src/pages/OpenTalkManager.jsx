@@ -172,14 +172,14 @@ function OpenTalkManagerPage() {
 
   return (
     <div
-      className="bg-white rounded-4 shadow-sm p-4"
+      className="bg-white rounded-4 shadow-sm"
       style={{
         width: "100%",
         marginTop: 20,
         border: "1px solid #ececec"
       }}
     >
-      <div className="container-fluid px-4 py-4" style={{ width: "100%", marginTop: 20 }}>
+      <div className="container-fluid px-4 py-4" style={{ width: "100%"}}>
         <Header
           onAddNew={handleGoToAddNew}
           searchName={inputName}

@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react"
-import "./styles/HostFrequencyReport.css"
+import { useEffect, useState } from "react"
+import styles from "./styles/module/HostFrequencyReport.module.css"
 import axios from "../api/axiosClient.jsx"
-import {getAccessToken} from "../helper/auth.jsx";
+import { getAccessToken } from "../helper/auth.jsx"
 
 const HostFrequencyReport = () => {
     const [searchTerm, setSearchTerm] = useState("")
@@ -26,8 +26,6 @@ const HostFrequencyReport = () => {
         fetchData()
     }, [])
 
-
-
     const filteredData = data.filter(
         (employee) =>
             employee.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -40,33 +38,33 @@ const HostFrequencyReport = () => {
     const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage)
 
     return (
-        <div className="hrms-container">
+        <div className={styles.hrmsContainer}>
             {/* Main Content */}
-            <div className="main-content">
-                <div className="header">
-                    <div className="header-left">
-                        <h1 className="page-title">Host Frequency Report</h1>
-                        <p className="page-subtitle">Summary of Opentalk Hosting Activities</p>
+            <div className={styles.mainContent}>
+                <div className={styles.header}>
+                    <div className={styles.headerLeft}>
+                        <h1 className={styles.pageTitle}>Host Frequency Report</h1>
+                        <p className={styles.pageSubtitle}>Summary of Opentalk Hosting Activities</p>
                     </div>
                 </div>
 
                 {/* Content Search */}
-                <div className="content-search">
-                    <div className="content-search-container">
+                <div className={styles.contentSearch}>
+                    <div className={styles.contentSearchContainer}>
                         <input
                             type="text"
-                            className="content-search-input"
+                            className={styles.contentSearchInput}
                             placeholder="Search"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <span className="content-search-icon">🔍</span>
+                        <span className={styles.contentSearchIcon}>🔍</span>
                     </div>
                 </div>
 
                 {/* Table */}
-                <div className="table-container">
-                    <table className="table">
+                <div className={styles.tableContainer}>
+                    <table className={styles.table}>
                         <thead>
                         <tr>
                             <th>Employee Name</th>
@@ -79,27 +77,24 @@ const HostFrequencyReport = () => {
                         {paginatedData.map((employee) => (
                             <tr key={employee.userId}>
                                 <td>
-                                    <div className="employee-info">
-                                        <img
-                                            src={"/placeholder.svg"}
-                                            className="employee-avatar"
-                                        />
-                                        <span className="employee-name">{employee.fullName}</span>
+                                    <div className={styles.employeeInfo}>
+                                        <img src={"/placeholder.svg"} className={styles.employeeAvatar} />
+                                        <span className={styles.employeeName}>{employee.fullName}</span>
                                     </div>
                                 </td>
                                 <td>{employee.branchName}</td>
                                 <td>
-                                    <span className="sessions-count">{employee.approvedCount}</span>
+                                    <span className={styles.sessionsCount}>{employee.approvedCount}</span>
                                 </td>
                                 <td>
-                        <span>
-                                  {employee.lastApprovedAt &&
-                                      new Date(employee.lastApprovedAt).toLocaleDateString("vi-VN", {
-                                          year: "numeric",
-                                          month: "2-digit",
-                                          day: "2-digit",
-                                      })}
-                        </span>
+                    <span>
+                      {employee.lastApprovedAt &&
+                          new Date(employee.lastApprovedAt).toLocaleDateString("vi-VN", {
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                          })}
+                    </span>
                                 </td>
                             </tr>
                         ))}
@@ -107,11 +102,11 @@ const HostFrequencyReport = () => {
                     </table>
 
                     {/* Pagination */}
-                    <div className="pagination-container">
-                        <div className="pagination-left">
-                            <span className="pagination-showing">Showing</span>
+                    <div className={styles.paginationContainer}>
+                        <div className={styles.paginationLeft}>
+                            <span className={styles.paginationShowing}>Showing</span>
                             <select
-                                className="pagination-select"
+                                className={styles.paginationSelect}
                                 value={itemsPerPage}
                                 onChange={(e) => setItemsPerPage(Number(e.target.value))}
                             >
@@ -121,11 +116,11 @@ const HostFrequencyReport = () => {
                             </select>
                         </div>
 
-                        <div className="pagination-info">Showing 1 to 10 out of 60 records</div>
+                        <div className={styles.paginationInfo}>Showing 1 to 10 out of 60 records</div>
 
-                        <div className="pagination-right">
+                        <div className={styles.paginationRight}>
                             <button
-                                className="pagination-btn"
+                                className={styles.paginationBtn}
                                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                                 disabled={currentPage === 1}
                             >
@@ -135,7 +130,7 @@ const HostFrequencyReport = () => {
                             {[1, 2, 3, 4].map((page) => (
                                 <button
                                     key={page}
-                                    className={`pagination-btn ${currentPage === page ? "active" : ""}`}
+                                    className={`${styles.paginationBtn} ${currentPage === page ? styles.active : ""}`}
                                     onClick={() => setCurrentPage(page)}
                                 >
                                     {page}
@@ -143,7 +138,7 @@ const HostFrequencyReport = () => {
                             ))}
 
                             <button
-                                className="pagination-btn"
+                                className={styles.paginationBtn}
                                 onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                                 disabled={currentPage === totalPages}
                             >

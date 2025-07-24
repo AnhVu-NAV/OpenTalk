@@ -9,7 +9,7 @@ body {
     background-color: #f8fafc;
 }
 
-.dashboard-container {
+.dashboardContainer {
     display: flex;
     min-height: 100vh;
 }
@@ -33,7 +33,7 @@ body {
     margin-bottom: 32px;
 }
 
-.logo-icon {
+.logoIcon {
     width: 40px;
     height: 40px;
     background: linear-gradient(135deg, #10b981, #059669);
@@ -46,22 +46,22 @@ body {
     font-size: 16px;
 }
 
-.logo-text {
+.logoText {
     font-size: 24px;
     font-weight: bold;
     color: #1e293b;
 }
 
-.nav-menu {
+.navMenu {
     list-style: none;
     padding: 0 16px;
 }
 
-.nav-item {
+.navItem {
     margin-bottom: 4px;
 }
 
-.nav-link {
+.navLink {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -74,23 +74,23 @@ body {
     font-weight: 500;
 }
 
-.nav-link:hover {
+.navLink:hover {
     background-color: #f1f5f9;
     color: #334155;
 }
 
-.nav-link.active {
+.navLink.active {
     background: linear-gradient(135deg, #ecfdf5, #d1fae5);
     color: #10b981;
     box-shadow: 0 2px 4px rgba(16, 185, 129, 0.1);
 }
 
-.nav-icon {
+.navIcon {
     width: 20px;
     height: 20px;
 }
 
-.theme-toggle {
+.themeToggle {
     position: absolute;
     bottom: 24px;
     left: 24px;
@@ -98,7 +98,7 @@ body {
     gap: 8px;
 }
 
-.theme-btn {
+.themeBtn {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
@@ -107,21 +107,20 @@ body {
     transition: all 0.2s;
 }
 
-.theme-btn.active {
+.themeBtn.active {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
 }
 
-.theme-btn:not(.active) {
+.themeBtn:not(.active) {
     background-color: #f1f5f9;
     color: #64748b;
 }
 
 /* Main Content */
-.main-content {
+.mainContent {
     flex: 1;
-    /*margin-left: 280px;*/
     padding: 24px;
     background-color: #f8fafc;
 }
@@ -139,11 +138,11 @@ body {
     border: 1px solid #e2e8f0;
 }
 
-.header-left {
+.headerLeft {
     flex: 1;
 }
 
-.page-title {
+.pageTitle {
     font-size: 28px;
     font-weight: bold;
     background: linear-gradient(135deg, #10b981, #059669);
@@ -153,7 +152,7 @@ body {
     margin-bottom: 4px;
 }
 
-.page-subtitle {
+.pageSubtitle {
     font-size: 14px;
     color: #64748b;
     background-color: #ecfdf5;
@@ -163,17 +162,17 @@ body {
     border: 1px solid #d1fae5;
 }
 
-.header-right {
+.headerRight {
     display: flex;
     align-items: center;
     gap: 24px;
 }
 
-.date-filter {
+.dateFilter {
     position: relative;
 }
 
-.date-select {
+.dateSelect {
     padding: 12px 16px;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
@@ -183,13 +182,13 @@ body {
     transition: all 0.2s;
 }
 
-.date-select:focus {
+.dateSelect:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.user-profile {
+.userProfile {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -199,11 +198,11 @@ body {
     transition: all 0.2s;
 }
 
-.user-profile:hover {
+.userProfile:hover {
     background-color: #f8fafc;
 }
 
-.user-avatar {
+.userAvatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -211,30 +210,30 @@ body {
     border: 2px solid #10b981;
 }
 
-.user-info {
+.userInfo {
     text-align: right;
 }
 
-.user-name {
+.userName {
     font-size: 14px;
     font-weight: 600;
     color: #1e293b;
 }
 
-.user-role {
+.userRole {
     font-size: 12px;
     color: #64748b;
 }
 
 /* Overview Cards */
-.overview-cards {
+.overviewCards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 24px;
     margin-bottom: 32px;
 }
 
-.overview-card {
+.overviewCard {
     background: white;
     padding: 24px;
     border-radius: 16px;
@@ -248,7 +247,7 @@ body {
     overflow: hidden;
 }
 
-.overview-card::before {
+.overviewCard::before {
     content: "";
     position: absolute;
     top: 0;
@@ -258,12 +257,12 @@ body {
     background: linear-gradient(135deg, #10b981, #059669);
 }
 
-.overview-card:hover {
+.overviewCard:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
 }
 
-.card-icon {
+.cardIcon {
     width: 60px;
     height: 60px;
     border-radius: 16px;
@@ -274,30 +273,30 @@ body {
     color: white;
 }
 
-.card-icon.employees {
+.cardIcon.employees {
     background: linear-gradient(135deg, #10b981, #059669);
 }
 
-.card-icon.meetings {
+.cardIcon.meetings {
     background: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }
 
-.card-icon.attendance {
+.cardIcon.attendance {
     background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
-.card-icon.projects {
+.cardIcon.projects {
     background: linear-gradient(135deg, #8b5cf6, #7c3aed);
 }
 
-.card-content h3 {
+.cardContent h3 {
     font-size: 32px;
     font-weight: bold;
     color: #1e293b;
     margin-bottom: 4px;
 }
 
-.card-content p {
+.cardContent p {
     font-size: 14px;
     color: #64748b;
     margin-bottom: 8px;
@@ -321,14 +320,14 @@ body {
 }
 
 /* Charts Section */
-.charts-section {
+.chartsSection {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
     margin-bottom: 32px;
 }
 
-.chart-card {
+.chartCard {
     background: white;
     border-radius: 16px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -336,7 +335,7 @@ body {
     overflow: hidden;
 }
 
-.chart-header {
+.chartHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -345,13 +344,13 @@ body {
     background: linear-gradient(135deg, #f8fafc, #ecfdf5);
 }
 
-.chart-header h3 {
+.chartHeader h3 {
     font-size: 18px;
     font-weight: 600;
     color: #1e293b;
 }
 
-.chart-btn {
+.chartBtn {
     padding: 8px 16px;
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
@@ -362,17 +361,17 @@ body {
     transition: all 0.2s;
 }
 
-.chart-btn:hover {
+.chartBtn:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.chart-content {
+.chartContent {
     padding: 24px;
 }
 
 /* Attendance Chart */
-.attendance-chart {
+.attendanceChart {
     display: flex;
     align-items: end;
     gap: 16px;
@@ -380,7 +379,7 @@ body {
     padding: 20px 0;
 }
 
-.chart-bar {
+.chartBar {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -403,20 +402,20 @@ body {
     transform: scaleY(1.05);
 }
 
-.bar-label {
+.barLabel {
     font-size: 12px;
     color: #64748b;
     font-weight: 500;
 }
 
 /* Department Stats */
-.department-stats {
+.departmentStats {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.dept-stat {
+.deptStat {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -427,35 +426,35 @@ body {
     transition: all 0.2s;
 }
 
-.dept-stat:hover {
+.deptStat:hover {
     background: #ecfdf5;
     border-color: #10b981;
 }
 
-.dept-info {
+.deptInfo {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.dept-name {
+.deptName {
     font-weight: 600;
     color: #1e293b;
 }
 
-.dept-meetings {
+.deptMeetings {
     font-size: 12px;
     color: #64748b;
 }
 
-.dept-progress {
+.deptProgress {
     display: flex;
     align-items: center;
     gap: 12px;
     min-width: 120px;
 }
 
-.progress-bar {
+.progressBar {
     flex: 1;
     height: 8px;
     background-color: #e2e8f0;
@@ -463,14 +462,14 @@ body {
     overflow: hidden;
 }
 
-.progress-fill {
+.progressFill {
     height: 100%;
     background: linear-gradient(135deg, #10b981, #059669);
     border-radius: 4px;
     transition: width 0.3s;
 }
 
-.progress-text {
+.progressText {
     font-size: 12px;
     font-weight: 600;
     color: #10b981;
@@ -478,13 +477,13 @@ body {
 }
 
 /* Bottom Section */
-.bottom-section {
+.bottomSection {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 24px;
 }
 
-.section-card {
+.sectionCard {
     background: white;
     border-radius: 16px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -492,7 +491,7 @@ body {
     overflow: hidden;
 }
 
-.section-header {
+.sectionHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -501,13 +500,13 @@ body {
     background: linear-gradient(135deg, #f8fafc, #ecfdf5);
 }
 
-.section-header h3 {
+.sectionHeader h3 {
     font-size: 18px;
     font-weight: 600;
     color: #1e293b;
 }
 
-.section-btn {
+.sectionBtn {
     padding: 8px 16px;
     background: transparent;
     color: #10b981;
@@ -518,20 +517,20 @@ body {
     transition: all 0.2s;
 }
 
-.section-btn:hover {
+.sectionBtn:hover {
     background: #10b981;
     color: white;
 }
 
 /* Recent Meetings */
-.meetings-list {
+.meetingsList {
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.meeting-item {
+.meetingItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -542,44 +541,56 @@ body {
     transition: all 0.2s;
 }
 
-.meeting-item:hover {
+.meetingItem:hover {
     background: #ecfdf5;
     border-color: #10b981;
     transform: translateX(4px);
 }
 
-.meeting-info h4 {
+.meetingInfo h4 {
     font-size: 16px;
     font-weight: 600;
     color: #1e293b;
     margin-bottom: 4px;
 }
 
-.meeting-info p {
+.meetingInfo p {
     font-size: 12px;
     color: #64748b;
     margin-bottom: 4px;
 }
 
-.meeting-host {
+.meetingHost {
     font-size: 11px;
     color: #10b981;
     font-weight: 500;
 }
 
-.meeting-meta {
+.meetingTopic {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.meetingBranch {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.meetingMeta {
     display: flex;
     flex-direction: column;
     align-items: end;
     gap: 8px;
 }
 
-.attendees-count {
+.duration {
     font-size: 12px;
     color: #64748b;
 }
 
-.meeting-status {
+.meetingStatus {
     padding: 4px 12px;
     border-radius: 12px;
     font-size: 11px;
@@ -587,30 +598,30 @@ body {
     text-transform: capitalize;
 }
 
-.meeting-status.completed {
+.meetingStatus.completed {
     background-color: #dcfce7;
     color: #16a34a;
 }
 
-.meeting-status.ongoing {
+.meetingStatus.ongoing {
     background-color: #fef3c7;
     color: #d97706;
 }
 
-.meeting-status.upcoming {
+.meetingStatus.upcoming {
     background-color: #dbeafe;
     color: #2563eb;
 }
 
 /* Top Hosts */
-.hosts-list {
+.hostsList {
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.host-item {
+.hostItem {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -621,13 +632,13 @@ body {
     transition: all 0.2s;
 }
 
-.host-item:hover {
+.hostItem:hover {
     background: #ecfdf5;
     border-color: #10b981;
     transform: scale(1.02);
 }
 
-.host-rank {
+.hostRank {
     width: 32px;
     height: 32px;
     background: linear-gradient(135deg, #10b981, #059669);
@@ -640,7 +651,7 @@ body {
     font-size: 14px;
 }
 
-.host-avatar {
+.hostAvatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -648,23 +659,23 @@ body {
     border: 2px solid #10b981;
 }
 
-.host-info {
+.hostInfo {
     flex: 1;
 }
 
-.host-info h4 {
+.hostInfo h4 {
     font-size: 14px;
     font-weight: 600;
     color: #1e293b;
     margin-bottom: 2px;
 }
 
-.host-info p {
+.hostInfo p {
     font-size: 12px;
     color: #64748b;
 }
 
-.host-rating {
+.hostRating {
     display: flex;
     align-items: center;
 }
@@ -681,15 +692,15 @@ body {
         transform: translateX(-100%);
     }
 
-    .main-content {
+    .mainContent {
         margin-left: 0;
     }
 
-    .charts-section {
+    .chartsSection {
         grid-template-columns: 1fr;
     }
 
-    .bottom-section {
+    .bottomSection {
         grid-template-columns: 1fr;
     }
 }
@@ -701,21 +712,21 @@ body {
         align-items: flex-start;
     }
 
-    .overview-cards {
+    .overviewCards {
         grid-template-columns: 1fr;
     }
 
-    .attendance-chart {
+    .attendanceChart {
         height: 150px;
     }
 
-    .meeting-item {
+    .meetingItem {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
     }
 
-    .meeting-meta {
+    .meetingMeta {
         align-items: flex-start;
         flex-direction: row;
         gap: 16px;

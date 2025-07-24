@@ -1,4 +1,4 @@
-/* ===== SALARY PAGE SCOPED STYLES ===== */
+/* ===== SALARY PAGE STYLES ===== */
 .salaryPageContainer {
     min-height: 100vh;
     background: linear-gradient(135deg, #f8fffe 0%, #ecfdf5 100%);
@@ -7,13 +7,12 @@
 }
 
 /* ===== PAGE HEADER ===== */
-.salaryPageHeader {
+.pageHeader {
     margin-bottom: 2rem;
-    padding: 1.5rem 0;
     border-bottom: 2px solid #d1fae5;
 }
 
-.salaryPageHeader h1 {
+.pageHeader h1 {
     font-size: 2.5rem;
     font-weight: 700;
     background: linear-gradient(135deg, #059669, #10b981);
@@ -24,7 +23,7 @@
     letter-spacing: -0.025em;
 }
 
-.salaryPageHeader p {
+.pageHeader p {
     color: #6b7280;
     font-size: 1.1rem;
     margin: 0;
@@ -85,8 +84,8 @@
 }
 
 /* ===== BUTTONS ===== */
-.salaryBtnExport,
-.salaryBtnCalculate {
+.btnExport,
+.btnCalculate {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 12px;
@@ -100,31 +99,31 @@
     white-space: nowrap;
 }
 
-.salaryBtnExport {
+.btnExport {
     background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
     color: #374151;
     border: 2px solid #d1d5db;
 }
 
-.salaryBtnExport:hover {
+.btnExport:hover {
     background: linear-gradient(135deg, #e5e7eb, #d1d5db);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.salaryBtnCalculate {
+.btnCalculate {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border: 2px solid #059669;
 }
 
-.salaryBtnCalculate:hover:not(:disabled) {
+.btnCalculate:hover:not(:disabled) {
     background: linear-gradient(135deg, #059669, #047857);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
 }
 
-.salaryBtnCalculate:disabled {
+.btnCalculate:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
@@ -178,13 +177,13 @@
 }
 
 /* ===== EMPLOYEE INFO ===== */
-.salaryEmployeeInfo {
+.employeeInfo {
     display: flex;
     align-items: center;
     gap: 0.75rem;
 }
 
-.salaryEmployeeAvatar {
+.employeeAvatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -193,18 +192,18 @@
     transition: all 0.3s ease;
 }
 
-.salaryEmployeeAvatar:hover {
+.employeeAvatar:hover {
     border-color: #10b981;
     transform: scale(1.1);
 }
 
-.salaryEmployeeInfo span {
+.employeeInfo span {
     font-weight: 600;
     color: #1f2937;
 }
 
 /* ===== STATUS BADGES ===== */
-.salaryStatusBadge {
+.statusBadge {
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -217,25 +216,25 @@
     transition: all 0.3s ease;
 }
 
-.salaryStatusBadge.paid {
+.statusBadge.approved {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.salaryStatusBadge.pending {
+.statusBadge.pending {
     background: linear-gradient(135deg, #f59e0b, #d97706);
     color: white;
     box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
-.salaryStatusBadge.cancelled {
+.statusBadge.rejected {
     background: linear-gradient(135deg, #ef4444, #dc2626);
     color: white;
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-.salaryStatusBadge.draft {
+.statusBadge.draft {
     background: linear-gradient(135deg, #6b7280, #4b5563);
     color: white;
     box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
@@ -264,7 +263,7 @@
 }
 
 /* ===== PAGINATION ===== */
-.salaryPaginationControls {
+.paginationControls {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -275,7 +274,7 @@
     gap: 1rem;
 }
 
-.salaryPaginationControls select {
+.paginationControls select {
     padding: 0.5rem;
     border: 2px solid #d1fae5;
     border-radius: 8px;
@@ -284,13 +283,13 @@
     transition: all 0.3s ease;
 }
 
-.salaryPaginationControls select:focus {
+.paginationControls select:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.salaryPaginationControls button {
+.paginationControls button {
     padding: 0.5rem 0.75rem;
     margin: 0 0.25rem;
     border: 2px solid #d1fae5;
@@ -302,22 +301,31 @@
     font-weight: 600;
 }
 
-.salaryPaginationControls button:hover:not(:disabled) {
+.paginationControls button:hover:not(:disabled) {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border-color: #059669;
     transform: translateY(-1px);
 }
 
-.salaryPaginationControls button.active {
+.paginationControls button.active {
     background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border-color: #059669;
 }
 
-.salaryPaginationControls button:disabled {
+.paginationControls button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* ===== EMPTY STATE ===== */
+.salaryTable tbody tr td[colspan="6"] {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6b7280;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -331,13 +339,18 @@
         align-items: stretch;
     }
 
+    .salaryControls > div {
+        display: flex;
+        gap: 0.5rem;
+    }
+
     .salarySearch {
         min-width: auto;
     }
 }
 
 @media (max-width: 768px) {
-    .salaryPageHeader h1 {
+    .pageHeader h1 {
         font-size: 2rem;
     }
 
@@ -349,19 +362,91 @@
         min-width: 800px;
     }
 
-    .salaryPaginationControls {
+    .paginationControls {
         flex-direction: column;
         text-align: center;
     }
 
-    .salaryEmployeeInfo {
+    .employeeInfo {
         flex-direction: column;
         text-align: center;
         gap: 0.5rem;
     }
 
-    .salaryEmployeeAvatar {
+    .employeeAvatar {
         width: 32px;
         height: 32px;
     }
+}
+
+@media (max-width: 480px) {
+    .salaryPageContainer {
+        padding: 0.5rem;
+    }
+
+    .pageHeader {
+        padding: 1rem 0;
+    }
+
+    .pageHeader h1 {
+        font-size: 1.75rem;
+    }
+
+    .salaryControls {
+        padding: 1rem;
+    }
+
+    .btnExport,
+    .btnCalculate {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .salaryTable th,
+    .salaryTable td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .statusBadge {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+        min-width: 70px;
+    }
+}
+
+/* ===== LOADING ANIMATION ===== */
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.btnCalculate:disabled {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ===== HOVER EFFECTS ===== */
+.salaryTable tbody tr:hover .employeeAvatar {
+    transform: scale(1.1);
+    border-color: #10b981;
+}
+
+.salaryTable tbody tr:hover .statusBadge {
+    transform: scale(1.05);
+}
+
+/* ===== FOCUS STYLES ===== */
+.salaryTable button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+}
+
+.paginationControls button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
 }
