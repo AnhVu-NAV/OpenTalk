@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import axios from "/src/api/axiosClient.jsx"
-import "/src/pages/styles/TopicProposalCategory.css"
+import styles from "./styles/module/TopicProposalCategory.module.css"
 import TopicProposal from "../components/common/TopicProposalCard.jsx"
 import { getAccessToken, getCurrentUser } from "../helper/auth.jsx"
 import ProposalDetail from "../components/proposalTopic/ProposalDetail.jsx"
@@ -132,9 +132,9 @@ const TopicProposalCategory = () => {
 
     if (loading) {
         return (
-            <div className="topic-proposal-container">
-                <div className="loading-container">
-                    <div className="loading-spinner"></div>
+            <div className={styles.topicProposalContainer}>
+                <div className={styles.topicLoadingContainer}>
+                    <div className={styles.topicLoadingSpinner}></div>
                     <p>Loading topics...</p>
                 </div>
             </div>
@@ -143,9 +143,9 @@ const TopicProposalCategory = () => {
 
     if (error) {
         return (
-            <div className="topic-proposal-container">
-                <div className="error-container">
-                    <div className="error-icon">⚠️</div>
+            <div className={styles.topicProposalContainer}>
+                <div className={styles.topicErrorContainer}>
+                    <div className={styles.topicErrorIcon}>⚠️</div>
                     <p>{error}</p>
                 </div>
             </div>
@@ -153,41 +153,41 @@ const TopicProposalCategory = () => {
     }
 
     return (
-        <div className="topic-proposal-container">
+        <div className={styles.topicProposalContainer}>
             {/* Header */}
-            <div className="page-header">
-                <div className="header-content">
-                    <h1 className="page-title">Topic Proposals</h1>
-                    <p className="page-subtitle">Manage and review topic proposals from team members</p>
+            <div className={styles.topicPageHeader}>
+                <div className={styles.topicHeaderContent}>
+                    <h1 className={styles.pageTitle}>Topic Proposals</h1>
+                    <p className={styles.topicPageSubtitle}>Manage and review topic proposals from team members</p>
                 </div>
             </div>
 
             {/* Stats Cards */}
-            <div className="stats-grid">
-                <div className="stat-card">
-                    <div className="stat-icon">📝</div>
-                    <div className="stat-content">
+            <div className={styles.topicStatsGrid}>
+                <div className={styles.topicStatCard}>
+                    <div className={styles.topicStatIcon}>📝</div>
+                    <div className={styles.topicStatContent}>
                         <h3>{posts.length}</h3>
                         <p>Total Proposals</p>
                     </div>
                 </div>
-                <div className="stat-card">
-                    <div className="stat-icon">✅</div>
-                    <div className="stat-content">
+                <div className={styles.topicStatCard}>
+                    <div className={styles.topicStatIcon}>✅</div>
+                    <div className={styles.topicStatContent}>
                         <h3>{posts.filter((p) => p.status === "approved").length}</h3>
                         <p>Approved</p>
                     </div>
                 </div>
-                <div className="stat-card">
-                    <div className="stat-icon">⏳</div>
-                    <div className="stat-content">
+                <div className={styles.topicStatCard}>
+                    <div className={styles.topicStatIcon}>⏳</div>
+                    <div className={styles.topicStatContent}>
                         <h3>{posts.filter((p) => p.status === "pending").length}</h3>
                         <p>Pending</p>
                     </div>
                 </div>
-                <div className="stat-card">
-                    <div className="stat-icon">❌</div>
-                    <div className="stat-content">
+                <div className={styles.topicStatCard}>
+                    <div className={styles.topicStatIcon}>❌</div>
+                    <div className={styles.topicStatContent}>
                         <h3>{posts.filter((p) => p.status === "rejected").length}</h3>
                         <p>Rejected</p>
                     </div>
@@ -195,27 +195,27 @@ const TopicProposalCategory = () => {
             </div>
 
             {/* Action Bar */}
-            <div className="action-bar">
-                <div className="search-container">
-                    <FaSearch className="search-icon" />
+            <div className={styles.topicActionBar}>
+                <div className={styles.topicSearchContainer}>
+                    <FaSearch className={styles.topicSearchIcon} />
                     <input
                         type="text"
-                        className="search-input"
+                        className={styles.topicSearchInput}
                         placeholder="Search by title..."
                         value={title}
                         onChange={handleTitleChange}
                     />
                 </div>
 
-                <div className="action-buttons">
-                    <button className="btn btn-primary">
+                <div className={styles.topicActionButtons}>
+                    <button className={`${styles.topicBtn} ${styles.topicBtnPrimary}`}>
                         <FaPlus />
                         Add New
                     </button>
-                    <div className="filter-group">
-                        <FaFilter className="filter-icon" />
+                    <div className={styles.topicFilterGroup}>
+                        <FaFilter className={styles.topicFilterIcon} />
                         <select
-                            className="status-filter"
+                            className={styles.topicStatusFilter}
                             value={statusFilter}
                             onChange={(e) => {
                                 setStatusFilter(e.target.value)
@@ -235,13 +235,13 @@ const TopicProposalCategory = () => {
 
             {/* Content */}
             {posts.length === 0 ? (
-                <div className="empty-state">
-                    <div className="empty-icon">📋</div>
+                <div className={styles.topicEmptyState}>
+                    <div className={styles.topicEmptyIcon}>📋</div>
                     <h3>No topics found</h3>
                     <p>Try adjusting your search criteria or add a new topic proposal</p>
                 </div>
             ) : (
-                <div className="proposals-grid">
+                <div className={styles.topicProposalsGrid}>
                     {posts.map((post) => (
                         <TopicProposal
                             key={post.id}
@@ -260,19 +260,23 @@ const TopicProposalCategory = () => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="pagination-container">
-                    <div className="pagination-info">
+                <div className={styles.topicPaginationContainer}>
+                    <div className={styles.topicPaginationInfo}>
                         Page {pageNo} of {totalPages}
                     </div>
-                    <div className="pagination-controls">
-                        <button className="pagination-btn" onClick={() => setPageNo((prev) => prev - 1)} disabled={pageNo === 1}>
+                    <div className={styles.topicPaginationControls}>
+                        <button
+                            className={styles.topicPaginationBtn}
+                            onClick={() => setPageNo((prev) => prev - 1)}
+                            disabled={pageNo === 1}
+                        >
                             <FaChevronLeft />
                         </button>
 
                         {[...Array(totalPages)].map((_, i) => (
                             <button
                                 key={i + 1}
-                                className={`pagination-number ${pageNo === i + 1 ? "active" : ""}`}
+                                className={`${styles.topicPaginationNumber} ${pageNo === i + 1 ? styles.active : ""}`}
                                 onClick={() => setPageNo(i + 1)}
                             >
                                 {i + 1}
@@ -280,7 +284,7 @@ const TopicProposalCategory = () => {
                         ))}
 
                         <button
-                            className="pagination-btn"
+                            className={styles.topicPaginationBtn}
                             onClick={() => setPageNo((prev) => prev + 1)}
                             disabled={pageNo === totalPages}
                         >

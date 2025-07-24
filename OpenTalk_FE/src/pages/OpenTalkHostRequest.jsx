@@ -85,8 +85,8 @@ function OpenTalkHostRequestPage() {
 
   return (
     <div
-      className="bg-white rounded-4 shadow-sm p-4"
-      style={{ width: "100%", marginTop: 20, border: "1px solid #ececec" }}
+      className="bg-white rounded-4 shadow-sm"
+      style={{ width: "100%", border: "1px solid #ececec" }}
     >
       <div className="container-fluid px-4 py-4">
         <Header />

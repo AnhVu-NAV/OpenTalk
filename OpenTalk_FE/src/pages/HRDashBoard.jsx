@@ -70,15 +70,6 @@ const HRDashboard = () => {
                             <span className="trend negative">-2.1%</span>
                         </div>
                     </div>
-
-                    {/*<div className="overview-card">*/}
-                    {/*    <div className="card-icon projects">🎯</div>*/}
-                    {/*    <div className="card-content">*/}
-                    {/*        <h3>{dashboardData.overview.activeProjects}</h3>*/}
-                    {/*        <p>Active Projects</p>*/}
-                    {/*        <span className="trend positive">+8.4%</span>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </div>
 
                 {/* Charts Section */}
@@ -168,29 +159,6 @@ const HRDashboard = () => {
                             })}
                         </div>
                     </div>
-
-                    {/* Top Hosts */}
-                    {/*<div className="section-card top-hosts">*/}
-                    {/*    <div className="section-header">*/}
-                    {/*        <h3>Top Meeting Hosts</h3>*/}
-                    {/*        <button className="section-btn">View All</button>*/}
-                    {/*    </div>*/}
-                    {/*    <div className="hosts-list">*/}
-                    {/*        {dashboardData.topHosts.map((host, index) => (*/}
-                    {/*            <div key={index} className="host-item">*/}
-                    {/*                <div className="host-rank">#{index + 1}</div>*/}
-                    {/*                <img src="/placeholder.svg?height=40&width=40" alt={host.name} className="host-avatar" />*/}
-                    {/*                <div className="host-info">*/}
-                    {/*                    <h4>{host.name}</h4>*/}
-                    {/*                    <p>{host.sessions} sessions</p>*/}
-                    {/*                </div>*/}
-                    {/*                <div className="host-rating">*/}
-                    {/*                    <span className="rating">⭐ {host.rating}</span>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        ))}*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </div>
             </div>
         </div>

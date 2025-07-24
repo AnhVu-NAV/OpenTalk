@@ -1,108 +1,107 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import MeetingCard from '../components/meetingCard/meetingCard/MeetingCard';
-import { FaSearch, FaChevronDown, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import MeetingCard from "../components/meetingCard/meetingCard/MeetingCard"
+import { FaSearch, FaChevronDown, FaChevronLeft, FaChevronRight } from "react-icons/fa"
 
-import { getCompanyBranches } from '../api/companyBranch';
-import { OpenTalkMeetingStatus } from '../constants/enums/openTalkMeetingStatus';
-import meetingMockData from '../api/__mocks__/data/meetingMockData';
-import './styles/HostMeetingListPage.css';
-import { getCurrentUser } from '../helper/auth';
-import { User } from 'lucide-react';
-import { getMeetingDetailsForHost } from '../api/meeting';
+import { getCompanyBranches } from "../api/companyBranch"
+import { OpenTalkMeetingStatus } from "../constants/enums/openTalkMeetingStatus"
+import meetingMockData from "../api/__mocks__/data/meetingMockData"
+import styles from "./styles/module/HostMeetingListPage.module.css"
+import { getCurrentUser } from "../helper/auth"
+import { getMeetingDetailsForHost } from "../api/meeting"
 
 const mockBranches = [
-    { id: 1, name: 'Branch A' },
-    { id: 2, name: 'Branch B' },
-    { id: 3, name: 'Branch C' },
-    { id: 4, name: 'Branch D' },
-];
+    { id: 1, name: "Branch A" },
+    { id: 2, name: "Branch B" },
+    { id: 3, name: "Branch C" },
+    { id: 4, name: "Branch D" },
+]
 
 const HostMeetingListPage = () => {
-    const navigate = useNavigate();
-    const [meetings, setMeetings] = useState([]);
-    const [branches, setBranches] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [branchFilter, setBranchFilter] = useState('');
-    const [activeTab, setActiveTab] = useState(OpenTalkMeetingStatus.COMPLETED);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8;
+    const navigate = useNavigate()
+    const [meetings, setMeetings] = useState([])
+    const [branches, setBranches] = useState([])
+    const [searchTerm, setSearchTerm] = useState("")
+    const [branchFilter, setBranchFilter] = useState("")
+    const [activeTab, setActiveTab] = useState(OpenTalkMeetingStatus.COMPLETED)
+    const [currentPage, setCurrentPage] = useState(1)
+    const itemsPerPage = 8
 
     const tabs = [
-        { id: OpenTalkMeetingStatus.COMPLETED, label: 'History' },
-        { id: OpenTalkMeetingStatus.UPCOMING, label: 'Upcoming' },
-        { id: OpenTalkMeetingStatus.ONGOING, label: 'Ongoing' },
-    ];
+        { id: OpenTalkMeetingStatus.COMPLETED, label: "History" },
+        { id: OpenTalkMeetingStatus.UPCOMING, label: "Upcoming" },
+        { id: OpenTalkMeetingStatus.ONGOING, label: "Ongoing" },
+    ]
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getMeetingDetailsForHost(searchTerm, branchFilter, getCurrentUser()?.username);
-                console.log('Fetched host meetings:', data);
-                setMeetings(Array.isArray(data) ? data : meetingMockData);
+                const data = await getMeetingDetailsForHost(searchTerm, branchFilter, getCurrentUser()?.username)
+                console.log("Fetched host meetings:", data)
+                setMeetings(Array.isArray(data) ? data : meetingMockData)
             } catch (e) {
-                console.error(e);
-                setMeetings(meetingMockData);
+                console.error(e)
+                setMeetings(meetingMockData)
             }
 
             try {
-                const branchData = await getCompanyBranches();
-                setBranches(Array.isArray(branchData) ? branchData : mockBranches);
+                const branchData = await getCompanyBranches()
+                setBranches(Array.isArray(branchData) ? branchData : mockBranches)
             } catch (e) {
-                console.error(e);
-                setBranches(mockBranches);
+                console.error(e)
+                setBranches(mockBranches)
             }
-        };
+        }
 
-        fetchData();
-    }, [searchTerm, branchFilter]);
+        fetchData()
+    }, [searchTerm, branchFilter])
 
     const handleJoin = (link) => {
         if (link) {
-            window.open(link, '_blank');
+            window.open(link, "_blank")
         }
-    };
+    }
 
     const filteredMeetings = meetings.filter((m) => {
         switch (activeTab) {
             case OpenTalkMeetingStatus.COMPLETED:
-                return m.status === OpenTalkMeetingStatus.COMPLETED;
+                return m.status === OpenTalkMeetingStatus.COMPLETED
             case OpenTalkMeetingStatus.UPCOMING:
-                return m.status === OpenTalkMeetingStatus.UPCOMING;
+                return m.status === OpenTalkMeetingStatus.UPCOMING
             case OpenTalkMeetingStatus.ONGOING:
-                return m.status === OpenTalkMeetingStatus.ONGOING;
+                return m.status === OpenTalkMeetingStatus.ONGOING
             default:
-                return true;
+                return true
         }
-    });
+    })
 
-    const totalPages = Math.ceil(filteredMeetings.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedMeetings = filteredMeetings.slice(startIndex, startIndex + itemsPerPage);
+    const totalPages = Math.ceil(filteredMeetings.length / itemsPerPage)
+    const startIndex = (currentPage - 1) * itemsPerPage
+    const paginatedMeetings = filteredMeetings.slice(startIndex, startIndex + itemsPerPage)
 
     return (
-        <div className="host-meeting-page">
-            <div className="host-meeting-filters">
-                <div className="host-meeting-search-container">
-                    <FaSearch className="host-meeting-search-icon" />
+        <div className={styles.hostMeetingPage}>
+            <div className={styles.hostMeetingFilters}>
+                <div className={styles.hostMeetingSearchContainer}>
+                    <FaSearch className={styles.hostMeetingSearchIcon} />
                     <input
                         type="text"
-                        className="host-meeting-search-input"
+                        className={styles.hostMeetingSearchInput}
                         placeholder="Search Meeting"
                         value={searchTerm}
                         onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                            setCurrentPage(1);
+                            setSearchTerm(e.target.value)
+                            setCurrentPage(1)
                         }}
                     />
                 </div>
-                <div className="host-meeting-select-container">
+                <div className={styles.hostMeetingSelectContainer}>
                     <select
-                        className="host-meeting-select"
+                        className={styles.hostMeetingSelect}
                         value={branchFilter}
                         onChange={(e) => {
-                            setBranchFilter(e.target.value);
-                            setCurrentPage(1);
+                            setBranchFilter(e.target.value)
+                            setCurrentPage(1)
                         }}
                     >
                         <option value="">All Branches</option>
@@ -112,26 +111,26 @@ const HostMeetingListPage = () => {
                             </option>
                         ))}
                     </select>
-                    <FaChevronDown className="host-meeting-select-icon" />
+                    <FaChevronDown className={styles.hostMeetingSelectIcon} />
                 </div>
             </div>
 
-            <div className="host-meeting-tabs-header">
+            <div className={styles.hostMeetingTabsHeader}>
                 {tabs.map((t) => (
                     <button
                         key={t.id}
                         onClick={() => {
-                            setActiveTab(t.id);
-                            setCurrentPage(1);
+                            setActiveTab(t.id)
+                            setCurrentPage(1)
                         }}
-                        className={`host-meeting-tab-button ${activeTab === t.id ? 'active' : ''}`}
+                        className={`${styles.hostMeetingTabButton} ${activeTab === t.id ? styles.active : ""}`}
                     >
                         {t.label}
                     </button>
                 ))}
             </div>
 
-            <div className="host-meeting-list-container">
+            <div className={styles.hostMeetingListContainer}>
                 {paginatedMeetings.map((m) => (
                     <MeetingCard
                         key={m.id}
@@ -140,7 +139,7 @@ const HostMeetingListPage = () => {
                         extraCount={0}
                         displayLink={m.status !== OpenTalkMeetingStatus.COMPLETED}
                         showButton={false}
-                        actionLabel={''}
+                        actionLabel={""}
                         isDisabledButton={true}
                         onAction={() => {}}
                         onView={() => navigate(`/host-meeting/${m.id}`, { state: { meetingList: meetings, onTab: activeTab } })}
@@ -148,15 +147,16 @@ const HostMeetingListPage = () => {
                 ))}
             </div>
 
-            <div className="host-meeting-pagination">
-                <div className="host-meeting-pagination-info">
-                    Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredMeetings.length)} of {filteredMeetings.length} results
+            <div className={styles.hostMeetingPagination}>
+                <div className={styles.hostMeetingPaginationInfo}>
+                    Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredMeetings.length)} of{" "}
+                    {filteredMeetings.length} results
                 </div>
-                <div className="host-meeting-pagination-buttons">
+                <div className={styles.hostMeetingPaginationButtons}>
                     <button
                         onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                         disabled={currentPage === 1}
-                        className="host-meeting-pagination-btn"
+                        className={styles.hostMeetingPaginationBtn}
                     >
                         <FaChevronLeft />
                     </button>
@@ -164,7 +164,7 @@ const HostMeetingListPage = () => {
                         <button
                             key={i + 1}
                             onClick={() => setCurrentPage(i + 1)}
-                            className={`host-meeting-pagination-number ${currentPage === i + 1 ? 'active' : ''}`}
+                            className={`${styles.hostMeetingPaginationNumber} ${currentPage === i + 1 ? styles.active : ""}`}
                         >
                             {i + 1}
                         </button>
@@ -172,14 +172,14 @@ const HostMeetingListPage = () => {
                     <button
                         onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                         disabled={currentPage === totalPages}
-                        className="host-meeting-pagination-btn"
+                        className={styles.hostMeetingPaginationBtn}
                     >
                         <FaChevronRight />
                     </button>
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default HostMeetingListPage;
+export default HostMeetingListPage

@@ -1,64 +1,66 @@
 import { useState, useEffect } from "react"
-import { FaSearch, FaPlus, FaEdit, FaTrash, FaEye, FaFilter, FaDownload } from "react-icons/fa"
-import "./styles/TopicHub.css"
-import axios from "../api/axiosClient.jsx";
-import {getAccessToken} from "../helper/auth.jsx";
-import PollApp from "./PollMeeting.jsx";
+import { FaSearch } from "react-icons/fa"
+import styles from "./styles/module/TopicHub.module.css"
+import axios from "../api/axiosClient.jsx"
+import { getAccessToken } from "../helper/auth.jsx"
+import PollApp from "./PollMeeting.jsx"
 
 const TopicHub = () => {
     const [selectedCategory, setSelectedCategory] = useState()
     const [meetingName, setMeetingName] = useState("")
     const [loading, setLoading] = useState(false)
-    const[categories, setCategories] = useState([])
+    const [categories, setCategories] = useState([])
 
     const fetchMeeting = async () => {
         try {
             const res = await axios.get("/opentalk-meeting", {
-                params: {name: meetingName},
+                params: {
+                    name: meetingName,
+                    pageNo: 1,
+                },
                 headers: { Authorization: `Bearer ${getAccessToken()}` },
             })
             setCategories(res.data.content || [])
-
         } catch (err) {
             console.error(err)
         } finally {
             setLoading(false)
         }
     }
-    useEffect(() => {
-        fetchMeeting();
-    },[meetingName])
 
+    useEffect(() => {
+        fetchMeeting()
+    }, [meetingName])
 
     return (
-        <div className="topic-hub">
+        <div className={styles.topicHub}>
             {/* Sidebar */}
-            <div className="topic-sidebar">
-                <div className="sidebar-header">
+            <div className={styles.topicHubSidebar}>
+                <div className={styles.topicHubSidebarHeader}>
                     <h2>OpenTalk Meeting</h2>
                 </div>
 
-                <div className="search-container">
-                    <FaSearch className="search-icon" />
+                <div className={styles.topicHubSearchContainer}>
+                    <FaSearch className={styles.topicHubSearchIcon} />
                     <input
                         type="text"
-                        className="search-input"
-                        placeholder="Search categories..."
+                        className={styles.topicHubSearchInput}
+                        placeholder="Search meeting..."
                         value={meetingName}
                         onChange={(e) => setMeetingName(e.target.value)}
                     />
                 </div>
 
-                <div className="category-list">
+                <div className={styles.topicHubCategoryList}>
                     {categories.map((category, index) => (
                         <div
                             key={category.id}
-                            className={`category-item ${selectedCategory === category.id ? "active" : ""}`}
+                            className={`${styles.topicHubCategoryItem} ${selectedCategory === category.id ? styles.active : ""}`}
                             onClick={() => setSelectedCategory(category)}
                         >
-                            <div className="category-number">{index + 1}</div>
-                            <div className="category-info">
-                                <div className="category-name">{category.meetingName}</div>
+                            <div className={styles.topicHubCategoryNumber}>{index + 1}</div>
+                            <div className={styles.topicHubCategoryInfo}>
+                                <div className={styles.topicHubCategoryName}>{category.meetingName}</div>
                             </div>
                         </div>
                     ))}
@@ -66,13 +68,11 @@ const TopicHub = () => {
             </div>
 
             {/* Main Content */}
-            <div className="topic-main">
+            <div className={styles.topicHubMain}>
                 {selectedCategory ? (
-                    <PollApp
-                        meeting={selectedCategory}
-                    />
+                    <PollApp meeting={selectedCategory} />
                 ) : (
-                    <div className="empty-state">Chọn một meeting để xem Poll nhé!</div>
+                    <div className={styles.topicHubEmptyState}>Chọn một meeting để xem Poll nhé!</div>
                 )}
             </div>
         </div>

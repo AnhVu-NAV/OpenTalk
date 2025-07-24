@@ -8,7 +8,7 @@ import LoginForm from "./pages/LoginForm";
 import RegisterForm from "./pages/RegisterForm";
 
 // Dashboard & Overview
-import DashBoard from "./pages/DashBoard";
+import DashBoard from "./pages/HRDashBoard.jsx";
 function Overview() {
     return <h2>Overview Page</h2>;
 }

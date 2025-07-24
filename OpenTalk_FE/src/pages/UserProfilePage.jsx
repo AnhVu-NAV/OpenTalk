@@ -1,14 +1,23 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import axios from "../api/axiosClient.jsx"
 import UserAttendanceTab from "./UserAttendanceTab"
-import "./styles/UserProfilePage.css"
+import styles from "./styles/module/UserProfilePage.module.css"
 import { getCurrentUser } from "../helper/auth.jsx"
 
 const UserProfilePage = ({ userId }) => {
     const [user, setUser] = useState(null)
     const [activeTab, setActiveTab] = useState("profile")
+    const [avatarBgColor, setAvatarBgColor] = useState("hsl(0, 70%, 85%)")
+    const getRandomPastelColor = () => {
+        const hue = Math.floor(Math.random() * 360)
+        return `hsl(${hue}, 70%, 85%)` // pastel màu sáng
+    }
+
+    useEffect(() => {
+        if (!user?.avatarUrl) {
+            setAvatarBgColor(getRandomPastelColor())
+        }
+    }, [user])
 
     useEffect(() => {
         const current = getCurrentUser()
@@ -26,8 +35,8 @@ const UserProfilePage = ({ userId }) => {
 
     if (!user) {
         return (
-            <div className="loading-container">
-                <div className="loading-spinner"></div>
+            <div className={styles.profileLoadingContainer}>
+                <div className={styles.profileLoadingSpinner}></div>
                 <p>Loading user profile...</p>
             </div>
         )
@@ -35,7 +44,7 @@ const UserProfilePage = ({ userId }) => {
 
     const tabs = [
         { id: "profile", label: "Profile", icon: "👤" },
-        { id: "personal", label: "Personal Information", icon: "📋" },
+        // { id: "personal", label: "Personal Information", icon: "📋" },
         { id: "professional", label: "Professional Information", icon: "💼" },
         { id: "attendance", label: "Attendance", icon: "📅" },
         { id: "documents", label: "Documents", icon: "📄" },
@@ -43,66 +52,78 @@ const UserProfilePage = ({ userId }) => {
     ]
 
     return (
-        <div className="user-profile-page">
-
+        <div className={styles.userProfilePage}>
             {/* Main Content */}
-            <div className="profile-main">
+            <div className={styles.profileMain}>
                 {/* Header */}
-                <div className="profile-header">
-                    <div className="header-top">
-                        <div className="breadcrumb">
+                <div className={styles.profileHeader}>
+                    <div className={styles.profileHeaderTop}>
+                        <div className={styles.profileBreadcrumb}>
                             <span>All Employee</span>
-                            <span className="separator">›</span>
+                            <span className={styles.profileSeparator}>›</span>
                             <span>{user.fullName}</span>
                         </div>
                     </div>
 
-                    <div className="user-header">
-                        <div className="user-info-section">
-                            <img src={user.avatarUrl || "/default-avatar.png"} alt="User Avatar" className="user-avatar" />
-                            <div className="user-details">
-                                <h1 className="user-name">{user.fullName}</h1>
-                                <div className="user-meta">
-                                    <div className="meta-item">
-                                        <span className="meta-icon">💼</span>
+                    <div className={styles.profileUserHeader}>
+                        <div className={styles.profileUserInfoSection}>
+                            {user.avatarUrl ? (
+                                <img
+                                    src={user.avatarUrl}
+                                    alt="User Avatar"
+                                    className={styles.profileUserAvatar}
+                                />
+                            ) : (
+                                <div
+                                    className={styles.profileAvatarFallback}
+                                    style={{ backgroundColor: avatarBgColor }}
+                                >
+                                    {user.fullName?.charAt(0).toUpperCase() || "U"}
+                                </div>
+                            )}
+                            <div className={styles.profileUserDetails}>
+                                <h1>{user.fullName}</h1>
+                                <div className={styles.profileUserMeta}>
+                                    <div className={styles.profileMetaItem}>
+                                        <span className={styles.profileMetaIcon}>💼</span>
                                         <span>{user.role || "Project Manager"}</span>
                                     </div>
-                                    <div className="meta-item">
-                                        <span className="meta-icon">✉️</span>
+                                    <div className={styles.profileMetaItem}>
+                                        <span className={styles.profileMetaIcon}>✉️</span>
                                         <span>{user.email}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button className="edit-profile-btn">
-                            <span className="edit-icon">✏️</span>
+                        <button className={styles.profileEditBtn}>
+                            <span className={styles.profileEditIcon}>✏️</span>
                             Edit Profile
                         </button>
                     </div>
                 </div>
 
                 {/* Tab Navigation */}
-                <div className="tab-navigation">
-                    <div className="main-tabs">
+                <div className={styles.profileTabNavigation}>
+                    <div className={styles.profileMainTabs}>
                         {tabs.slice(0, 4).map((tab) => (
                             <button
                                 key={tab.id}
-                                className={`tab-btn ${activeTab === tab.id ? "active" : ""}`}
+                                className={`${styles.profileTabBtn} ${activeTab === tab.id ? styles.active : ""}`}
                                 onClick={() => setActiveTab(tab.id)}
                             >
-                                <span className="tab-icon">{tab.icon}</span>
+                                <span className={styles.profileTabIcon}>{tab.icon}</span>
                                 {tab.label}
                             </button>
                         ))}
                     </div>
-                    <div className="secondary-tabs">
+                    <div className={styles.profileSecondaryTabs}>
                         {tabs.slice(4).map((tab) => (
                             <button
                                 key={tab.id}
-                                className={`tab-btn secondary ${activeTab === tab.id ? "active" : ""}`}
+                                className={`${styles.profileTabBtn} ${styles.secondary} ${activeTab === tab.id ? styles.active : ""}`}
                                 onClick={() => setActiveTab(tab.id)}
                             >
-                                <span className="tab-icon">{tab.icon}</span>
+                                <span className={styles.profileTabIcon}>{tab.icon}</span>
                                 {tab.label}
                             </button>
                         ))}
@@ -110,102 +131,104 @@ const UserProfilePage = ({ userId }) => {
                 </div>
 
                 {/* Tab Content */}
-                <div className="tab-content">
+                <div className={styles.profileTabContent}>
                     {(activeTab === "profile" || activeTab === "personal") && (
-                        <div className="profile-form">
-                            <div className="form-row">
-                                <div className="form-group">
+                        <div className={styles.profileForm}>
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>First Name</label>
-                                    <div className="form-value">{user.fullName?.split(" ")[0] || "Brooklyn"}</div>
+                                    <div className={styles.profileFormValue}>{user.fullName?.split(" ")[0] || "Brooklyn"}</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>Last Name</label>
-                                    <div className="form-value">{user.fullName?.split(" ").slice(1).join(" ") || "Simmons"}</div>
+                                    <div className={styles.profileFormValue}>
+                                        {user.fullName?.split(" ").slice(1).join(" ") || "Simmons"}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>Mobile Number</label>
-                                    <div className="form-value">{user.mobile || "(702) 555-0122"}</div>
+                                    <div className={styles.profileFormValue}>{user.mobile || "(702) 555-0122"}</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>Email Address</label>
-                                    <div className="form-value">{user.email}</div>
+                                    <div className={styles.profileFormValue}>{user.email}</div>
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>Date of Birth</label>
-                                    <div className="form-value">{user.dob || "July 14, 1995"}</div>
+                                    <div className={styles.profileFormValue}>{user.dob || "July 14, 1995"}</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>Marital Status</label>
-                                    <div className="form-value">{user.maritalStatus || "Married"}</div>
+                                    <div className={styles.profileFormValue}>{user.maritalStatus || "Married"}</div>
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>Gender</label>
-                                    <div className="form-value">{user.gender || "Female"}</div>
+                                    <div className={styles.profileFormValue}>{user.gender || "Female"}</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>Nationality</label>
-                                    <div className="form-value">{user.nationality || "America"}</div>
+                                    <div className={styles.profileFormValue}>{user.nationality || "America"}</div>
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>Address</label>
-                                    <div className="form-value">{user.address || "2464 Royal Ln. Mesa, New Jersey"}</div>
+                                    <div className={styles.profileFormValue}>{user.address || "2464 Royal Ln. Mesa, New Jersey"}</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>City</label>
-                                    <div className="form-value">{user.city || "California"}</div>
+                                    <div className={styles.profileFormValue}>{user.city || "California"}</div>
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>State</label>
-                                    <div className="form-value">{user.state || "United State"}</div>
+                                    <div className={styles.profileFormValue}>{user.state || "United State"}</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>Zip Code</label>
-                                    <div className="form-value">{user.zipCode || "35624"}</div>
+                                    <div className={styles.profileFormValue}>{user.zipCode || "35624"}</div>
                                 </div>
                             </div>
                         </div>
                     )}
 
                     {activeTab === "professional" && (
-                        <div className="professional-info">
-                            <div className="form-row">
-                                <div className="form-group">
+                        <div className={styles.profileProfessionalInfo}>
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>Employee ID</label>
-                                    <div className="form-value">EMP001</div>
+                                    <div className={styles.profileFormValue}>EMP001</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>Department</label>
-                                    <div className="form-value">Project Management</div>
+                                    <div className={styles.profileFormValue}>Project Management</div>
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>Position</label>
-                                    <div className="form-value">Project Manager</div>
+                                    <div className={styles.profileFormValue}>Project Manager</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>Join Date</label>
-                                    <div className="form-value">January 15, 2020</div>
+                                    <div className={styles.profileFormValue}>January 15, 2020</div>
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group">
+                            <div className={styles.profileFormRow}>
+                                <div className={styles.profileFormGroup}>
                                     <label>Salary</label>
-                                    <div className="form-value">$75,000</div>
+                                    <div className={styles.profileFormValue}>$75,000</div>
                                 </div>
-                                <div className="form-group">
+                                <div className={styles.profileFormGroup}>
                                     <label>Manager</label>
-                                    <div className="form-value">Robert Allen</div>
+                                    <div className={styles.profileFormValue}>Robert Allen</div>
                                 </div>
                             </div>
                         </div>
@@ -214,35 +237,35 @@ const UserProfilePage = ({ userId }) => {
                     {activeTab === "attendance" && <UserAttendanceTab userId={userId} />}
 
                     {activeTab === "documents" && (
-                        <div className="documents-section">
-                            <div className="document-item">
-                                <span className="doc-icon">📄</span>
-                                <span className="doc-name">Resume.pdf</span>
-                                <span className="doc-date">Uploaded: Jan 15, 2020</span>
-                                <button className="doc-action">Download</button>
+                        <div className={styles.profileDocumentsSection}>
+                            <div className={styles.profileDocumentItem}>
+                                <span className={styles.profileDocIcon}>📄</span>
+                                <span className={styles.profileDocName}>Resume.pdf</span>
+                                <span className={styles.profileDocDate}>Uploaded: Jan 15, 2020</span>
+                                <button className={styles.profileDocAction}>Download</button>
                             </div>
-                            <div className="document-item">
-                                <span className="doc-icon">📄</span>
-                                <span className="doc-name">Contract.pdf</span>
-                                <span className="doc-date">Uploaded: Jan 15, 2020</span>
-                                <button className="doc-action">Download</button>
+                            <div className={styles.profileDocumentItem}>
+                                <span className={styles.profileDocIcon}>📄</span>
+                                <span className={styles.profileDocName}>Contract.pdf</span>
+                                <span className={styles.profileDocDate}>Uploaded: Jan 15, 2020</span>
+                                <button className={styles.profileDocAction}>Download</button>
                             </div>
                         </div>
                     )}
 
                     {activeTab === "access" && (
-                        <div className="access-section">
-                            <div className="access-item">
+                        <div className={styles.profileAccessSection}>
+                            <div className={styles.profileAccessItem}>
                                 <label>System Access</label>
-                                <div className="access-status active">Active</div>
+                                <div className={`${styles.profileAccessStatus} ${styles.active}`}>Active</div>
                             </div>
-                            <div className="access-item">
+                            <div className={styles.profileAccessItem}>
                                 <label>Last Login</label>
-                                <div className="access-value">Today, 09:30 AM</div>
+                                <div className={styles.profileAccessValue}>Today, 09:30 AM</div>
                             </div>
-                            <div className="access-item">
+                            <div className={styles.profileAccessItem}>
                                 <label>Password Last Changed</label>
-                                <div className="access-value">30 days ago</div>
+                                <div className={styles.profileAccessValue}>30 days ago</div>
                             </div>
                         </div>
                     )}
