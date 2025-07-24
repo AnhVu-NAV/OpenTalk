@@ -4,8 +4,9 @@ import {FaBuilding, FaCalendarAlt, FaUser, FaTimes, FaCheck, FaPlus} from "react
 import { getAccessToken, getCurrentUser } from "../../helper/auth.jsx"
 import axios from "/src/api/axiosClient.jsx"
 import { Modal, Button, Form, Spinner } from "react-bootstrap"
+import {useNavigate} from "react-router-dom";
 
-const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal }) => {
+const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, meetingId, needAdd }) => {
     const [data, setData] = useState(null)
     const [successMsg, setSuccessMsg] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
@@ -18,7 +19,7 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal }) =
     const [toastVisible, setToastVisible] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
     const [opentalkMeeting, setOntalkMeeting] = useState(null)
-
+    const navigate = useNavigate();
     const fetchData = useCallback(async () => {
         try {
             console.log("Fetching data in ProposalDetail...")
@@ -52,9 +53,10 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal }) =
             return
         }
         try {
+            console.log()
             setRejectSubmitting(true)
             await axios.put(
-                `/topic-idea/decision`,
+                `/topic-idea/admin/decision`,
                 {
                     decision: "rejected",
                     remark: rejectNote.trim(),
@@ -85,7 +87,7 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal }) =
         try {
             setApproveSubmitting(true)
             await axios.put(
-                `/topic-idea/decision`,
+                `/topic-idea/admin/decision`,
                 {
                     decision: "approved",
                     remark: null,
@@ -112,15 +114,19 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal }) =
     const handleAdd = async (topicId, pollId) => {
         try {
             console.log("Start adding topic to poll"+pollId)
-            const params = { topicId, pollId };
             await axios.post(
-                `/topic-poll`,
-                params
+                `/topic-poll?topicId=${topicId}&pollId=${pollId}`,null,
+                { headers: { Authorization: `Bearer ${getAccessToken()}` }}
              )
+            if (typeof onClose === "function") {
+                onClose();  // Đóng modal trước khi điều hướng
+            }
+            navigate(`/poll/create/${meetingId}`);
         } catch (err) {
             console.error(err)
             setErrorMsg("Đã có lỗi khi thêm mới lưạ chọn.")
         }
+
     }
 
     useEffect(() => {
@@ -251,13 +257,26 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal }) =
                 </div>
             </div>
 
+            {/* Remark */}
+            {data?.status === "rejected" && (
+            <div className="description-section">
+                <h3 className="section-title">Reject reason</h3>
+                <div className="description-card">
+                    <div className="author-info">
+                        <div className="author-details">
+                            <h4>{data.remark}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            )}
             {/* Action Buttons */}
-            {data?.status === "pending" && (
                 <div className="action-buttons">
                     <button className="btn btn-reject" onClick={onOpenRejectModal} disabled={approveSubmitting}>
                         <FaTimes />
                         Reject
                     </button>
+                    {data?.status === "pending" && (
                     <button className="btn btn-approve" onClick={handleApprove} disabled={rejectSubmitting || approveSubmitting}>
                         {approveSubmitting ? (
                             <Spinner animation="border" size="sm" />
@@ -267,13 +286,12 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal }) =
                                 Approve
                             </>
                         )}
-                    </button>
+                    </button>)}
                 </div>
-            )}
 
-            {data?.status === "approved" && (
+            {needAdd && (
                 <div className="action-buttons">
-                    <button className="btn btn-approve" onClick={() => handleAdd(1, 2)}>
+                    <button className="btn btn-approve" onClick={() => handleAdd(data.id, pollId)}>
                         {approveSubmitting ? (
                             <Spinner animation="border" size="sm" />
                         ) : (

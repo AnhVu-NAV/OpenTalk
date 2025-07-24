@@ -108,7 +108,7 @@ const TopicProposalCategory = () => {
             setRejectSubmitting(true)
             const user = getCurrentUser()
             await axios.put(
-                `/topic-idea/decision`,
+                `/topic-idea/admin/decision`,
                 {
                     decision: "rejected",
                     remark: rejectNote.trim(),

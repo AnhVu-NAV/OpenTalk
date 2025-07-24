@@ -3,7 +3,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {
     FaHome, FaVideo, FaEnvelope, FaProjectDiagram, FaTicketAlt, FaUsers,
     FaRegCalendarCheck, FaRegNewspaper, FaFileAlt, FaBuilding, FaUserCircle,
-    FaCog, FaSignOutAlt, FaRegLightbulb
+    FaCog, FaSignOutAlt, FaRegLightbulb, FaPoll
 } from "react-icons/fa";
 import {getCurrentUser, clearTokens} from "../helper/auth";
 
@@ -13,11 +13,10 @@ const menuItems = [
     { label: "Overview", icon: <FaHome />, path: "/" },             // USER
 
     // 2. Meetings
-    { label: "Meeting", icon: <FaVideo />, path: "/meeting" },
+    { label: "Meetings", icon: <FaVideo />, path: "/meeting" },
     // { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/:id" },
     { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting" },
     // { label: "Host Meeting Detail", icon: <FaVideo />, path: "/host-meeting/:id" },
-    { label: "Meetings", icon: <FaVideo />, path: "/meeting" },
     // { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/detail/:id" },
     { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request" },
     { label: "OpenTalk Manager", icon: <FaVideo />, path: "/opentalk/manager" },
@@ -34,9 +33,8 @@ const menuItems = [
 
     // 5. Suggest / Topics
     { label: "Suggest Topic", icon: <FaRegNewspaper />, path: "/suggest-topic" },
-    { label: "Topic Hub", icon: <FaRegLightbulb />, path: "/topic" },
+    { label: "Topic Hub", icon: <FaPoll  />, path: "/topic" },
     { label: "Topic Proposal", icon: <FaRegLightbulb />, path: "/topicProposal" },
-    { label: "Topic Proposal Category", icon: <FaRegLightbulb />, path: "/topic-proposal-category" },
 
     // 6. Reports / Management
     { label: "Host Frequency Report", icon: <FaFileAlt />, path: "/hostfrequencyreport" },
@@ -45,13 +43,12 @@ const menuItems = [
     // 8. Salary / Ticket / Message / Test
     { label: "Salary", icon: <FaCog />, path: "/salary" },
     { label: "Ticket", icon: <FaTicketAlt />, path: "/ticket" },
-    { label: "Message", icon: <FaEnvelope />, path: "/message" },
-    { label: "Test Page", icon: <FaCog />, path: "/test" },
+
 
     // 7. User / Account / Settings
     // { label: "User Profile", icon: <FaUserCircle />, path: "/user/:id" },
     { label: "Account", icon: <FaUserCircle />, path: "/account" },
-    { label: "Settings", icon: <FaCog />, path: "/settings" },
+
 
 
 ];
@@ -96,25 +93,25 @@ function Sidebar() {
 
         const accessMap = {
             ADMIN: [
-                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "Employee",
                 "HostFrequencyReport", "Organization", "User Profile",
                 "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting"
 
             ],
             HR: [
-                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "Employee","Suggest Topic",
                 "HostFrequencyReport", "Organization", "User Profile",
                 "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test",
                 "Host Meeting"
             ],
             USER: [
-                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "User Profile",
                 "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test",
                 "Host Meeting",
-                "Overview", "Meetings", "Meeting Detail", "Poll Meeting",
+                "Overview", "Meeting Detail", "Poll Meeting",
                 "Attendance", "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
                 "Message", "Account", "Settings", "Test Page"
             ],
@@ -125,14 +122,14 @@ function Sidebar() {
                 "Message", "Account", "Settings", "Test Page"
             ],
             MEETING_MANAGER: [
-                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "HostFrequencyReport", "Poll Meeting",
                 "User Profile",
                 "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting",
-                "Dashboard", "Meetings", "Meeting Detail", "Poll Meeting", "Create Poll",
+                "Dashboard", "Meeting Detail", "Poll Meeting", "Create Poll",
                 "OpenTalk Manager", "OpenTalk Requests", "Attendance", "Attendance (Admin)",
                 "Host Frequency Report", "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
-                "Message", "Account", "Settings", "Test Page"
+                "Message", "Account", "Settings", "Test Page", "Topic Poll"
             ],
             ADMIN: [  // full quyền (tuỳ hệ thống)
                 ...menuItems.map(item => item.label) // tất cả
