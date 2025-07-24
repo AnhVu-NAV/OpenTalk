@@ -13,11 +13,10 @@ const menuItems = [
     { label: "Overview", icon: <FaHome />, path: "/" },             // USER
 
     // 2. Meetings
-    { label: "Meeting", icon: <FaVideo />, path: "/meeting" },
+    { label: "Meetings", icon: <FaVideo />, path: "/meeting" },
     // { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/:id" },
     { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting" },
     // { label: "Host Meeting Detail", icon: <FaVideo />, path: "/host-meeting/:id" },
-    { label: "Meetings", icon: <FaVideo />, path: "/meeting" },
     // { label: "Meeting Detail", icon: <FaVideo />, path: "/meeting/detail/:id" },
     { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request" },
     { label: "OpenTalk Manager", icon: <FaVideo />, path: "/opentalk/manager" },
@@ -96,25 +95,25 @@ function Sidebar() {
 
         const accessMap = {
             ADMIN: [
-                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "Employee",
                 "HostFrequencyReport", "Organization", "User Profile",
                 "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting"
 
             ],
             HR: [
-                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "Employee","Suggest Topic",
                 "HostFrequencyReport", "Organization", "User Profile",
                 "Salary", "Settings", "Poll Meeting", "Topic Hub", "Topic Proposal", "Topic Detail", "Test",
                 "Host Meeting"
             ],
             USER: [
-                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "User Profile",
                 "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test",
                 "Host Meeting",
-                "Overview", "Meetings", "Meeting Detail", "Poll Meeting",
+                "Overview", "Meeting Detail", "Poll Meeting",
                 "Attendance", "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
                 "Message", "Account", "Settings", "Test Page"
             ],
@@ -125,11 +124,11 @@ function Sidebar() {
                 "Message", "Account", "Settings", "Test Page"
             ],
             MEETING_MANAGER: [
-                "Overview", "Meeting", "Message", "Notice", "Account", "Suggest", "Attendance",
+                "Overview", "Meetings", "Message", "Notice", "Account", "Suggest", "Attendance",
                 "HostFrequencyReport", "Poll Meeting",
                 "User Profile",
                 "Topic Hub", "Topic Proposal", "Topic Detail", "Settings", "Test", "OpenTalk Manager", "OpenTalk Requests", "Cronjob Configuration", "Host Meeting",
-                "Dashboard", "Meetings", "Meeting Detail", "Poll Meeting", "Create Poll",
+                "Dashboard", "Meeting Detail", "Poll Meeting", "Create Poll",
                 "OpenTalk Manager", "OpenTalk Requests", "Attendance", "Attendance (Admin)",
                 "Host Frequency Report", "Suggest Topic", "Topic Hub", "Topic Proposal", "Topic Proposal Category",
                 "Message", "Account", "Settings", "Test Page"
