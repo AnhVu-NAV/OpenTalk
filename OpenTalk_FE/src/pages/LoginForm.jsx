@@ -28,7 +28,7 @@ export default function Login() {
       const data = res.data.result;
       saveAuthTokens(data);
       showToast('Login successful!', 'success');
-      setTimeout(() => window.location.href = '/dashboard', 1000);
+      setTimeout(() => window.location.href = '/', 1000);
     } catch (err) {
       const msg = err.response?.data?.message
         || 'Login failed. Please try again!';

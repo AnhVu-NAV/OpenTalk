@@ -1,19 +1,24 @@
-import axios from 'axios';
-import { getAccessToken, getRefreshToken, clearTokens, saveAuthTokens } from '../helper/auth';
+import axios from "axios";
+import {
+  getAccessToken,
+  getRefreshToken,
+  clearTokens,
+  saveAuthTokens,
+} from "../helper/auth";
 
 const axiosClient = axios.create({
-    baseURL: 'http://localhost:8080/api',
-    headers: {
-        'Content-Type': 'application/json',
-    },
+  baseURL: "http://localhost:8080/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 axiosClient.interceptors.request.use((config) => {
-    const token = getAccessToken();
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
+  const token = getAccessToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 let isRefreshing = false;
@@ -52,7 +57,7 @@ axiosClient.interceptors.response.use(
       isRefreshing = true;
       try {
         const refreshResponse = await axios.post(
-          'http://localhost:8080/api/auth/refresh',
+          "http://localhost:8080/api/auth/refresh",
           null,
           {
             headers: {
@@ -61,7 +66,8 @@ axiosClient.interceptors.response.use(
           }
         );
 
-        const { accessToken, refreshToken, userDTO } = refreshResponse.data.data;
+        const { accessToken, refreshToken, userDTO } =
+          refreshResponse.data.data;
         saveAuthTokens({ accessToken, refreshToken, userDTO });
 
         onRefreshed(accessToken);
@@ -70,11 +76,16 @@ axiosClient.interceptors.response.use(
         return axiosClient(originalRequest);
       } catch (refreshErr) {
         clearTokens();
-        window.location.href = '/login';
+        window.location.href = "/login";
         return Promise.reject(refreshErr);
       } finally {
         isRefreshing = false;
       }
+    }
+
+    if (error.response?.status === 403) {
+      clearTokens();
+      window.location.href = "/";
     }
 
     return Promise.reject(error);
