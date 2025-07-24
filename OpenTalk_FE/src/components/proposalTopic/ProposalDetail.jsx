@@ -53,9 +53,10 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
             return
         }
         try {
+            console.log()
             setRejectSubmitting(true)
             await axios.put(
-                `/topic-idea/decision`,
+                `/topic-idea/admin/decision`,
                 {
                     decision: "rejected",
                     remark: rejectNote.trim(),
@@ -86,7 +87,7 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
         try {
             setApproveSubmitting(true)
             await axios.put(
-                `/topic-idea/decision`,
+                `/topic-idea/admin/decision`,
                 {
                     decision: "approved",
                     remark: null,
@@ -256,13 +257,26 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
                 </div>
             </div>
 
+            {/* Remark */}
+            {data?.status === "rejected" && (
+            <div className="description-section">
+                <h3 className="section-title">Reject reason</h3>
+                <div className="description-card">
+                    <div className="author-info">
+                        <div className="author-details">
+                            <h4>{data.remark}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            )}
             {/* Action Buttons */}
-            {data?.status === "pending" && (
                 <div className="action-buttons">
                     <button className="btn btn-reject" onClick={onOpenRejectModal} disabled={approveSubmitting}>
                         <FaTimes />
                         Reject
                     </button>
+                    {data?.status === "pending" && (
                     <button className="btn btn-approve" onClick={handleApprove} disabled={rejectSubmitting || approveSubmitting}>
                         {approveSubmitting ? (
                             <Spinner animation="border" size="sm" />
@@ -272,9 +286,8 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
                                 Approve
                             </>
                         )}
-                    </button>
+                    </button>)}
                 </div>
-            )}
 
             {needAdd && (
                 <div className="action-buttons">
