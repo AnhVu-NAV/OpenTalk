@@ -80,7 +80,7 @@ function App() {
 
                         {/* Meeting routes */}
                         <Route path="/meeting" element={<MeetingListPage />} />
-                        <Route path="/detail/:id" element={<MeetingDetailPage />} />
+                        <Route path="/meeting/:id" element={<MeetingDetailPage />} />
                         <Route path="/host-meeting" element={<HostMeetingListPage />} />
                         <Route path="/host-meeting/:id" element={<HostMeetingDetailPage />} />
                         <Route path="/poll-meeting" element={<TopicHub />} />
