@@ -300,6 +300,7 @@ const TopicProposalCategory = () => {
                     <ProposalDetail
                         id={selectedTopicId}
                         onClose={handleCloseModal}
+                        needReject={true}
                         showToast={showToast}
                         onOpenRejectModal={() => {
                             setRejectNote("")

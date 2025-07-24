@@ -6,7 +6,7 @@ import axios from "/src/api/axiosClient.jsx"
 import { Modal, Button, Form, Spinner } from "react-bootstrap"
 import {useNavigate} from "react-router-dom";
 
-const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, meetingId, needAdd }) => {
+const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, meetingId, needAdd, needReject }) => {
     const [data, setData] = useState(null)
     const [successMsg, setSuccessMsg] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
@@ -241,7 +241,7 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
                 <div className="description-card">
                     <div className="author-info">
                         <img
-                            src="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"
+                            src={data.suggestedBy.avatar}
                             alt={data.suggestedBy.fullName}
                             className="author-avatar"
                         />
@@ -272,10 +272,10 @@ const ProposalDetail = ({ id, pollId, onClose, showToast, onOpenRejectModal, mee
             )}
             {/* Action Buttons */}
                 <div className="action-buttons">
-                    <button className="btn btn-reject" onClick={onOpenRejectModal} disabled={approveSubmitting}>
+                    {needReject && (<button className="btn btn-reject" onClick={onOpenRejectModal} disabled={approveSubmitting}>
                         <FaTimes />
                         Reject
-                    </button>
+                    </button>)}
                     {data?.status === "pending" && (
                     <button className="btn btn-approve" onClick={handleApprove} disabled={rejectSubmitting || approveSubmitting}>
                         {approveSubmitting ? (
