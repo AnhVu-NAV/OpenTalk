@@ -11,6 +11,7 @@ import ResetPassword from "./pages/ResetPassword";
 
 // Dashboard & Overview
 import DashBoard from "./pages/HRDashBoard.jsx";
+import HomePage from "./pages/HomePage.jsx";
 function Overview() {
     return <h2>Overview Page</h2>;
 }
@@ -74,13 +75,14 @@ function App() {
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/forget-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/" element={<HomePage />} />
 
                 {/* Protected */}
                 <Route element={<AuthGuard />}>
                     <Route element={<Layout />}>
-                        {/* Overview / Dashboard */}
-                        <Route path="/" element={<UserHomeDashboard />} />
-                        <Route path="/dashboard" element={<DashBoard />} />
+                        {/* Overview / Dashboard */}                     
+                        <Route path="/user/home" element={<UserHomeDashboard />} />
+                        <Route path="/admin/dashboard" element={<DashBoard />} />
 
                         {/* Meeting routes */}
                         <Route path="/meeting" element={<MeetingListPage />} />

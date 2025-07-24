@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button, Table } from "react-bootstrap";
+import { uploadMaterial } from "../../api/apiList";
 
 function MeetingMaterial({
   show,
@@ -7,66 +8,76 @@ function MeetingMaterial({
   files,
   onUpload,
   onDelete,
-  onSave,     
-  onBack,     
+  onSave,
+  onBack,
+  userId,
+  meetingId,
 }) {
+  const handleFileUpload = async (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    const newFiles = [];
+
+    for (const file of selectedFiles) {
+      try {
+        const response = await uploadMaterial(file, userId, meetingId);
+        newFiles.push({ name: file.name, url: response.data });
+        onUpload(newFiles);
+      } catch (err) {
+        console.error("File upload failed", err);
+        alert("File upload failed");
+      }
+    }
+  };
+
   return (
     <Modal
+      id="meeting-material-modal"
       show={show}
       onHide={onHide}
       centered
       size="lg"
       contentClassName="meeting-material-modal-content"
     >
-      <Modal.Body className="py-4 px-4">
+      <Modal.Body className="py-4 px-4" id="meeting-material-modal-body">
         {/* PERSONAL DOCUMENTS HEADER */}
-        <div className="d-flex justify-content-between align-items-center mb-1">
+        <div className="d-flex justify-content-between align-items-center mb-4" id="meeting-header">
           <span className="fw-semibold" style={{ fontSize: 20 }}>
             Upload Meeting Materials
           </span>
         </div>
         {/* DRAG AND DROP AREA */}
-        <div className="material-dropzone">
-          <div className="dropzone-icon" style={{ marginBottom: 10 }}>
-            <svg width="68" height="68" viewBox="0 0 68 68" fill="none">
-                <rect x="9" y="25" width="50" height="34" rx="4" fill="#E9F7F1" stroke="#30B183" strokeWidth="2"/>
-                <path d="M34 44V15" stroke="#30B183" strokeWidth="3" strokeLinecap="round"/>
-                <path d="M28 22L34 15L40 22" stroke="#30B183" strokeWidth="3" strokeLinecap="round"/>
-                <rect x="18" y="57" width="32" height="4" rx="2" fill="#E0E0E0"/>
-            </svg>
-          </div>
-          <div className="fw-bold" style={{ fontSize: 22 }}>
-            Drag &amp; Drop here to upload
-          </div>
-          <div style={{ color: "#555", fontSize: 15, marginBottom: 14 }}>
-            Or select file from your computer
-          </div>
-          <label className="material-upload-btn">
+        <div className="material-dropzone" id="file-dropzone">
+          <label className="material-upload-btn" htmlFor="file-upload">
             <i className="bi bi-upload me-2"></i>
             Upload File
             <input
+              id="file-upload"
               type="file"
               multiple
               style={{ display: "none" }}
-              onChange={onUpload}
+              onChange={handleFileUpload}
             />
           </label>
         </div>
         {/* PAYSLIPS LIST */}
-        <div className="fw-semibold mt-4 mb-2" style={{ fontSize: 19 }}>
+        <div className="fw-semibold mt-4 mb-2" style={{ fontSize: 19 }} id="document-list-header">
           Document List
         </div>
-        <Table hover className="mb-2">
+        <Table hover className="mb-2" id="document-table">
           <thead>
             <tr>
               <th style={{ width: "65%" }}>Document Name</th>
-              <th className="text-end" style={{ width: "35%" }}>Action</th>
+              <th className="text-end" style={{ width: "35%" }}>
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             {files.length === 0 && (
               <tr>
-                <td colSpan={2} className="text-center text-muted">No file uploaded.</td>
+                <td colSpan={2} className="text-center text-muted">
+                  No file uploaded.
+                </td>
               </tr>
             )}
             {files.map((file, idx) => (
@@ -78,6 +89,7 @@ function MeetingMaterial({
                     style={{ padding: "5px 9px", marginRight: 8 }}
                     tabIndex={-1}
                     title="Download"
+                    id={`download-btn-${file.name}-${idx}`}
                   >
                     <i className="bi bi-download" />
                   </Button>
@@ -87,6 +99,7 @@ function MeetingMaterial({
                     tabIndex={-1}
                     title="Delete"
                     onClick={() => onDelete(idx)}
+                    id={`delete-btn-${file.name}-${idx}`}
                   >
                     <i className="bi bi-trash" />
                   </Button>
@@ -98,11 +111,12 @@ function MeetingMaterial({
       </Modal.Body>
 
       {/* Nút SAVE và BACK cố định góc phải dưới */}
-      <div className="d-flex justify-content-end gap-2 px-4 pb-4">
+      <div className="d-flex justify-content-end gap-2 px-4 pb-4" id="footer-buttons">
         <Button
           variant="secondary"
           onClick={onBack || onHide}
           style={{ minWidth: 100 }}
+          id="back-btn"
         >
           Back
         </Button>
@@ -110,12 +124,13 @@ function MeetingMaterial({
           className="btn-dark-green"
           onClick={onSave}
           style={{ minWidth: 100 }}
+          id="save-btn"
         >
           Save
         </Button>
       </div>
 
-      {/* <style>{`
+      <style>{`
         .material-dropzone {
           display: flex;
           flex-direction: column;
@@ -126,12 +141,6 @@ function MeetingMaterial({
           background: #fafbfc;
           margin-bottom: 14px;
           padding: 30px 0 20px 0;
-        }
-        .dropzone-icon {
-          margin-bottom: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
         .material-upload-btn {
           margin-top: 4px;
@@ -151,7 +160,7 @@ function MeetingMaterial({
         .meeting-material-modal-content {
           border-radius: 18px !important;
         }
-      `}</style> */}
+      `}</style>
     </Modal>
   );
 }

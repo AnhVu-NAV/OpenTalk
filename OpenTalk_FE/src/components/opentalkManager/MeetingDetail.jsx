@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import MeetingMaterialModal from "./MeetingMaterial";
-import { getMeetingById, getCheckinCode } from "../../services/opentalkManagerService";
+import {
+  getMeetingById,
+  getCheckinCode,
+} from "../../services/opentalkManagerService";
 import axios from "../../api/axiosClient.jsx";
-import {getAccessToken} from "../../helper/auth.jsx";
+import { getAccessToken, getCurrentUser } from "../../helper/auth.jsx";
 
 function formatDateTime(dtStr) {
   if (!dtStr) return "";
@@ -24,7 +27,7 @@ function ViewMeetingDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
-  const[error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   // Lấy meeting từ navigate state nếu có
   const meetingFromState = location.state?.meeting;
@@ -34,7 +37,9 @@ function ViewMeetingDetails() {
   const [loading, setLoading] = useState(!meetingFromState);
 
   // State cho Attendance Code động
-  const [attendanceCode, setAttendanceCode] = useState(meetingFromState?.attendanceCode || "");
+  const [attendanceCode, setAttendanceCode] = useState(
+    meetingFromState?.attendanceCode || ""
+  );
   const [attendanceCodeLoading, setAttendanceCodeLoading] = useState(false);
 
   // Meeting material (UI only)
@@ -46,7 +51,7 @@ function ViewMeetingDetails() {
     if (!meeting) {
       setLoading(true);
       getMeetingById(id)
-        .then(res => {
+        .then((res) => {
           setMeeting(res.data);
           setLoading(false);
         })
@@ -60,7 +65,7 @@ function ViewMeetingDetails() {
       if (meeting.status === "ONGOING") {
         setAttendanceCodeLoading(true);
         getCheckinCode(meeting.id)
-          .then(res => {
+          .then((res) => {
             if (res.data && res.data.checkinCode && res.data.expiresAt) {
               const expiresAt = new Date(res.data.expiresAt).getTime();
               if (expiresAt > Date.now()) {
@@ -88,22 +93,19 @@ function ViewMeetingDetails() {
   const hostLabel = meeting.host?.fullName || meeting.host?.username || "";
   const branchLabel = meeting.companyBranch?.name || "";
 
-
-
   const handleCreatePoll = async (id) => {
     try {
       console.log(id);
       navigate(`/poll/create/${id}`);
-      await axios.post(`/poll/${id}`,
-          { headers: { Authorization: `Bearer ${getAccessToken()}` }},
-      );
-
+      await axios.post(`/poll/${id}`, {
+        headers: { Authorization: `Bearer ${getAccessToken()}` },
+      });
     } catch (err) {
       setError(err);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="addmeeting-bg-enterprise">
@@ -118,41 +120,49 @@ function ViewMeetingDetails() {
             >
               &larr;
             </span>
-            <span className="fw-semibold fs-5 back-text" style={{ cursor: "pointer" }} onClick={() => navigate(-1)}>
+            <span
+              className="fw-semibold fs-5 back-text"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(-1)}
+            >
               Back
             </span>
           </div>
           <div className="d-flex gap-2">
-          {/* Nút Create Poll chỉ hiện khi WAITING_TOPIC */}
-          {meeting.status === "WAITING_TOPIC" && (
-            <Button
-              className="px-4 py-2 rounded-3 btn-warning"
-              style={{ minWidth: 110, fontWeight: 500 }}
-              onClick={() => {handleCreatePoll(id)}}
-            >
-              <i className="bi bi-bar-chart-steps me-2"></i>
-              Create Poll
-            </Button>
-          )}
-          {/* Nút Edit luôn hiện */}
-          {editableStatuses.includes(meeting.status) && (
+            {/* Nút Create Poll chỉ hiện khi WAITING_TOPIC */}
+            {meeting.status === "WAITING_TOPIC" && (
+              <Button
+                className="px-4 py-2 rounded-3 btn-warning"
+                style={{ minWidth: 110, fontWeight: 500 }}
+                onClick={() => {
+                  handleCreatePoll(id);
+                }}
+              >
+                <i className="bi bi-bar-chart-steps me-2"></i>
+                Create Poll
+              </Button>
+            )}
+            {/* Nút Edit luôn hiện */}
             <Button
               className="px-4 py-2 rounded-3 btn-dark-green"
               style={{ minWidth: 110, fontWeight: 500 }}
-              onClick={() => navigate(`/meeting/edit-meeting/${id}`, { state: { meeting } })}
+              onClick={() =>
+                navigate(`/meeting/edit-meeting/${id}`, { state: { meeting } })
+              }
             >
               <i className="bi bi-pencil-square me-2"></i>
               Edit
             </Button>
-          )}
-        </div>
+          </div>
         </div>
         <h2 className="addmeeting-title mb-3">Meeting Details</h2>
         {/* FORM VIEW-ONLY */}
         <Form autoComplete="off" className="addmeeting-form-enterprise">
           <div className="addmeeting-grid-row mb-2">
             <Form.Group>
-              <Form.Label className="form-label-enterprise">Meeting Title</Form.Label>
+              <Form.Label className="form-label-enterprise">
+                Meeting Title
+              </Form.Label>
               <Form.Control
                 name="meetingName"
                 value={meeting.meetingName}
@@ -162,7 +172,9 @@ function ViewMeetingDetails() {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label className="form-label-enterprise text-primary">Scheduled Date</Form.Label>
+              <Form.Label className="form-label-enterprise text-primary">
+                Scheduled Date
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="scheduledDate"
@@ -194,7 +206,9 @@ function ViewMeetingDetails() {
             />
           </Form.Group>
           <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Company Branch</Form.Label>
+            <Form.Label className="form-label-enterprise">
+              Company Branch
+            </Form.Label>
             <Form.Control
               name="companyBranch"
               value={branchLabel}
@@ -204,7 +218,9 @@ function ViewMeetingDetails() {
             />
           </Form.Group>
           <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Meeting URL</Form.Label>
+            <Form.Label className="form-label-enterprise">
+              Meeting URL
+            </Form.Label>
             <Form.Control
               name="meetingLink"
               value={meeting.meetingLink}
@@ -224,7 +240,9 @@ function ViewMeetingDetails() {
             />
           </Form.Group>
           <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Duration (minutes)</Form.Label>
+            <Form.Label className="form-label-enterprise">
+              Duration (minutes)
+            </Form.Label>
             <Form.Control
               name="duration"
               value={meeting.duration}
@@ -234,10 +252,14 @@ function ViewMeetingDetails() {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label className="form-label-enterprise">Attendance Code</Form.Label>
+            <Form.Label className="form-label-enterprise">
+              Attendance Code
+            </Form.Label>
             <Form.Control
               name="attendanceCode"
-              value={attendanceCodeLoading ? "Loading..." : (attendanceCode || "")}
+              value={
+                attendanceCodeLoading ? "Loading..." : attendanceCode || ""
+              }
               readOnly
               size="sm"
               style={{ background: "#f8fafb" }}
@@ -261,8 +283,10 @@ function ViewMeetingDetails() {
         show={showMaterial}
         onHide={() => setShowMaterial(false)}
         files={files}
-        onUpload={(e) => setFiles([...files, ...Array.from(e.target.files).map(f => ({ name: f.name }))])}
+        onUpload={(newFiles) => setFiles([...files, ...newFiles])}
         onDelete={(idx) => setFiles(files.filter((_, i) => i !== idx))}
+        userId={getCurrentUser().id}
+        meetingId={id}
       />
       <link
         rel="stylesheet"
