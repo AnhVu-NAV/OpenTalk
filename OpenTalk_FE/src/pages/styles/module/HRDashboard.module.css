@@ -1,0 +1,734 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f8fafc;
+}
+
+.dashboardContainer {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background-color: white;
+    border-right: 1px solid #e2e8f0;
+    padding: 24px 0;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 24px;
+    margin-bottom: 32px;
+}
+
+.logoIcon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.logoText {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.navMenu {
+    list-style: none;
+    padding: 0 16px;
+}
+
+.navItem {
+    margin-bottom: 4px;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #64748b;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.navLink:hover {
+    background-color: #f1f5f9;
+    color: #334155;
+}
+
+.navLink.active {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    color: #10b981;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.1);
+}
+
+.navIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.themeToggle {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    gap: 8px;
+}
+
+.themeBtn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.themeBtn.active {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.themeBtn:not(.active) {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+/* Main Content */
+.mainContent {
+    flex: 1;
+    padding: 24px;
+    background-color: #f8fafc;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.headerLeft {
+    flex: 1;
+}
+
+.pageTitle {
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+}
+
+.pageSubtitle {
+    font-size: 14px;
+    color: #64748b;
+    background-color: #ecfdf5;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    border: 1px solid #d1fae5;
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.dateFilter {
+    position: relative;
+}
+
+.dateSelect {
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dateSelect:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 12px;
+    transition: all 0.2s;
+}
+
+.userProfile:hover {
+    background-color: #f8fafc;
+}
+
+.userAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #10b981;
+}
+
+.userInfo {
+    text-align: right;
+}
+
+.userName {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.userRole {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Overview Cards */
+.overviewCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.overviewCard {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.overviewCard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.overviewCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+}
+
+.cardIcon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+}
+
+.cardIcon.employees {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.cardIcon.meetings {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.cardIcon.attendance {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.cardIcon.projects {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.cardContent h3 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.cardContent p {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.trend {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+.trend.positive {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.trend.negative {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Charts Section */
+.chartsSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.chartCard {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.chartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, #f8fafc, #ecfdf5);
+}
+
+.chartHeader h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.chartBtn {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chartBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.chartContent {
+    padding: 24px;
+}
+
+/* Attendance Chart */
+.attendanceChart {
+    display: flex;
+    align-items: end;
+    gap: 16px;
+    height: 200px;
+    padding: 20px 0;
+}
+
+.chartBar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.bar {
+    width: 100%;
+    background: linear-gradient(to top, #10b981, #34d399);
+    border-radius: 4px 4px 0 0;
+    min-height: 20px;
+    transition: all 0.3s;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.bar:hover {
+    background: linear-gradient(to top, #059669, #10b981);
+    transform: scaleY(1.05);
+}
+
+.barLabel {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Department Stats */
+.departmentStats {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.deptStat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+}
+
+.deptStat:hover {
+    background: #ecfdf5;
+    border-color: #10b981;
+}
+
+.deptInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.deptName {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.deptMeetings {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.deptProgress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 120px;
+}
+
+.progressBar {
+    flex: 1;
+    height: 8px;
+    background-color: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+
+.progressText {
+    font-size: 12px;
+    font-weight: 600;
+    color: #10b981;
+    min-width: 35px;
+}
+
+/* Bottom Section */
+.bottomSection {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.sectionCard {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #e2e8f0;
+    background: linear-gradient(135deg, #f8fafc, #ecfdf5);
+}
+
+.sectionHeader h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.sectionBtn {
+    padding: 8px 16px;
+    background: transparent;
+    color: #10b981;
+    border: 1px solid #10b981;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sectionBtn:hover {
+    background: #10b981;
+    color: white;
+}
+
+/* Recent Meetings */
+.meetingsList {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.meetingItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+}
+
+.meetingItem:hover {
+    background: #ecfdf5;
+    border-color: #10b981;
+    transform: translateX(4px);
+}
+
+.meetingInfo h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.meetingInfo p {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.meetingHost {
+    font-size: 11px;
+    color: #10b981;
+    font-weight: 500;
+}
+
+.meetingTopic {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.meetingBranch {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.meetingMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 8px;
+}
+
+.duration {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.meetingStatus {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.meetingStatus.completed {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.meetingStatus.ongoing {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.meetingStatus.upcoming {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+/* Top Hosts */
+.hostsList {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.hostItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+}
+
+.hostItem:hover {
+    background: #ecfdf5;
+    border-color: #10b981;
+    transform: scale(1.02);
+}
+
+.hostRank {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.hostAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #10b981;
+}
+
+.hostInfo {
+    flex: 1;
+}
+
+.hostInfo h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 2px;
+}
+
+.hostInfo p {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.hostRating {
+    display: flex;
+    align-items: center;
+}
+
+.rating {
+    font-size: 12px;
+    font-weight: 600;
+    color: #f59e0b;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .mainContent {
+        margin-left: 0;
+    }
+
+    .chartsSection {
+        grid-template-columns: 1fr;
+    }
+
+    .bottomSection {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .overviewCards {
+        grid-template-columns: 1fr;
+    }
+
+    .attendanceChart {
+        height: 150px;
+    }
+
+    .meetingItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .meetingMeta {
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 16px;
+    }
+}
