@@ -14,7 +14,8 @@ const TopicHub = () => {
     const fetchMeeting = async () => {
         try {
             const res = await axios.get("/opentalk-meeting", {
-                params: {name: meetingName},
+                params: {name: meetingName,
+                         pageNo},
                 headers: { Authorization: `Bearer ${getAccessToken()}` },
             })
             setCategories(res.data.content || [])
@@ -43,7 +44,7 @@ const TopicHub = () => {
                     <input
                         type="text"
                         className="search-input"
-                        placeholder="Search categories..."
+                        placeholder="Search meeting..."
                         value={meetingName}
                         onChange={(e) => setMeetingName(e.target.value)}
                     />

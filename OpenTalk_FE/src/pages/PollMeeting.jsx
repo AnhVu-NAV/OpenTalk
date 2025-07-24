@@ -196,7 +196,7 @@ const PollApp = (meeting) => {
                                     </div>
                                     <button
                                         onClick={() => handleVote(option.id)}
-                                        disabled={!hasVoted&&poll.isEnabled}
+                                        disabled={!hasVoted}
                                         className="poll-vote-button"
                                     >
                                         Vote
