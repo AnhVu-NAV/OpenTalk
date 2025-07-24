@@ -78,8 +78,6 @@
     border: 1px solid #d1fae5;
     padding: 2rem;
     height: fit-content;
-    position: sticky;
-    top: 2rem;
 }
 
 .meeting-detail-meeting-highlight {
