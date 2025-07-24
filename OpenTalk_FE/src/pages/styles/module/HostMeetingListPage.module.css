@@ -1,24 +1,24 @@
 /* Host Meeting List Page Styles */
-.host-meeting-page {
+.hostMeetingPage {
     min-height: 100vh;
     background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
     padding: 2rem 1rem;
 }
 
-.host-meeting-filters {
+.hostMeetingFilters {
     display: flex;
     gap: 1rem;
     margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 
-.host-meeting-search-container {
+.hostMeetingSearchContainer {
     position: relative;
     flex: 1;
     min-width: 300px;
 }
 
-.host-meeting-search-icon {
+.hostMeetingSearchIcon {
     position: absolute;
     left: 1rem;
     top: 50%;
@@ -27,7 +27,7 @@
     font-size: 1rem;
 }
 
-.host-meeting-search-input {
+.hostMeetingSearchInput {
     width: 100%;
     padding: 0.75rem 1rem 0.75rem 2.5rem;
     border: 2px solid #e5e7eb;
@@ -38,18 +38,18 @@
     box-sizing: border-box;
 }
 
-.host-meeting-search-input:focus {
+.hostMeetingSearchInput:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.host-meeting-select-container {
+.hostMeetingSelectContainer {
     position: relative;
     min-width: 200px;
 }
 
-.host-meeting-select {
+.hostMeetingSelect {
     width: 100%;
     padding: 0.75rem 2.5rem 0.75rem 1rem;
     border: 2px solid #e5e7eb;
@@ -62,13 +62,13 @@
     box-sizing: border-box;
 }
 
-.host-meeting-select:focus {
+.hostMeetingSelect:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.host-meeting-select-icon {
+.hostMeetingSelectIcon {
     position: absolute;
     right: 1rem;
     top: 50%;
@@ -77,7 +77,7 @@
     pointer-events: none;
 }
 
-.host-meeting-tabs-header {
+.hostMeetingTabsHeader {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 2rem;
@@ -89,7 +89,7 @@
     overflow-x: auto;
 }
 
-.host-meeting-tab-button {
+.hostMeetingTabButton {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 8px;
@@ -102,25 +102,25 @@
     color: #6b7280;
 }
 
-.host-meeting-tab-button:hover {
+.hostMeetingTabButton:hover {
     background: #f3f4f6;
     color: #374151;
 }
 
-.host-meeting-tab-button.active {
+.hostMeetingTabButton.active {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.host-meeting-list-container {
+.hostMeetingListContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.host-meeting-card {
+.hostMeetingCard {
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
@@ -130,7 +130,7 @@
     position: relative;
 }
 
-.host-meeting-card::before {
+.hostMeetingCard::before {
     content: "";
     position: absolute;
     top: 0;
@@ -140,17 +140,17 @@
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
-.host-meeting-card:hover {
+.hostMeetingCard:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 30px rgba(16, 185, 129, 0.15);
 }
 
-.host-meeting-card-header {
+.hostMeetingCardHeader {
     padding: 1.5rem;
     border-bottom: 1px solid #f3f4f6;
 }
 
-.host-meeting-card-title {
+.hostMeetingCardTitle {
     font-size: 1.125rem;
     font-weight: 600;
     color: #1f2937;
@@ -158,7 +158,7 @@
     line-height: 1.4;
 }
 
-.host-meeting-card-meta {
+.hostMeetingCardMeta {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -166,18 +166,18 @@
     color: #6b7280;
 }
 
-.host-meeting-card-content {
+.hostMeetingCardContent {
     padding: 1.5rem;
 }
 
-.host-meeting-card-description {
+.hostMeetingCardDescription {
     color: #6b7280;
     font-size: 0.875rem;
     line-height: 1.5;
     margin-bottom: 1rem;
 }
 
-.host-meeting-card-status {
+.hostMeetingCardStatus {
     display: inline-flex;
     align-items: center;
     padding: 0.375rem 0.75rem;
@@ -189,30 +189,30 @@
     margin-bottom: 1rem;
 }
 
-.host-meeting-status-completed {
+.hostMeetingStatusCompleted {
     background: #d1fae5;
     color: #065f46;
     border: 1px solid #10b981;
 }
 
-.host-meeting-status-upcoming {
+.hostMeetingStatusUpcoming {
     background: #dbeafe;
     color: #1e40af;
     border: 1px solid #3b82f6;
 }
 
-.host-meeting-status-ongoing {
+.hostMeetingStatusOngoing {
     background: #fef3c7;
     color: #92400e;
     border: 1px solid #f59e0b;
 }
 
-.host-meeting-card-actions {
+.hostMeetingCardActions {
     display: flex;
     gap: 0.75rem;
 }
 
-.host-meeting-action-btn {
+.hostMeetingActionBtn {
     flex: 1;
     padding: 0.75rem 1rem;
     border: none;
@@ -223,38 +223,38 @@
     font-size: 0.875rem;
 }
 
-.host-meeting-primary-btn {
+.hostMeetingPrimaryBtn {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
 }
 
-.host-meeting-primary-btn:hover:not(:disabled) {
+.hostMeetingPrimaryBtn:hover:not(:disabled) {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.host-meeting-secondary-btn {
+.hostMeetingSecondaryBtn {
     background: white;
     color: #10b981;
     border: 2px solid #10b981;
 }
 
-.host-meeting-secondary-btn:hover {
+.hostMeetingSecondaryBtn:hover {
     background: #10b981;
     color: white;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.host-meeting-action-btn:disabled {
+.hostMeetingActionBtn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
 }
 
-.host-meeting-pagination {
+.hostMeetingPagination {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -265,18 +265,18 @@
     border: 1px solid #d1fae5;
 }
 
-.host-meeting-pagination-info {
+.hostMeetingPaginationInfo {
     font-size: 0.875rem;
     color: #6b7280;
 }
 
-.host-meeting-pagination-buttons {
+.hostMeetingPaginationButtons {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.host-meeting-pagination-btn {
+.hostMeetingPaginationBtn {
     width: 36px;
     height: 36px;
     border: 1px solid #d1d5db;
@@ -290,18 +290,18 @@
     color: #6b7280;
 }
 
-.host-meeting-pagination-btn:hover:not(:disabled) {
+.hostMeetingPaginationBtn:hover:not(:disabled) {
     background: #10b981;
     color: white;
     border-color: #10b981;
 }
 
-.host-meeting-pagination-btn:disabled {
+.hostMeetingPaginationBtn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.host-meeting-pagination-number {
+.hostMeetingPaginationNumber {
     width: 36px;
     height: 36px;
     border: 1px solid #d1d5db;
@@ -316,20 +316,20 @@
     font-weight: 500;
 }
 
-.host-meeting-pagination-number:hover {
+.hostMeetingPaginationNumber:hover {
     background: #10b981;
     color: white;
     border-color: #10b981;
 }
 
-.host-meeting-pagination-number.active {
+.hostMeetingPaginationNumber.active {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border-color: #10b981;
 }
 
 /* Empty State */
-.host-meeting-empty-state {
+.hostMeetingEmptyState {
     text-align: center;
     padding: 4rem 2rem;
     background: white;
@@ -338,7 +338,7 @@
     border: 1px solid #d1fae5;
 }
 
-.host-meeting-empty-icon {
+.hostMeetingEmptyIcon {
     width: 80px;
     height: 80px;
     background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
@@ -351,14 +351,14 @@
     color: #9ca3af;
 }
 
-.host-meeting-empty-state h3 {
+.hostMeetingEmptyState h3 {
     font-size: 1.25rem;
     font-weight: 600;
     color: #374151;
     margin: 0 0 0.5rem 0;
 }
 
-.host-meeting-empty-state p {
+.hostMeetingEmptyState p {
     font-size: 1rem;
     color: #6b7280;
     margin: 0;
@@ -366,40 +366,40 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .host-meeting-page {
+    .hostMeetingPage {
         padding: 1rem 0.5rem;
     }
 
-    .host-meeting-filters {
+    .hostMeetingFilters {
         flex-direction: column;
     }
 
-    .host-meeting-search-container,
-    .host-meeting-select-container {
+    .hostMeetingSearchContainer,
+    .hostMeetingSelectContainer {
         min-width: auto;
     }
 
-    .host-meeting-tabs-header {
+    .hostMeetingTabsHeader {
         padding: 0.25rem;
     }
 
-    .host-meeting-tab-button {
+    .hostMeetingTabButton {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
     }
 
-    .host-meeting-list-container {
+    .hostMeetingListContainer {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    .host-meeting-pagination {
+    .hostMeetingPagination {
         flex-direction: column;
         gap: 1rem;
         padding: 1.5rem;
     }
 
-    .host-meeting-pagination-buttons {
+    .hostMeetingPaginationButtons {
         flex-wrap: wrap;
         justify-content: center;
     }

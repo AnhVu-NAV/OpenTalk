@@ -4,17 +4,17 @@ import { FaSearch, FaDownload, FaPlus, FaEye, FaTrash, FaChevronLeft, FaChevronR
 import axios from "/src/api/axiosClient.jsx"
 import DeleteModal from "../components/deleteModal/DeleteModal.jsx"
 import { getAccessToken } from "../helper/auth"
-import "./styles/EmployeePage.css"
-import SuccessToast from "../components/SuccessToast/SuccessToast.jsx";
+import styles from "./styles/module/EmployeePage.module.css"
+import SuccessToast from "../components/SuccessToast/SuccessToast.jsx"
 
 const getStatusClass = (status) => {
     const statusMap = {
-        Active: "status-active",
-        "On Boarding": "status-onboarding",
-        Probation: "status-probation",
-        "On Leave": "status-leave",
+        Active: "statusActive",
+        "On Boarding": "statusOnboarding",
+        Probation: "statusProbation",
+        "On Leave": "statusLeave",
     }
-    return `status-badge ${statusMap[status] || "status-badge"}`
+    return `${styles.statusBadge} ${styles[statusMap[status]] || styles.statusBadge}`
 }
 
 const EmployeePage = () => {
@@ -50,15 +50,13 @@ const EmployeePage = () => {
         fetchEmployees()
     }, [])
 
-
-
     const filtered = employees.filter((emp) => {
         const matchesSearch =
             emp.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             emp.email?.toLowerCase().includes(searchTerm.toLowerCase())
         const matchesOffice = officeFilter ? emp.companyBranch?.name === officeFilter : true
         const matchesStatus = statusFilter ? emp.status === statusFilter : true
-        return matchesSearch && matchesOffice  && matchesStatus
+        return matchesSearch && matchesOffice && matchesStatus
     })
 
     const totalPages = Math.ceil(filtered.length / itemsPerPage)
@@ -73,8 +71,8 @@ const EmployeePage = () => {
         try {
             await axios.delete(`/hr/employees/${selectedEmployee.id}`, {
                 headers: {
-                    Authorization: `Bearer ${getAccessToken()}`
-                }
+                    Authorization: `Bearer ${getAccessToken()}`,
+                },
             })
             setEmployees((prev) => prev.filter((e) => e.id !== selectedEmployee.id))
             setToastMessage("Employee deleted successfully!")
@@ -88,33 +86,33 @@ const EmployeePage = () => {
     }
     const handleExport = async () => {
         try {
-            const response = await axios.get('/hr/export/', {
-                params: { status: statusFilter, companyBranchId: officeFilter},
-                responseType: 'blob',
+            const response = await axios.get("/hr/export/", {
+                params: { status: statusFilter, companyBranchId: officeFilter },
+                responseType: "blob",
                 headers: {
-                    Authorization: `Bearer ${getAccessToken()}`
-                }// vì server trả file Excel
+                    Authorization: `Bearer ${getAccessToken()}`,
+                }, // vì server trả file Excel
             })
             // tạo link ẩn để download
             const blob = new Blob([response.data])
             const url = window.URL.createObjectURL(blob)
-            const link = document.createElement('a')
+            const link = document.createElement("a")
             link.href = url
-            link.setAttribute('download', 'employees.xlsx')
+            link.setAttribute("download", "employees.xlsx")
             document.body.appendChild(link)
             link.click()
             link.remove()
             window.URL.revokeObjectURL(url)
         } catch (err) {
-            console.error('Export thất bại:', err)
+            console.error("Export thất bại:", err)
         }
     }
 
     if (loading) {
         return (
-            <div className="hrms-container">
-                <div className="loading-container">
-                    <div className="loading-spinner-large"></div>
+            <div className={styles.hrmsContainer}>
+                <div className={styles.loadingContainer}>
+                    <div className={styles.loadingSpinnerLarge}></div>
                     <p>Loading employees...</p>
                 </div>
             </div>
@@ -122,44 +120,42 @@ const EmployeePage = () => {
     }
 
     return (
-        <div className="hrms-container">
-
+        <div className={styles.hrmsContainer}>
             {/* Main Content */}
-            <div className="main-content">
-                <div className="header">
-                    <div className="header-left">
-                        <h1 className="page-title">All Employees</h1>
-                        <p className="page-subtitle">Manage your team members and their information</p>
+            <div className={styles.mainContent}>
+                <div className={styles.header}>
+                    <div className={styles.headerLeft}>
+                        <h1 className={styles.pageTitle}>All Employees</h1>
+                        <p className={styles.pageSubtitle}>Manage your team members and their information</p>
                     </div>
-
                 </div>
 
                 {/* Stats Cards */}
-                <div className="stats-grid">
-                    <div className="stat-card">
-                        <div className="stat-icon">👥</div>
-                        <div className="stat-content">
+                <div className={styles.statsGrid}>
+                    <div className={styles.statCard}>
+                        <div className={styles.statIcon}>👥</div>
+                        <div className={styles.statContent}>
                             <h3>{employees.length}</h3>
                             <p>Total Employees</p>
                         </div>
                     </div>
-                    <div className="stat-card">
-                        <div className="stat-icon">✅</div>
-                        <div className="stat-content">
+                    <div className={styles.statCard}>
+                        <div className={styles.statIcon}>✅</div>
+                        <div className={styles.statContent}>
                             <h3>{employees.filter((e) => e.status === "Active").length}</h3>
                             <p>Active</p>
                         </div>
                     </div>
-                    <div className="stat-card">
-                        <div className="stat-icon">🔄</div>
-                        <div className="stat-content">
+                    <div className={styles.statCard}>
+                        <div className={styles.statIcon}>🔄</div>
+                        <div className={styles.statContent}>
                             <h3>{employees.filter((e) => e.status === "On Boarding").length}</h3>
                             <p>On Boarding</p>
                         </div>
                     </div>
-                    <div className="stat-card">
-                        <div className="stat-icon">⏸️</div>
-                        <div className="stat-content">
+                    <div className={styles.statCard}>
+                        <div className={styles.statIcon}>⏸️</div>
+                        <div className={styles.statContent}>
                             <h3>{employees.filter((e) => e.status === "On Leave").length}</h3>
                             <p>On Leave</p>
                         </div>
@@ -167,28 +163,28 @@ const EmployeePage = () => {
                 </div>
 
                 {/* Action Bar */}
-                <div className="action-bar">
-                    <div className="action-search">
-                        <FaSearch className="action-search-icon" />
+                <div className={styles.actionBar}>
+                    <div className={styles.actionSearch}>
+                        <FaSearch className={styles.actionSearchIcon} />
                         <input
                             type="text"
-                            className="action-search-input"
+                            className={styles.actionSearchInput}
                             placeholder="Search employees..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
 
-                    <div className="action-buttons">
-                        <button className="btn btn-outline" onClick={handleExport}>
+                    <div className={styles.actionButtons}>
+                        <button className={`${styles.btn} ${styles.btnOutline}`} onClick={handleExport}>
                             <FaDownload />
                             Export
                         </button>
-                        <button onClick={() => navigate("/employee/add")} className="btn btn-primary">
+                        <button onClick={() => navigate("/employee/add")} className={`${styles.btn} ${styles.btnPrimary}`}>
                             <FaPlus />
                             Add Employee
                         </button>
-                        <button className="btn btn-outline">
+                        <button className={`${styles.btn} ${styles.btnOutline}`}>
                             <FaFilter />
                             Filter
                         </button>
@@ -196,9 +192,13 @@ const EmployeePage = () => {
                 </div>
 
                 {/* Filters */}
-                <div className="filters-row">
-                    <div className="filter-group">
-                        <select className="filter-select" value={officeFilter} onChange={(e) => setOfficeFilter(e.target.value)}>
+                <div className={styles.filtersRow}>
+                    <div className={styles.filterGroup}>
+                        <select
+                            className={styles.filterSelect}
+                            value={officeFilter}
+                            onChange={(e) => setOfficeFilter(e.target.value)}
+                        >
                             <option value="">All Offices</option>
                             {uniqueOffices.map((office) => (
                                 <option key={office} value={office}>
@@ -208,21 +208,24 @@ const EmployeePage = () => {
                         </select>
                     </div>
 
-
-                    <div className="filter-group">
-                        <select className="filter-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                    <div className={styles.filterGroup}>
+                        <select
+                            className={styles.filterSelect}
+                            value={statusFilter}
+                            onChange={(e) => setStatusFilter(e.target.value)}
+                        >
                             <option value="">All Status</option>
                             {uniqueStatuses.map((status) => (
                                 <option key={status} value={status}>
-                                    {status ? 'Activated' : 'Inactivated'}
+                                    {status ? "Activated" : "Inactivated"}
                                 </option>
                             ))}
                         </select>
                     </div>
 
-                    {(officeFilter  || statusFilter || searchTerm) && (
+                    {(officeFilter || statusFilter || searchTerm) && (
                         <button
-                            className="clear-filters-btn"
+                            className={styles.clearFiltersBtn}
                             onClick={() => {
                                 setOfficeFilter("")
                                 setStatusFilter("")
@@ -235,12 +238,12 @@ const EmployeePage = () => {
                 </div>
 
                 {/* Table */}
-                <div className="table-container">
-                    <table className="table">
+                <div className={styles.tableContainer}>
+                    <table className={styles.table}>
                         <thead>
                         <tr>
                             <th>
-                                <input type="checkbox" className="checkbox" />
+                                <input type="checkbox" className={styles.checkbox} />
                             </th>
                             <th>Employee</th>
                             <th>Email</th>
@@ -254,42 +257,48 @@ const EmployeePage = () => {
                         {paginatedEmployees.map((emp) => (
                             <tr key={emp.id}>
                                 <td>
-                                    <input type="checkbox" className="checkbox" />
+                                    <input type="checkbox" className={styles.checkbox} />
                                 </td>
                                 <td>
-                                    <div className="employee-info">
-                                        <div className="employee-avatar">
+                                    <div className={styles.employeeInfo}>
+                                        <div className={styles.employeeAvatar}>
                                             {emp.avatarUrl ? (
-                                                <img src={emp.avatarUrl || "/placeholder.svg"} alt={emp.fullName} className="avatar-image" />
+                                                <img
+                                                    src={emp.avatarUrl || "/placeholder.svg"}
+                                                    alt={emp.fullName}
+                                                    className={styles.avatarImage}
+                                                />
                                             ) : (
-                                                <div className="avatar-placeholder">{emp.fullName?.charAt(0)?.toUpperCase() || "?"}</div>
+                                                <div className={styles.avatarPlaceholder}>
+                                                    {emp.fullName?.charAt(0)?.toUpperCase() || "?"}
+                                                </div>
                                             )}
                                         </div>
-                                        <div className="employee-details">
-                                            <div className="employee-name">{emp.fullName}</div>
-                                            <div className="employee-id">ID: {emp.id}</div>
+                                        <div className={styles.employeeDetails}>
+                                            <div className={styles.employeeName}>{emp.fullName}</div>
+                                            <div className={styles.employeeId}>ID: {emp.id}</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="email-cell">{emp.email}</div>
+                                    <div className={styles.emailCell}>{emp.email}</div>
                                 </td>
                                 <td>
-                                    <div className="office-cell">{emp.companyBranch?.name || "N/A"}</div>
+                                    <div className={styles.officeCell}>{emp.companyBranch?.name || "N/A"}</div>
                                 </td>
                                 <td>
                                     <span className={getStatusClass(emp.status)}>{emp.status?.toUpperCase() || "N/A"}</span>
                                 </td>
                                 <td>
-                    <span className={`account-badge ${emp.isEnabled ? "enabled" : "disabled"}`}>
+                    <span className={`${styles.accountBadge} ${emp.isEnabled ? styles.enabled : styles.disabled}`}>
                       {emp.isEnabled ? "Activated" : "Disabled"}
                     </span>
                                 </td>
                                 <td>
-                                    <div className="action-buttons">
+                                    <div className={styles.actionButtons}>
                                         <button
                                             onClick={() => navigate(`/employee/edit/${emp.id}`)}
-                                            className="action-btn action-btn-view"
+                                            className={`${styles.actionBtn} ${styles.actionBtnView}`}
                                             title="View Employee"
                                         >
                                             <FaEye />
@@ -299,7 +308,7 @@ const EmployeePage = () => {
                                                 setSelectedEmployee(emp)
                                                 setShowDelete(true)
                                             }}
-                                            className="action-btn action-btn-delete"
+                                            className={`${styles.actionBtn} ${styles.actionBtnDelete}`}
                                             title="Delete Employee"
                                         >
                                             <FaTrash />
@@ -312,17 +321,17 @@ const EmployeePage = () => {
                     </table>
 
                     {/* Pagination */}
-                    <div className="pagination-container">
-                        <div className="pagination-info">
+                    <div className={styles.paginationContainer}>
+                        <div className={styles.paginationInfo}>
                             Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filtered.length)} of {filtered.length}{" "}
                             results
                         </div>
 
-                        <div className="pagination-controls">
+                        <div className={styles.paginationControls}>
                             <button
                                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                                 disabled={currentPage === 1}
-                                className="pagination-btn"
+                                className={styles.paginationBtn}
                             >
                                 <FaChevronLeft />
                             </button>
@@ -331,7 +340,7 @@ const EmployeePage = () => {
                                 <button
                                     key={i + 1}
                                     onClick={() => setCurrentPage(i + 1)}
-                                    className={`pagination-number ${currentPage === i + 1 ? "active" : ""}`}
+                                    className={`${styles.paginationNumber} ${currentPage === i + 1 ? styles.active : ""}`}
                                 >
                                     {i + 1}
                                 </button>
@@ -340,7 +349,7 @@ const EmployeePage = () => {
                             <button
                                 onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                                 disabled={currentPage === totalPages}
-                                className="pagination-btn"
+                                className={styles.paginationBtn}
                             >
                                 <FaChevronRight />
                             </button>
@@ -356,12 +365,7 @@ const EmployeePage = () => {
                     onConfirm={handleConfirmDelete}
                 />
 
-                <SuccessToast
-                    message={toastMessage}
-                    isVisible={showToast}
-                    type="success"
-                    onClose={() => setShowToast(false)}
-                />
+                <SuccessToast message={toastMessage} isVisible={showToast} type="success" onClose={() => setShowToast(false)} />
             </div>
         </div>
     )

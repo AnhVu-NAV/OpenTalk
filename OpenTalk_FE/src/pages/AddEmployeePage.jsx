@@ -1,9 +1,9 @@
-import {useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 import axios from "/src/api/axiosClient.jsx"
-import {useNavigate} from "react-router-dom"
-import "./styles/AddEmployeePage.css"
-import {getAccessToken} from "../helper/auth.jsx";
-import SuccessToast from "../components/SuccessToast/SuccessToast.jsx";
+import { useNavigate } from "react-router-dom"
+import styles from "./styles/module/AddEmployeePage.module.css"
+import { getAccessToken } from "../helper/auth.jsx"
+import SuccessToast from "../components/SuccessToast/SuccessToast.jsx"
 
 const AddEmployeeNew = () => {
     const [employee, setEmployee] = useState({
@@ -23,18 +23,14 @@ const AddEmployeeNew = () => {
     const [toastMessage, setToastMessage] = useState("")
     const [showToast, setShowToast] = useState(false)
 
-
-
     useEffect(() => {
         const fetchBranches = async () => {
             try {
-                const res = await axios.get("/company-branch",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${getAccessToken()}`,
-                        },
-                    }
-                );
+                const res = await axios.get("/company-branch", {
+                    headers: {
+                        Authorization: `Bearer ${getAccessToken()}`,
+                    },
+                })
 
                 setBranches(res.data)
             } catch (error) {
@@ -65,24 +61,24 @@ const AddEmployeeNew = () => {
     }
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value, type, checked } = e.target
 
         if (name === "companyBranch") {
             setEmployee((prev) => ({
                 ...prev,
                 companyBranch: { id: value },
-            }));
+            }))
         } else {
             setEmployee((prev) => ({
                 ...prev,
                 [name]: type === "checkbox" ? checked : value,
-            }));
+            }))
         }
 
         if (errors[name]) {
-            setErrors((prev) => ({ ...prev, [name]: "" }));
+            setErrors((prev) => ({ ...prev, [name]: "" }))
         }
-    };
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -91,13 +87,11 @@ const AddEmployeeNew = () => {
 
         setLoading(true)
         try {
-            await axios.post("http://localhost:8080/api/hr/employees", employee,
-                {
-                    headers: {
-                        Authorization: `Bearer ${getAccessToken()}`,
-                    },
-                }
-            );
+            await axios.post("http://localhost:8080/api/hr/employees", employee, {
+                headers: {
+                    Authorization: `Bearer ${getAccessToken()}`,
+                },
+            })
             setToastMessage("Employee created successfully!")
             setShowToast(true)
             setTimeout(() => navigate("/employee"), 1000)
@@ -110,95 +104,91 @@ const AddEmployeeNew = () => {
     }
 
     return (
-        <div className="hrms-container">
-
+        <div className={styles.hrmsContainer}>
             {/* Main Content */}
-            <div className="main-content">
-                <div className="header">
-                    <div className="header-left">
-                        <button onClick={() => navigate("/employee")} className="back-button">
+            <div className={styles.mainContent}>
+                <div className={styles.header}>
+                    <div className={styles.headerLeft}>
+                        <button onClick={() => navigate("/employee")} className={styles.backButton}>
                             ←
                         </button>
                         <div>
-                            <h1 className="page-title">Add New Employee</h1>
-                            <div className="breadcrumb">
+                            <h1 className={styles.pageTitle}>Add New Employee</h1>
+                            <div className={styles.breadcrumb}>
                                 <span>All Employees</span>
-                                <span className="breadcrumb-separator">›</span>
-                                <span className="breadcrumb-current">Add New Employee</span>
+                                <span className={styles.breadcrumbSeparator}>›</span>
+                                <span className={styles.breadcrumbCurrent}>Add New Employee</span>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 {/* Form Container */}
-                <div className="form-container">
-                    <div className="form-header">
-                        <h2 className="form-title">Employee Information</h2>
-                        <p className="form-subtitle">Fill in the details to create a new employee account</p>
+                <div className={styles.formContainer}>
+                    <div className={styles.formHeader}>
+                        <h2 className={styles.formTitle}>Employee Information</h2>
+                        <p className={styles.formSubtitle}>Fill in the details to create a new employee account</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="employee-form">
+                    <form onSubmit={handleSubmit} className={styles.employeeForm}>
                         {/* Profile Section */}
-                        <div className="form-section">
-                            <h3 className="section-title">Profile Information</h3>
+                        <div className={styles.formSection}>
+                            <h3 className={styles.sectionTitle}>Profile Information</h3>
 
-                            <div className="profile-upload-section">
-                                <div className="avatar-upload">
-                                    <div className="avatar-preview">
+                            <div className={styles.profileUploadSection}>
+                                <div className={styles.avatarUpload}>
+                                    <div className={styles.avatarPreview}>
                                         {employee.avatarUrl ? (
-                                            <img src={employee.avatarUrl || "/placeholder.svg"} alt="Avatar"
-                                                 className="avatar-image"/>
+                                            <img src={employee.avatarUrl || "/placeholder.svg"} alt="Avatar" className={styles.avatarImage} />
                                         ) : (
-                                            <div className="avatar-placeholder">
-                                                <span className="avatar-icon">👤</span>
+                                            <div className={styles.avatarPlaceholder}>
+                                                <span className={styles.avatarIcon}>👤</span>
                                             </div>
                                         )}
                                     </div>
-                                    <div className="upload-info">
+                                    <div className={styles.uploadInfo}>
                                         <h4>Profile Picture</h4>
                                         <p>Add a profile picture for the employee</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="form-grid">
-                                <div className="form-group">
-                                    <label className="form-label">
-                                        Full Name <span className="required">*</span>
+                            <div className={styles.formGrid}>
+                                <div className={styles.formGroup}>
+                                    <label className={styles.formLabel}>
+                                        Full Name <span className={styles.required}>*</span>
                                     </label>
                                     <input
                                         type="text"
-                                        className={`form-input ${errors.fullName ? "error" : ""}`}
+                                        className={`${styles.formInput} ${errors.fullName ? styles.error : ""}`}
                                         name="fullName"
                                         value={employee.fullName}
                                         onChange={handleChange}
                                         placeholder="Enter full name"
                                     />
-                                    {errors.fullName && <span className="error-message">{errors.fullName}</span>}
+                                    {errors.fullName && <span className={styles.errorMessage}>{errors.fullName}</span>}
                                 </div>
 
-                                <div className="form-group">
-                                    <label className="form-label">
-                                        Email Address <span className="required">*</span>
+                                <div className={styles.formGroup}>
+                                    <label className={styles.formLabel}>
+                                        Email Address <span className={styles.required}>*</span>
                                     </label>
                                     <input
                                         type="email"
-                                        className={`form-input ${errors.email ? "error" : ""}`}
+                                        className={`${styles.formInput} ${errors.email ? styles.error : ""}`}
                                         name="email"
                                         value={employee.email}
                                         onChange={handleChange}
                                         placeholder="Enter email address"
                                     />
-                                    {errors.email && <span className="error-message">{errors.email}</span>}
+                                    {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
                                 </div>
 
-                                <div className="form-group">
-                                    <label className="form-label">Avatar URL</label>
+                                <div className={styles.formGroup}>
+                                    <label className={styles.formLabel}>Avatar URL</label>
                                     <input
                                         type="url"
-                                        className="form-input"
+                                        className={styles.formInput}
                                         name="avatarUrl"
                                         value={employee.avatarUrl}
                                         onChange={handleChange}
@@ -206,12 +196,12 @@ const AddEmployeeNew = () => {
                                     />
                                 </div>
 
-                                <div className="form-group">
-                                    <label className="form-label">
-                                        Company Branch <span className="required">*</span>
+                                <div className={styles.formGroup}>
+                                    <label className={styles.formLabel}>
+                                        Company Branch <span className={styles.required}>*</span>
                                     </label>
                                     <select
-                                        className={`form-select ${errors.companyBranch ? "error" : ""}`}
+                                        className={`${styles.formSelect} ${errors.companyBranch ? styles.error : ""}`}
                                         name="companyBranch"
                                         value={employee.companyBranch.id}
                                         onChange={handleChange}
@@ -223,58 +213,58 @@ const AddEmployeeNew = () => {
                                             </option>
                                         ))}
                                     </select>
-                                    {errors.companyBranch && <span className="error-message">{errors.companyBranch}</span>}
+                                    {errors.companyBranch && <span className={styles.errorMessage}>{errors.companyBranch}</span>}
                                 </div>
                             </div>
                         </div>
 
                         {/* Account Section */}
-                        <div className="form-section">
-                            <h3 className="section-title">Account Credentials</h3>
+                        <div className={styles.formSection}>
+                            <h3 className={styles.sectionTitle}>Account Credentials</h3>
 
-                            <div className="form-grid">
-                                <div className="form-group">
-                                    <label className="form-label">
-                                        Username <span className="required">*</span>
+                            <div className={styles.formGrid}>
+                                <div className={styles.formGroup}>
+                                    <label className={styles.formLabel}>
+                                        Username <span className={styles.required}>*</span>
                                     </label>
                                     <input
                                         type="text"
-                                        className={`form-input ${errors.username ? "error" : ""}`}
+                                        className={`${styles.formInput} ${errors.username ? styles.error : ""}`}
                                         name="username"
                                         value={employee.username}
                                         onChange={handleChange}
                                         placeholder="Enter username"
                                     />
-                                    {errors.username && <span className="error-message">{errors.username}</span>}
+                                    {errors.username && <span className={styles.errorMessage}>{errors.username}</span>}
                                 </div>
 
-                                <div className="form-group">
-                                    <label className="form-label">
-                                        Password <span className="required">*</span>
+                                <div className={styles.formGroup}>
+                                    <label className={styles.formLabel}>
+                                        Password <span className={styles.required}>*</span>
                                     </label>
                                     <input
                                         type="password"
-                                        className={`form-input ${errors.password ? "error" : ""}`}
+                                        className={`${styles.formInput} ${errors.password ? styles.error : ""}`}
                                         name="password"
                                         value={employee.password}
                                         onChange={handleChange}
                                         placeholder="Enter password (min 6 characters)"
                                     />
-                                    {errors.password && <span className="error-message">{errors.password}</span>}
+                                    {errors.password && <span className={styles.errorMessage}>{errors.password}</span>}
                                 </div>
 
-                                <div className="form-group form-group-full">
-                                    <div className="checkbox-group">
-                                        <label className="checkbox-label">
+                                <div className={`${styles.formGroup} ${styles.formGroupFull}`}>
+                                    <div className={styles.checkboxGroup}>
+                                        <label className={styles.checkboxLabel}>
                                             <input
                                                 type="checkbox"
-                                                className="checkbox-input"
+                                                className={styles.checkboxInput}
                                                 name="isEnabled"
                                                 checked={employee.isEnabled}
                                                 onChange={handleChange}
                                             />
-                                            <span className="checkbox-custom"></span>
-                                            <span className="checkbox-text">
+                                            <span className={styles.checkboxCustom}></span>
+                                            <span className={styles.checkboxText}>
                         <strong>Enable Account</strong>
                         <small>Allow this employee to access the system</small>
                       </span>
@@ -285,19 +275,19 @@ const AddEmployeeNew = () => {
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="form-actions">
+                        <div className={styles.formActions}>
                             <button
                                 type="button"
-                                className="btn btn-secondary"
+                                className={`${styles.btn} ${styles.btnSecondary}`}
                                 onClick={() => navigate("/employee")}
                                 disabled={loading}
                             >
                                 Cancel
                             </button>
-                            <button type="submit" className="btn btn-primary" disabled={loading}>
+                            <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`} disabled={loading}>
                                 {loading ? (
                                     <>
-                                        <span className="loading-spinner"></span>
+                                        <span className={styles.loadingSpinner}></span>
                                         Creating...
                                     </>
                                 ) : (
@@ -311,12 +301,7 @@ const AddEmployeeNew = () => {
                     </form>
                 </div>
             </div>
-            <SuccessToast
-                message={toastMessage}
-                isVisible={showToast}
-                type="success"
-                onClose={() => setShowToast(false)}
-            />
+            <SuccessToast message={toastMessage} isVisible={showToast} type="success" onClose={() => setShowToast(false)} />
         </div>
     )
 }

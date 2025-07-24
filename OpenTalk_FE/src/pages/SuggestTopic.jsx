@@ -1,117 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import CustomTextEditor from "../components/textEdit/RichTextEditor.jsx";
-import './styles/SuggestTopic.css'
-import {getCurrentUser, getAccessToken} from "../helper/auth.jsx";
-import axios from '/src/api/axiosClient.jsx';
+import { useState, useEffect } from "react"
+import CustomTextEditor from "../components/textEdit/RichTextEditor.jsx"
+import styles from "./styles/module/SuggestTopic.module.css"
+import { getCurrentUser, getAccessToken } from "../helper/auth.jsx"
+import axios from "/src/api/axiosClient.jsx"
+import { AiOutlineCalendar, AiOutlineEye, AiOutlineFileText, AiOutlineFlag } from "react-icons/ai"
+import TopicProposal from "../components/common/TopicProposalCard.jsx"
 
-
-import {AiOutlineCalendar, AiOutlineEye, AiOutlineFileText, AiOutlineFlag} from "react-icons/ai";
-import TopicProposal from "../components/common/TopicProposalCard.jsx";
 const SuggestTopic = () => {
-    const [topicUser, setTopicUser] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [topicUser, setTopicUser] = useState([])
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
-        const user = getCurrentUser();
+        const user = getCurrentUser()
         if (!user) {
-            console.error('Chưa tìm thấy user, bạn cần login trước!');
-            setLoading(false);
-            return;
+            console.error("Chưa tìm thấy user, bạn cần login trước!")
+            setLoading(false)
+            return
         }
-        const userId = user.id;
-        axios.get(`/topic-idea/suggestedBy/${userId}`, {
-            headers: { Authorization: `Bearer ${ getAccessToken()}` }
-        })
-            .then(res => {
-                setTopicUser(res.data);
+        const userId = user.id
+        axios
+            .get(`/topic-idea/suggestedBy/${userId}`, {
+                headers: { Authorization: `Bearer ${getAccessToken()}` },
             })
-            .catch(err => {
-                console.error('Lỗi khi fetch suggested topics:', err);
+            .then((res) => {
+                setTopicUser(res.data)
+            })
+            .catch((err) => {
+                console.error("Lỗi khi fetch suggested topics:", err)
             })
             .finally(() => {
-                setLoading(false);
-            });
-    }, [loading]);
-
-    // useEffect(() => {
-    //     handleSubmitTopic({ title: "hehe", content: "hahah" });
-    // }, [])
+                setLoading(false)
+            })
+    }, [loading])
 
     const handleSubmitTopic = async ({ title, content }) => {
-        const token = getAccessToken();
-        const user = getCurrentUser();
+        const token = getAccessToken()
+        const user = getCurrentUser()
 
         try {
-            console.log(title);
-            console.log(content);
+            console.log(title)
+            console.log(content)
             const res = await axios.post(
                 "/topic-idea",
                 {
                     title: title,
                     description: content,
-                    status: '',
-                    remark: '',
-                    suggestedBy:  user,
+                    status: "",
+                    remark: "",
+                    suggestedBy: user,
                 },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            )
             setLoading(true)
-            console.log("Topic suggested successfully:", res.data);
-            alert("Topic submitted!");
+            console.log("Topic suggested successfully:", res.data)
+            alert("Topic submitted!")
         } catch (err) {
-            console.error("Error submitting topic:", err);
-            alert("Error submitting topic!");
+            console.error("Error submitting topic:", err)
+            alert("Error submitting topic!")
         }
-    };
+    }
+
     return (
-        <div className="page-wrapper">
-            <div className="page-header">
-                <p className="page-subtitle">Idea Suggestion</p>
-                <h1 className="page-title">Suggest New Topic</h1>
+        <div className={styles.pageWrapper}>
+            <div className={styles.pageHeader}>
+                <p className={styles.pageSubtitle}>Idea Suggestion</p>
+                <h1 className={styles.pageTitle}>Suggest New Topic</h1>
             </div>
-            <div className="layout">
+            <div className={styles.layout}>
                 {/* Editor bên trái */}
-                <div className="layout__main">
+                <div className={styles.layoutMain}>
                     <CustomTextEditor onSubmit={handleSubmitTopic} />
                 </div>
                 {/* Card bên phải */}
-                <aside className="layout__sidebar">
-                    <div className="action-card">
-                        <div className="action-card__header">Actions</div>
-                        <ul className="action-card__list">
-                            <li className="action-card__item">
-                  <span className="action-card__label">
-                    <AiOutlineFlag className="action-card__icon"/>
-                    <strong>Status:</strong> Draft
-                  </span>
-                                
+                <aside className={styles.layoutSidebar}>
+                    <div className={styles.actionCard}>
+                        <div className={styles.actionCardHeader}>Actions</div>
+                        <ul className={styles.actionCardList}>
+                            <li className={styles.actionCardItem}>
+                <span className={styles.actionCardLabel}>
+                  <AiOutlineFlag className={styles.actionCardIcon} />
+                  <strong>Status:</strong> Draft
+                </span>
                             </li>
-                            <li className="action-card__item">
-                  <span className="action-card__label">
-                    <AiOutlineEye className="action-card__icon"/>
-                    <strong>Visibility:</strong> Public
-                  </span>
-                                
+                            <li className={styles.actionCardItem}>
+                <span className={styles.actionCardLabel}>
+                  <AiOutlineEye className={styles.actionCardIcon} />
+                  <strong>Visibility:</strong> Public
+                </span>
                             </li>
-                            <li className="action-card__item">
-                  <span className="action-card__label">
-                    <AiOutlineCalendar className="action-card__icon"/>
-                    <strong>Schedule:</strong> Now
-                  </span>
-                                
+                            <li className={styles.actionCardItem}>
+                <span className={styles.actionCardLabel}>
+                  <AiOutlineCalendar className={styles.actionCardIcon} />
+                  <strong>Schedule:</strong> Now
+                </span>
                             </li>
-                            <li className="action-card__item action-card__item--last">
-                  <span className="action-card__label">
-                    <AiOutlineFileText className="action-card__icon"/>
-                    <strong>Readability:</strong> Ok
-                  </span>
+                            <li className={`${styles.actionCardItem} ${styles.actionCardItemLast}`}>
+                <span className={styles.actionCardLabel}>
+                  <AiOutlineFileText className={styles.actionCardIcon} />
+                  <strong>Readability:</strong> Ok
+                </span>
                             </li>
                         </ul>
-                        <div className="action-card__footer">
-                            <button className="btn btn--draft">Save Draft</button>
+                        <div className={styles.actionCardFooter}>
+                            <button className={`${styles.btn} ${styles.btnDraft}`}>Save Draft</button>
                         </div>
                     </div>
                 </aside>
@@ -121,8 +116,8 @@ const SuggestTopic = () => {
                     You have not suggest before.
                 </div>
             ) : (
-                <div className="category-list">
-                    {topicUser.map(post => (
+                <div className={styles.categoryList}>
+                    {topicUser.map((post) => (
                         <TopicProposal
                             key={post.id}
                             title={post.title}
@@ -136,8 +131,7 @@ const SuggestTopic = () => {
                 </div>
             )}
         </div>
+    )
+}
 
-    );
-};
-
-export default SuggestTopic;
+export default SuggestTopic

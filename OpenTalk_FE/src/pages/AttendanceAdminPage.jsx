@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import "./styles/AttendancePage.css";
-import { FaSearch } from "react-icons/fa";
-import axios from "../api/axiosClient.jsx";
+import { useEffect, useState } from "react"
+import styles from "./styles/module/AttendancePage.module.css"
+import { FaSearch } from "react-icons/fa"
+import axios from "../api/axiosClient.jsx"
 
 const AttendancePage = () => {
-    const [attendances, setAttendances] = useState([]);
-    const [search, setSearch] = useState("");
+    const [attendances, setAttendances] = useState([])
+    const [search, setSearch] = useState("")
 
     useEffect(() => {
-        fetchAttendances();
-    }, []);
+        fetchAttendances()
+    }, [])
 
     const fetchAttendances = async () => {
         try {
@@ -17,33 +17,30 @@ const AttendancePage = () => {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
                 },
-            });
+            })
 
             // Nếu res.data là object chứa data
             if (Array.isArray(res.data)) {
-                setAttendances(res.data);
+                setAttendances(res.data)
             } else if (Array.isArray(res.data.data)) {
-                setAttendances(res.data.data);
+                setAttendances(res.data.data)
             } else {
-                setAttendances([]); // fallback
+                setAttendances([]) // fallback
             }
         } catch (err) {
-            console.error("Failed to fetch attendances", err);
-            setAttendances([]); // tránh undefined
+            console.error("Failed to fetch attendances", err)
+            setAttendances([]) // tránh undefined
         }
-    };
+    }
 
-
-    const filtered = attendances.filter((a) =>
-        a.fullName.toLowerCase().includes(search.toLowerCase())
-    );
+    const filtered = attendances.filter((a) => a.fullName.toLowerCase().includes(search.toLowerCase()))
 
     return (
-        <div className="container mt-4 attendance-wrapper">
+        <div className={`container mt-4 ${styles.attendanceWrapper}`}>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="fw-bold">Attendance</h2>
-                <div className="search-box">
-                    <FaSearch className="search-icon" />
+                <div className={styles.searchBox}>
+                    <FaSearch className={styles.searchIcon} />
                     <input
                         type="text"
                         className="form-control"
@@ -54,7 +51,7 @@ const AttendancePage = () => {
                 </div>
             </div>
 
-            <table className="table table-hover align-middle custom-table">
+            <table className={`table table-hover align-middle ${styles.customTable}`}>
                 <thead>
                 <tr>
                     <th>Employee Name</th>
@@ -83,11 +80,7 @@ const AttendancePage = () => {
                         <td>{a.type}</td>
                         <td>{a.checkinTime}</td>
                         <td>
-                <span
-                    className={`badge rounded-pill ${
-                        a.status === "Late" ? "bg-danger" : "bg-success"
-                    }`}
-                >
+                <span className={`badge rounded-pill ${a.status === "Late" ? "bg-danger" : "bg-success"}`}>
                   {a.status}
                 </span>
                         </td>
@@ -96,11 +89,9 @@ const AttendancePage = () => {
                 </tbody>
             </table>
 
-            {filtered.length === 0 && (
-                <div className="text-center text-muted">No attendance found.</div>
-            )}
+            {filtered.length === 0 && <div className="text-center text-muted">No attendance found.</div>}
         </div>
-    );
-};
+    )
+}
 
-export default AttendancePage;
+export default AttendancePage

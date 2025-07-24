@@ -1,24 +1,24 @@
 /* Meeting List Page Styles */
-.meeting-list-page {
+.meetingListPage {
     min-height: 100vh;
     background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
     padding: 2rem 1rem;
 }
 
-.meeting-list-filters {
+.meetingListFilters {
     display: flex;
     gap: 1rem;
     margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 
-.meeting-list-search-container {
+.meetingListSearchContainer {
     position: relative;
     flex: 1;
     min-width: 300px;
 }
 
-.meeting-list-search-icon {
+.meetingListSearchIcon {
     position: absolute;
     left: 1rem;
     top: 50%;
@@ -27,7 +27,7 @@
     font-size: 1rem;
 }
 
-.meeting-list-search-input {
+.meetingListSearchInput {
     width: 100%;
     padding: 0.75rem 1rem 0.75rem 2.5rem;
     border: 2px solid #e5e7eb;
@@ -38,18 +38,18 @@
     box-sizing: border-box;
 }
 
-.meeting-list-search-input:focus {
+.meetingListSearchInput:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.meeting-list-select-container {
+.meetingListSelectContainer {
     position: relative;
     min-width: 200px;
 }
 
-.meeting-list-select {
+.meetingListSelect {
     width: 100%;
     padding: 0.75rem 2.5rem 0.75rem 1rem;
     border: 2px solid #e5e7eb;
@@ -62,13 +62,13 @@
     box-sizing: border-box;
 }
 
-.meeting-list-select:focus {
+.meetingListSelect:focus {
     outline: none;
     border-color: #10b981;
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-.meeting-list-select-icon {
+.meetingListSelectIcon {
     position: absolute;
     right: 1rem;
     top: 50%;
@@ -77,7 +77,7 @@
     pointer-events: none;
 }
 
-.meeting-list-tabs-header {
+.meetingListTabsHeader {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 2rem;
@@ -89,7 +89,7 @@
     overflow-x: auto;
 }
 
-.meeting-list-tab-button {
+.meetingListTabButton {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 8px;
@@ -102,25 +102,25 @@
     color: #6b7280;
 }
 
-.meeting-list-tab-button:hover {
+.meetingListTabButton:hover {
     background: #f3f4f6;
     color: #374151;
 }
 
-.meeting-list-tab-button.active {
+.meetingListTabButton.active {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.meeting-list-container {
+.meetingListContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
 
-.meeting-list-card {
+.meetingListCard {
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
@@ -130,7 +130,7 @@
     position: relative;
 }
 
-.meeting-list-card::before {
+.meetingListCard::before {
     content: "";
     position: absolute;
     top: 0;
@@ -140,17 +140,17 @@
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
-.meeting-list-card:hover {
+.meetingListCard:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 30px rgba(16, 185, 129, 0.15);
 }
 
-.meeting-list-card-header {
+.meetingListCardHeader {
     padding: 1.5rem;
     border-bottom: 1px solid #f3f4f6;
 }
 
-.meeting-list-card-title {
+.meetingListCardTitle {
     font-size: 1.125rem;
     font-weight: 600;
     color: #1f2937;
@@ -158,7 +158,7 @@
     line-height: 1.4;
 }
 
-.meeting-list-card-meta {
+.meetingListCardMeta {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -166,18 +166,18 @@
     color: #6b7280;
 }
 
-.meeting-list-card-content {
+.meetingListCardContent {
     padding: 1.5rem;
 }
 
-.meeting-list-card-description {
+.meetingListCardDescription {
     color: #6b7280;
     font-size: 0.875rem;
     line-height: 1.5;
     margin-bottom: 1rem;
 }
 
-.meeting-list-card-status {
+.meetingListCardStatus {
     display: inline-flex;
     align-items: center;
     padding: 0.375rem 0.75rem;
@@ -189,36 +189,36 @@
     margin-bottom: 1rem;
 }
 
-.meeting-list-status-completed {
+.meetingListStatusCompleted {
     background: #d1fae5;
     color: #065f46;
     border: 1px solid #10b981;
 }
 
-.meeting-list-status-waiting-host-register {
+.meetingListStatusWaitingHostRegister {
     background: #fef3c7;
     color: #92400e;
     border: 1px solid #fbbf24;
 }
 
-.meeting-list-status-upcoming {
+.meetingListStatusUpcoming {
     background: #dbeafe;
     color: #1e40af;
     border: 1px solid #3b82f6;
 }
 
-.meeting-list-status-ongoing {
+.meetingListStatusOngoing {
     background: #fef3c7;
     color: #92400e;
     border: 1px solid #f59e0b;
 }
 
-.meeting-list-card-actions {
+.meetingListCardActions {
     display: flex;
     gap: 0.75rem;
 }
 
-.meeting-list-action-btn {
+.meetingListActionBtn {
     flex: 1;
     padding: 0.75rem 1rem;
     border: none;
@@ -229,38 +229,38 @@
     font-size: 0.875rem;
 }
 
-.meeting-list-primary-btn {
+.meetingListPrimaryBtn {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
 }
 
-.meeting-list-primary-btn:hover:not(:disabled) {
+.meetingListPrimaryBtn:hover:not(:disabled) {
     background: linear-gradient(135deg, #059669 0%, #047857 100%);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.meeting-list-secondary-btn {
+.meetingListSecondaryBtn {
     background: white;
     color: #10b981;
     border: 2px solid #10b981;
 }
 
-.meeting-list-secondary-btn:hover {
+.meetingListSecondaryBtn:hover {
     background: #10b981;
     color: white;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
-.meeting-list-action-btn:disabled {
+.meetingListActionBtn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
 }
 
-.meeting-list-pagination {
+.meetingListPagination {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -271,18 +271,18 @@
     border: 1px solid #d1fae5;
 }
 
-.meeting-list-pagination-info {
+.meetingListPaginationInfo {
     font-size: 0.875rem;
     color: #6b7280;
 }
 
-.meeting-list-pagination-buttons {
+.meetingListPaginationButtons {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.meeting-list-pagination-btn {
+.meetingListPaginationBtn {
     width: 36px;
     height: 36px;
     border: 1px solid #d1d5db;
@@ -296,18 +296,18 @@
     color: #6b7280;
 }
 
-.meeting-list-pagination-btn:hover:not(:disabled) {
+.meetingListPaginationBtn:hover:not(:disabled) {
     background: #10b981;
     color: white;
     border-color: #10b981;
 }
 
-.meeting-list-pagination-btn:disabled {
+.meetingListPaginationBtn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.meeting-list-pagination-number {
+.meetingListPaginationNumber {
     width: 36px;
     height: 36px;
     border: 1px solid #d1d5db;
@@ -322,20 +322,20 @@
     font-weight: 500;
 }
 
-.meeting-list-pagination-number:hover {
+.meetingListPaginationNumber:hover {
     background: #10b981;
     color: white;
     border-color: #10b981;
 }
 
-.meeting-list-pagination-number.active {
+.meetingListPaginationNumber.active {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
     border-color: #10b981;
 }
 
 /* Empty State */
-.meeting-list-empty-state {
+.meetingListEmptyState {
     text-align: center;
     padding: 4rem 2rem;
     background: white;
@@ -344,7 +344,7 @@
     border: 1px solid #d1fae5;
 }
 
-.meeting-list-empty-icon {
+.meetingListEmptyIcon {
     width: 80px;
     height: 80px;
     background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
@@ -357,14 +357,14 @@
     color: #9ca3af;
 }
 
-.meeting-list-empty-state h3 {
+.meetingListEmptyState h3 {
     font-size: 1.25rem;
     font-weight: 600;
     color: #374151;
     margin: 0 0 0.5rem 0;
 }
 
-.meeting-list-empty-state p {
+.meetingListEmptyState p {
     font-size: 1rem;
     color: #6b7280;
     margin: 0;
@@ -372,40 +372,40 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .meeting-list-page {
+    .meetingListPage {
         padding: 1rem 0.5rem;
     }
 
-    .meeting-list-filters {
+    .meetingListFilters {
         flex-direction: column;
     }
 
-    .meeting-list-search-container,
-    .meeting-list-select-container {
+    .meetingListSearchContainer,
+    .meetingListSelectContainer {
         min-width: auto;
     }
 
-    .meeting-list-tabs-header {
+    .meetingListTabsHeader {
         padding: 0.25rem;
     }
 
-    .meeting-list-tab-button {
+    .meetingListTabButton {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
     }
 
-    .meeting-list-container {
+    .meetingListContainer {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    .meeting-list-pagination {
+    .meetingListPagination {
         flex-direction: column;
         gap: 1rem;
         padding: 1.5rem;
     }
 
-    .meeting-list-pagination-buttons {
+    .meetingListPaginationButtons {
         flex-wrap: wrap;
         justify-content: center;
     }
