@@ -27,15 +27,15 @@ const menuSections = [
     {
         title: "Dashboard",
         items: [
-            { label: "Dashboard", icon: <FaHome />, path: "/", roles: ["HR", "MEETING_MANAGER"] },
-            { label: "Overview", icon: <FaHome />, path: "/", roles: ["USER"] },
+            { label: "Dashboard", icon: <FaHome />, path: "/admin/dashboard", roles: ["HR", "MEETING_MANAGER"] },
+            { label: "Overview", icon: <FaHome />, path: "/user/home", roles: ["USER"] },
         ],
     },
     {
         title: "Meetings",
         items: [
-            { label: "Meetings", icon: <FaVideo />, path: "/meeting", roles: ["HR", "USER", "MEETING_MANAGER"] },
-            { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting", roles: ["HR", "USER", "MEETING_MANAGER"] },
+            { label: "Meetings", icon: <FaVideo />, path: "/meeting", roles: ["USER"] },
+            { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting", roles: ["USER"] },
             { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request", roles: ["HR", "MEETING_MANAGER"] },
             { label: "OpenTalk Manager", icon: <FaVideo />, path: "/opentalk/manager", roles: ["HR", "MEETING_MANAGER"] },
             {
@@ -44,7 +44,6 @@ const menuSections = [
                 path: "/poll-meeting",
                 roles: ["HR", "USER", "MEETING_MANAGER"],
             },
-            { label: "Create Poll", icon: <FaProjectDiagram />, path: "/poll/create", roles: ["HR", "MEETING_MANAGER"] },
         ],
     },
     {
@@ -54,7 +53,7 @@ const menuSections = [
                 label: "Attendance",
                 icon: <FaRegCalendarCheck />,
                 path: "/attendance",
-                roles: ["HR", "USER", "MEETING_MANAGER"],
+                roles: ["USER"],
             },
             {
                 label: "Attendance (Admin)",
@@ -78,7 +77,7 @@ const menuSections = [
                 label: "Suggest Topic",
                 icon: <FaRegNewspaper />,
                 path: "/suggest-topic",
-                roles: ["HR", "USER", "MEETING_MANAGER"],
+                roles: ["USER"],
             },
             { label: "Topic Hub", icon: <FaPoll />, path: "/topic", roles: ["HR", "USER", "MEETING_MANAGER"] },
             {
@@ -99,12 +98,15 @@ const menuSections = [
                 roles: ["HR", "MEETING_MANAGER"],
             },
             { label: "Salary", icon: <FaCog />, path: "/salary", roles: ["HR"] },
-            { label: "Ticket", icon: <FaTicketAlt />, path: "/ticket", roles: ["HR", "MEETING_MANAGER"] },
         ],
     },
     {
         title: "Account",
         items: [{ label: "Account", icon: <FaUserCircle />, path: "/account", roles: ["HR", "USER", "MEETING_MANAGER"] }],
+    },
+    {
+        title: "Cronjob Configuration",
+        items: [{ label: "Cronjob Configuration", icon: <FaUserCircle />, path: "/cronjob", roles: ["MEETING_MANAGER"] }],
     },
 ]
 
