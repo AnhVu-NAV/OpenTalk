@@ -6,6 +6,8 @@ import AuthGuard from "./components/common/AuthGuard";
 // Auth
 import LoginForm from "./pages/LoginForm";
 import RegisterForm from "./pages/RegisterForm";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 // Dashboard & Overview
 import DashBoard from "./pages/HRDashBoard.jsx";
@@ -70,6 +72,8 @@ function App() {
                 {/* Public */}
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
+                <Route path="/forget-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
 
                 {/* Protected */}
                 <Route element={<AuthGuard />}>
