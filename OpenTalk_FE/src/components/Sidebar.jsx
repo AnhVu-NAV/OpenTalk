@@ -33,7 +33,6 @@ const menuSections = [
         title: "Meetings",
         items: [
             { label: "Meetings", icon: <FaVideo />, path: "/meeting", roles: ["USER"] },
-            { label: "Host Meeting", icon: <FaVideo />, path: "/host-meeting", roles: ["USER"] },
             { label: "OpenTalk Requests", icon: <FaEnvelope />, path: "/opentalk/request", roles: ["HR", "MEETING_MANAGER"] },
             { label: "OpenTalk Manager", icon: <FaVideo />, path: "/opentalk/manager", roles: ["HR", "MEETING_MANAGER"] },
             {
@@ -77,12 +76,11 @@ const menuSections = [
                 path: "/suggest-topic",
                 roles: ["USER"],
             },
-            { label: "Topic Hub", icon: <FaPoll />, path: "/topic", roles: ["HR", "USER", "MEETING_MANAGER"] },
             {
                 label: "Topic Proposal",
                 icon: <FaRegLightbulb />,
                 path: "/topicProposal",
-                roles: ["HR", "USER", "MEETING_MANAGER"],
+                roles: ["HR", "MEETING_MANAGER"],
             },
         ],
     },
