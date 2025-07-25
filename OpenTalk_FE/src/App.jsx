@@ -12,16 +12,12 @@ import ResetPassword from "./pages/ResetPassword";
 // Dashboard & Overview
 import DashBoard from "./pages/HRDashBoard.jsx";
 import HomePage from "./pages/HomePage.jsx";
-function Overview() {
-    return <h2>Overview Page</h2>;
-}
 
 // Meetings
 import MeetingListPage from "./pages/MeetingListPage";
 import MeetingDetailPage from "./pages/MeetingDetailPage";
 import HostMeetingListPage from "./pages/HostMeetingListPage";
 import HostMeetingDetailPage from "./pages/HostMeetingDetailPage";
-import PollApp from "./pages/PollMeeting";
 import CreatePoll from "./pages/CreatePoll";
 import OpenTalkManagerPage from "./pages/OpenTalkManager";
 import OpenTalkHostRequestPage from "./pages/OpenTalkHostRequest";
@@ -38,7 +34,6 @@ import UserAttendanceTab from "./pages/UserAttendanceTab";
 import EmployeePage from "./pages/EmployeePage";
 import AddEmployeeNew from "./pages/AddEmployeePage";
 import EditEmployeePage from "./pages/EditEmployeePage";
-// import ExportEmployeePage from "./pages/ExportEmployeePage";
 
 // Suggest / Topics
 import SuggestTopic from "./pages/SuggestTopic";
@@ -52,19 +47,11 @@ import OrganizationListPage from "./pages/OrganizationListPage";
 // Others
 import SalaryPage from "./pages/SalaryPage";
 import UserProfilePage from "./pages/UserProfilePage";
-import TestPage from "./pages/test";
 import UserHomeDashboard from "./pages/UserHomeDashboard.jsx";
-// import AttendancePage from "./pages/AttendancePage.jsx";
 import CronjobManagePage from "./pages/CronjobManagePage";
 import TopicHub from "./pages/TopicHub.jsx";
+import EditProfilePage from "./pages/EditProfilePage.jsx";
 
-// Optional Pages
-function Message() { return <h2>Message Page</h2>; }
-// function Project() { return <OpenTalkManagerPage />; }
-// function Ticket() { return <OpenTalkHostRequestPage />; }
-// function Notice() { return <SuggestTopic />; }
-// function Account() { return <UserProfilePage />; }
-// function Setting() { return <h2>Settings Page</h2>; }
 
 function App() {
     return (
@@ -119,17 +106,12 @@ function App() {
                         {/* Reports & Org */}
                         <Route path="/hostfrequencyreport" element={<HostFrequencyReport />} />
                         <Route path="/organization" element={<OrganizationListPage />} />
-
                         <Route path="/cronjob" element={<CronjobManagePage />} />
 
                         {/* Others */}
-                        {/*<Route path="/message" element={<Message />} />*/}
-                        {/*<Route path="/ticket" element={<Ticket />} />*/}
-                        {/*<Route path="/notice" element={<Notice />} />*/}
                         <Route path="/account" element={<UserProfilePage />} />
-                        {/*<Route path="/settings" element={<Setting />} />*/}
+                        <Route path="/edit-profile" element={<EditProfilePage />} />
                         <Route path="/salary" element={<SalaryPage />} />
-                        {/*<Route path="/test" element={<TestPage />} />*/}
                     </Route>
                 </Route>
             </Routes>

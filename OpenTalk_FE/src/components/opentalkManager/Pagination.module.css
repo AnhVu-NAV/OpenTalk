@@ -1,0 +1,134 @@
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.paginationBtn {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    min-width: 40px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6b7280;
+    transition: all 0.3s ease;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paginationBtn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #10b981;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.paginationBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f9fafb;
+}
+
+.paginationBtn.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #10b981;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.ellipsis {
+    color: #9ca3af;
+    font-size: 16px;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+    user-select: none;
+    padding: 0 4px;
+}
+
+.paginationInfo {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0 16px;
+    font-weight: 500;
+}
+
+/* Navigation buttons */
+.navBtn {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #6b7280;
+    transition: all 0.3s ease;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navBtn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #10b981;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.navBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background: #f9fafb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pagination {
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+
+    .paginationBtn,
+    .navBtn {
+        min-width: 36px;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    .paginationInfo {
+        font-size: 12px;
+        margin: 0 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination {
+        gap: 2px;
+    }
+
+    .paginationBtn,
+    .navBtn {
+        min-width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .ellipsis {
+        font-size: 14px;
+    }
+}

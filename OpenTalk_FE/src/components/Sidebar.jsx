@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
 import {
@@ -56,7 +54,7 @@ const menuSections = [
                 roles: ["USER"],
             },
             {
-                label: "Attendance (Admin)",
+                label: "Manager Attendance",
                 icon: <FaRegCalendarCheck />,
                 path: "/attendance/admin",
                 roles: ["HR", "MEETING_MANAGER"],

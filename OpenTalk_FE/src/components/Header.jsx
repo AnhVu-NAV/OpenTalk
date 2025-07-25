@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { FaBell, FaMoon, FaSun } from "react-icons/fa"
 import { getCurrentUser, clearTokens } from "../helper/auth"
@@ -100,12 +98,12 @@ function Header({ onToggleSidebar, sidebarCollapsed }) {
 
                         {dropdownOpen && (
                             <div className={styles.dropdownMenu}>
-                                <a href="#" className={styles.dropdownItem}>
+                                <a href="/account" className={styles.dropdownItem}>
                                     Profile
                                 </a>
-                                <a href="#" className={styles.dropdownItem}>
-                                    Settings
-                                </a>
+                                {/*<a href="#" className={styles.dropdownItem}>*/}
+                                {/*    Settings*/}
+                                {/*</a>*/}
                                 <div className={styles.dropdownDivider}></div>
                                 <button className={styles.dropdownItem} onClick={handleLogout}>
                                     Logout

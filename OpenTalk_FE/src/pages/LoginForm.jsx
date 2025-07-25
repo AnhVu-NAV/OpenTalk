@@ -1,105 +1,148 @@
-import React, { useState } from 'react';
-import authApi from '../api/authApi';
-import { saveAuthTokens } from '../helper/auth';
-import SuccessToast from '../components/SuccessToast/SuccessToast';
+import {useEffect, useState} from "react"
+import authApi from "../api/authApi"
+import { saveAuthTokens } from "../helper/auth"
+import SuccessToast from "../components/SuccessToast/SuccessToast"
+import styles from "./styles/module/LoginForm.module.css"
 
 export default function Login() {
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: "", password: "" })
 
   // State cho toast
-  const [toastVisible, setToastVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('success');
+  const [toastVisible, setToastVisible] = useState(false)
+  const [toastMessage, setToastMessage] = useState("")
+  const [toastType, setToastType] = useState("success")
+  const [generatedCode, setGeneratedCode] = useState("")
+  const [inputCode, setInputCode] = useState("")
 
-  const showToast = (msg, type = 'success') => {
-    setToastMessage(msg);
-    setToastType(type);
-    setToastVisible(true);
-  };
+  const generateCode = () => {
+    const code = Math.random().toString(36).substring(2, 7).toUpperCase()
+    setGeneratedCode(code)
+  }
 
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    generateCode()
+  }, [])
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const showToast = (msg, type = "success") => {
+    setToastMessage(msg)
+    setToastType(type)
+    setToastVisible(true)
+  }
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     try {
-      const res = await authApi.login(form);
-      const data = res.data.result;
-      saveAuthTokens(data);
-      showToast('Login successful!', 'success');
-      setTimeout(() => window.location.href = '/', 1000);
+      if (inputCode.trim().toUpperCase() !== generatedCode) {
+        showToast("Incorrect verification code", "error")
+        return
+      }
+      const res = await authApi.login(form)
+      const data = res.data.result
+      saveAuthTokens(data)
+      showToast("Login successful!", "success")
+      setTimeout(() => (window.location.href = "/"), 1000)
     } catch (err) {
-      const msg = err.response?.data?.message
-        || 'Login failed. Please try again!';
-      showToast(msg, 'error');
-      console.error(err);
+      const msg = err.response?.data?.message || "Login failed. Please try again!"
+      showToast(msg, "error")
+      console.error(err)
     }
-  };
+  }
+
+
 
   return (
-    <>
-      <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-        <div className="bg-white p-5 shadow rounded" style={{ width: '100%', maxWidth: 400 }}>
-          <div className="text-center mb-4">
-            <h5 className="fw-bold">Welcome Back</h5>
-            <p className="text-muted" style={{ fontSize: 14 }}>
-              Login to your account to continue
-            </p>
+      <>
+        <div className={styles.container}>
+          <div className={styles.floatingElements}>
+            <div className={styles.floatingShape}></div>
+            <div className={styles.floatingShape}></div>
+            <div className={styles.floatingShape}></div>
           </div>
 
-          <hr className="my-4" />
+          <div className={styles.floatingCard}>
+            <div className={styles.leftPanel}>
+              <div className={styles.header}>
+                <div className={styles.logo}>
+                  <div className={styles.logoIcon}>💬</div>
+                  OpenTalk
+                </div>
+                <div className={styles.avatar}></div>
+                <h1 className={styles.title}>Login</h1>
+              </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">
-                Email<span className="text-danger">*</span>
-              </label>
-              <input
-                type="text"
-                name="email"
-                className="form-control"
-                placeholder="Enter your email"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
+              <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.inputGroup}>
+                  <div className={styles.inputIcon}>📧</div>
+                  <input
+                      type="text"
+                      name="email"
+                      className={styles.input}
+                      placeholder="Email Address"
+                      value={form.email}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <div className={styles.inputIcon}>🔒</div>
+                  <input
+                      type="password"
+                      name="password"
+                      className={styles.input}
+                      placeholder="Password"
+                      value={form.password}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+
+                <div className={styles.verificationGroup}>
+                  <div className={`${styles.inputGroup} ${styles.verificationInput}`}>
+                    <div className={styles.inputIcon}>🔐</div>
+                    <input
+                        type="text"
+                        className={styles.input}
+                        placeholder="Verification code"
+                        value={inputCode}
+                        onChange={(e) => setInputCode(e.target.value)}
+                        required
+                    />
+                  </div>
+                  <div className={styles.verificationCode} onClick={generateCode} title="Click to refresh">
+                    {generatedCode}
+                  </div>
+                </div>
+
+                <button type="submit" className={styles.loginButton}>
+                  Login
+                </button>
+              </form>
+
+              <div className={styles.footer}>
+                <a href="/forget-password" className={styles.forgotPasswordLink}>
+                  Forget Password?
+                </a>
+                <a href="/register" className={styles.registerLink}>
+                  Register
+                </a>
+              </div>
             </div>
 
-            <div className="mb-3">
-              <label className="form-label">
-                Password<span className="text-danger">*</span>
-              </label>
-              <input
-                type="password"
-                name="password"
-                className="form-control"
-                placeholder="Enter your password"
-                value={form.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="mb-3 text-end">
-              <a href="/forget-password" className="text-decoration-none small">Forgot password?</a>
-            </div>
-
-            <button type="submit" className="btn btn-dark w-100">Login</button>
-          </form>
-
-          <p className="text-center mt-3 small">
-            Don’t have an account? <a href="/register">Register now.</a>
-          </p>
+            <div className={styles.rightPanel}></div>
+          </div>
         </div>
-      </div>
 
-      <SuccessToast
-        message={toastMessage}
-        isVisible={toastVisible}
-        type={toastType}
-        onClose={() => setToastVisible(false)}
-      />
-    </>
-  );
+        <SuccessToast
+            message={toastMessage}
+            isVisible={toastVisible}
+            type={toastType}
+            onClose={() => setToastVisible(false)}
+        />
+      </>
+  )
 }

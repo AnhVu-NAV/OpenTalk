@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import styles from "./styles/module/PollMeeting.module.css"
 import { FaQuestion } from "react-icons/fa"

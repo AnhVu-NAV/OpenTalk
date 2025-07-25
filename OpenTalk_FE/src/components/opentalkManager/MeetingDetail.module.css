@@ -1,0 +1,223 @@
+.container {
+    background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%);
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.contentWrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.headerSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.backSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.backSection:hover {
+    transform: translateX(-4px);
+}
+
+.backArrow {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d5a3d;
+}
+
+.backText {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d5a3d;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 12px;
+}
+
+.actionButton {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.pollButton {
+    background: linear-gradient(135deg, #fef5e7 0%, #fed7aa 100%);
+    color: #c05621;
+    border: 1px solid #f6ad55;
+}
+
+.pollButton:hover {
+    background: linear-gradient(135deg, #ed8936 0%, #c05621 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(237, 137, 54, 0.3);
+}
+
+.editButton {
+    background: linear-gradient(135deg, #2d5a3d 0%, #1e3d2a 100%);
+    color: white;
+    border: 1px solid #1e3d2a;
+}
+
+.editButton:hover {
+    background: linear-gradient(135deg, #1e3d2a 0%, #0f1f15 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 90, 61, 0.3);
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.title::before {
+    content: "👁️";
+    font-size: 36px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gridRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formLabel {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.formLabel.primary {
+    color: #3182ce;
+}
+
+.formControl {
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #2d3748;
+    background: #f8fafb;
+    transition: all 0.2s ease;
+}
+
+.formControl:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.materialSection {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+}
+
+.materialButton {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+    color: #2d5a3d;
+    border: 2px solid #2d5a3d;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.materialButton:hover {
+    background: linear-gradient(135deg, #2d5a3d 0%, #1e3d2a 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(45, 90, 61, 0.2);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .contentWrapper {
+        padding: 24px 20px;
+        border-radius: 16px;
+    }
+
+    .headerSection {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .actionButtons {
+        width: 100%;
+        justify-content: stretch;
+    }
+
+    .actionButton {
+        flex: 1;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .gridRow {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .materialSection {
+        justify-content: center;
+    }
+
+    .materialButton {
+        width: 100%;
+    }
+}

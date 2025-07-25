@@ -30,16 +30,16 @@ const HRDashboard = () => {
                         <p className={styles.pageSubtitle}>Overview of HR metrics and meeting analytics</p>
                     </div>
 
-                    <div className={styles.headerRight}>
-                        <div className={styles.dateFilter}>
-                            <select value={dateRange} onChange={(e) => setDateRange(e.target.value)} className={styles.dateSelect}>
-                                <option value="today">Today</option>
-                                <option value="thisWeek">This Week</option>
-                                <option value="thisMonth">This Month</option>
-                                <option value="thisQuarter">This Quarter</option>
-                            </select>
-                        </div>
-                    </div>
+                    {/*<div className={styles.headerRight}>*/}
+                    {/*    <div className={styles.dateFilter}>*/}
+                    {/*        <select value={dateRange} onChange={(e) => setDateRange(e.target.value)} className={styles.dateSelect}>*/}
+                    {/*            <option value="today">Today</option>*/}
+                    {/*            <option value="thisWeek">This Week</option>*/}
+                    {/*            <option value="thisMonth">This Month</option>*/}
+                    {/*            <option value="thisQuarter">This Quarter</option>*/}
+                    {/*        </select>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                 </div>
 
                 {/* Overview Cards */}

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import authApi from "../api/authApi";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import authApi from "../api/authApi"
+import styles from "./styles/module/RegisterForm.module.css"
 
 export default function SignUp() {
   const [form, setForm] = useState({
@@ -9,29 +10,29 @@ export default function SignUp() {
     email: "",
     password: "",
     agree: false,
-  });
-  const [formErrors, setFormErrors] = useState({});      // Server-side field errors
-  const [generalError, setGeneralError] = useState("");  // Non-field error
-  const navigate = useNavigate();
+  })
+  const [formErrors, setFormErrors] = useState({})
+  const [generalError, setGeneralError] = useState("")
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+    const { name, value, type, checked } = e.target
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value })
     // clear field error when user types
-    setFormErrors({ ...formErrors, [name]: null });
-    setGeneralError("");
-  };
+    setFormErrors({ ...formErrors, [name]: null })
+    setGeneralError("")
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!form.agree) {
-      alert("You must agree to the terms.");
-      return;
+      alert("You must agree to the terms.")
+      return
     }
 
     // reset previous errors
-    setFormErrors({});
-    setGeneralError("");
+    setFormErrors({})
+    setGeneralError("")
 
     try {
       const response = await authApi.register({
@@ -39,145 +40,132 @@ export default function SignUp() {
         username: form.username,
         email: form.email,
         password: form.password,
-      });
+      })
 
-      const { code, message } = response.data;
+      const { code, message } = response.data
       if (code === 0) {
-        alert("Registered successfully! Please login.");
-        navigate("/login");
+        alert("Registered successfully! Please login.")
+        navigate("/login")
       } else {
-        setGeneralError(message);
+        setGeneralError(message)
       }
-
     } catch (err) {
       if (err.response && err.response.status === 400 && typeof err.response.data === "object") {
-        setFormErrors(err.response.data);
+        setFormErrors(err.response.data)
       } else if (err.response && err.response.data && err.response.data.message) {
-        setGeneralError(err.response.data.message);
+        setGeneralError(err.response.data.message)
       } else {
-        setGeneralError("An unexpected error occurred during registration.");
+        setGeneralError("An unexpected error occurred during registration.")
       }
-      console.error(err);
+      console.error(err)
     }
-  };
+  }
 
   return (
-    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-      <div
-        className="bg-white p-5 shadow rounded"
-        style={{ width: "100%", maxWidth: 400 }}
-      >
-        {generalError && (
-          <div className="alert alert-danger">
-            {generalError}
-          </div>
-        )}
+      <div className={styles.container}>
+        <div className={styles.floatingElements}>
+          <div className={styles.floatingShape}></div>
+          <div className={styles.floatingShape}></div>
+          <div className={styles.floatingShape}></div>
+        </div>
 
-        <h5 className="fw-bold text-center mb-4">Create An Account</h5>
-
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">
-              Full Name<span className="text-danger">*</span>
-            </label>
-            <input
-              type="text"
-              name="fullname"
-              className={`form-control ${formErrors.fullname ? "is-invalid" : ""}`}
-              placeholder="Enter your name"
-              value={form.fullname}
-              onChange={handleChange}
-              required
-            />
-            {formErrors.fullname && (
-              <div className="invalid-feedback">
-                {formErrors.fullname}
+        <div className={styles.floatingCard}>
+          <div className={styles.leftPanel}>
+            <div className={styles.header}>
+              <div className={styles.logo}>
+                <div className={styles.logoIcon}>💬</div>
+                OpenTalk
               </div>
-            )}
-          </div>
+              <h1 className={styles.title}>Create An Account</h1>
+            </div>
 
-          <div className="mb-3">
-            <label className="form-label">
-              User Name<span className="text-danger">*</span>
-            </label>
-            <input
-              type="text"
-              name="username"
-              className={`form-control ${formErrors.username ? "is-invalid" : ""}`}
-              placeholder="Enter account username"
-              value={form.username}
-              onChange={handleChange}
-              required
-            />
-            {formErrors.username && (
-              <div className="invalid-feedback">
-                {formErrors.username}
+            {generalError && <div className={styles.errorAlert}>{generalError}</div>}
+
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div className={styles.inputGroup}>
+                <div className={styles.inputIcon}>👤</div>
+                <input
+                    type="text"
+                    name="fullname"
+                    className={`${styles.input} ${formErrors.fullname ? styles.invalid : ""}`}
+                    placeholder="Full Name"
+                    value={form.fullname}
+                    onChange={handleChange}
+                    required
+                />
+                {formErrors.fullname && <div className={styles.errorMessage}>{formErrors.fullname}</div>}
               </div>
-            )}
-          </div>
 
-          <div className="mb-3">
-            <label className="form-label">
-              Email<span className="text-danger">*</span>
-            </label>
-            <input
-              type="email"
-              name="email"
-              className={`form-control ${formErrors.email ? "is-invalid" : ""}`}
-              placeholder="Enter your email"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
-            {formErrors.email && (
-              <div className="invalid-feedback">
-                {formErrors.email}
+              <div className={styles.inputGroup}>
+                <div className={styles.inputIcon}>🏷️</div>
+                <input
+                    type="text"
+                    name="username"
+                    className={`${styles.input} ${formErrors.username ? styles.invalid : ""}`}
+                    placeholder="User Name"
+                    value={form.username}
+                    onChange={handleChange}
+                    required
+                />
+                {formErrors.username && <div className={styles.errorMessage}>{formErrors.username}</div>}
               </div>
-            )}
-          </div>
 
-          <div className="mb-3">
-            <label className="form-label">
-              Password<span className="text-danger">*</span>
-            </label>
-            <input
-              type="password"
-              name="password"
-              className={`form-control ${formErrors.password ? "is-invalid" : ""}`}
-              placeholder="Create a password"
-              value={form.password}
-              onChange={handleChange}
-              required
-            />
-            {formErrors.password && (
-              <div className="invalid-feedback">
-                {formErrors.password}
+              <div className={styles.inputGroup}>
+                <div className={styles.inputIcon}>📧</div>
+                <input
+                    type="email"
+                    name="email"
+                    className={`${styles.input} ${formErrors.email ? styles.invalid : ""}`}
+                    placeholder="Email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                />
+                {formErrors.email && <div className={styles.errorMessage}>{formErrors.email}</div>}
               </div>
-            )}
+
+              <div className={styles.inputGroup}>
+                <div className={styles.inputIcon}>🔒</div>
+                <input
+                    type="password"
+                    name="password"
+                    className={`${styles.input} ${formErrors.password ? styles.invalid : ""}`}
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                />
+                {formErrors.password && <div className={styles.errorMessage}>{formErrors.password}</div>}
+              </div>
+
+              <div className={styles.checkboxGroup}>
+                <input
+                    className={styles.checkbox}
+                    type="checkbox"
+                    name="agree"
+                    checked={form.agree}
+                    onChange={handleChange}
+                />
+                <label className={styles.checkboxLabel}>
+                  I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
+                </label>
+              </div>
+
+              <button type="submit" className={styles.registerButton}>
+                Sign up
+              </button>
+            </form>
+
+            <p className={styles.footer}>
+              Already have an account?{" "}
+              <a href="/login" className={styles.footerLink}>
+                Login here.
+              </a>
+            </p>
           </div>
 
-          <div className="form-check mb-3">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              name="agree"
-              checked={form.agree}
-              onChange={handleChange}
-            />
-            <label className="form-check-label">
-              I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
-            </label>
-          </div>
-
-          <button type="submit" className="btn btn-dark w-100">
-            Sign up
-          </button>
-        </form>
-
-        <p className="text-center mt-3 small">
-          Already have an account? <a href="/login">Login here.</a>
-        </p>
+          <div className={styles.rightPanel}></div>
+        </div>
       </div>
-    </div>
-  );
+  )
 }

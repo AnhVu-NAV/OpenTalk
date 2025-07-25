@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { FaSearch, FaDownload, FaPlus, FaEye, FaTrash, FaChevronLeft, FaChevronRight, FaFilter } from "react-icons/fa"
+import {useState, useEffect} from "react"
+import {useNavigate} from "react-router-dom"
+import {FaSearch, FaDownload, FaPlus, FaEye, FaTrash, FaChevronLeft, FaChevronRight, FaFilter} from "react-icons/fa"
 import axios from "/src/api/axiosClient.jsx"
 import DeleteModal from "../components/deleteModal/DeleteModal.jsx"
-import { getAccessToken } from "../helper/auth"
+import {getAccessToken} from "../helper/auth"
 import styles from "./styles/module/EmployeePage.module.css"
 import SuccessToast from "../components/SuccessToast/SuccessToast.jsx"
 
@@ -28,44 +28,55 @@ const EmployeePage = () => {
     const [selectedEmployee, setSelectedEmployee] = useState(null)
     const [showToast, setShowToast] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
+    const [totalItems, setTotalItems] = useState(0)
     const itemsPerPage = 8
+
 
     const navigate = useNavigate()
 
     useEffect(() => {
         const fetchEmployees = async () => {
+            setLoading(true)
             try {
+                const params = {
+                    page: currentPage - 1,
+                    size: itemsPerPage,
+                    email: searchTerm || "",
+                    isEnable: statusFilter === "Activated" ? true : statusFilter === "Inactivated" ? false : undefined,
+                    companyBranchId: officeFilter || undefined,
+                }
+
                 const res = await axios.get("/hr/employees", {
                     headers: {
                         Authorization: `Bearer ${getAccessToken()}`,
                     },
+                    params,
                 })
+
                 setEmployees(res.data.content)
+                setTotalItems(res.data.totalElements)
             } catch (error) {
                 console.error("Error fetching employees:", error)
             } finally {
                 setLoading(false)
             }
         }
+
         fetchEmployees()
-    }, [])
+    }, [searchTerm, statusFilter, officeFilter, currentPage])
 
-    const filtered = employees.filter((emp) => {
-        const matchesSearch =
-            emp.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            emp.email?.toLowerCase().includes(searchTerm.toLowerCase())
-        const matchesOffice = officeFilter ? emp.companyBranch?.name === officeFilter : true
-        const matchesStatus = statusFilter ? emp.status === statusFilter : true
-        return matchesSearch && matchesOffice && matchesStatus
-    })
-
-    const totalPages = Math.ceil(filtered.length / itemsPerPage)
-    const startIndex = (currentPage - 1) * itemsPerPage
-    const paginatedEmployees = filtered.slice(startIndex, startIndex + itemsPerPage)
+    const totalPages = Math.ceil(totalItems / itemsPerPage)
+    const paginatedEmployees = employees
 
     const uniqueOffices = [...new Set(employees.map((e) => e.companyBranch?.name).filter(Boolean))]
     const uniqueStatuses = [...new Set(employees.map((e) => e.isEnabled).filter(Boolean))]
     console.log(uniqueStatuses)
+    const roleMap = {
+        1: "Meeting Manager",
+        2: "Employee",
+        3: "HR",
+    }
+
 
     const handleConfirmDelete = async () => {
         try {
@@ -87,7 +98,7 @@ const EmployeePage = () => {
     const handleExport = async () => {
         try {
             const response = await axios.get("/hr/export/", {
-                params: { status: statusFilter, companyBranchId: officeFilter },
+                params: {status: statusFilter, companyBranchId: officeFilter},
                 responseType: "blob",
                 headers: {
                     Authorization: `Bearer ${getAccessToken()}`,
@@ -135,29 +146,29 @@ const EmployeePage = () => {
                     <div className={styles.statCard}>
                         <div className={styles.statIcon}>👥</div>
                         <div className={styles.statContent}>
-                            <h3>{employees.length}</h3>
+                            <h3>{totalItems}</h3>
                             <p>Total Employees</p>
                         </div>
                     </div>
                     <div className={styles.statCard}>
                         <div className={styles.statIcon}>✅</div>
                         <div className={styles.statContent}>
-                            <h3>{employees.filter((e) => e.status === "Active").length}</h3>
+                            <h3>{employees.filter((e) => e.isEnabled).length}</h3>
                             <p>Active</p>
                         </div>
                     </div>
                     <div className={styles.statCard}>
-                        <div className={styles.statIcon}>🔄</div>
+                        <div className={styles.statIcon}>🚫</div>
                         <div className={styles.statContent}>
-                            <h3>{employees.filter((e) => e.status === "On Boarding").length}</h3>
-                            <p>On Boarding</p>
+                            <h3>{employees.filter((e) => !e.isEnabled).length}</h3>
+                            <p>Disabled Accounts</p>
                         </div>
                     </div>
                     <div className={styles.statCard}>
-                        <div className={styles.statIcon}>⏸️</div>
+                        <div className={styles.statIcon}>🧑‍💼</div>
                         <div className={styles.statContent}>
-                            <h3>{employees.filter((e) => e.status === "On Leave").length}</h3>
-                            <p>On Leave</p>
+                            <h3>{employees.filter((e) => e.role === 2).length}</h3>
+                            <p>Employees</p>
                         </div>
                     </div>
                 </div>
@@ -165,7 +176,7 @@ const EmployeePage = () => {
                 {/* Action Bar */}
                 <div className={styles.actionBar}>
                     <div className={styles.actionSearch}>
-                        <FaSearch className={styles.actionSearchIcon} />
+                        <FaSearch className={styles.actionSearchIcon}/>
                         <input
                             type="text"
                             className={styles.actionSearchInput}
@@ -177,15 +188,16 @@ const EmployeePage = () => {
 
                     <div className={styles.actionButtons}>
                         <button className={`${styles.btn} ${styles.btnOutline}`} onClick={handleExport}>
-                            <FaDownload />
+                            <FaDownload/>
                             Export
                         </button>
-                        <button onClick={() => navigate("/employee/add")} className={`${styles.btn} ${styles.btnPrimary}`}>
-                            <FaPlus />
+                        <button onClick={() => navigate("/employee/add")}
+                                className={`${styles.btn} ${styles.btnPrimary}`}>
+                            <FaPlus/>
                             Add Employee
                         </button>
                         <button className={`${styles.btn} ${styles.btnOutline}`}>
-                            <FaFilter />
+                            <FaFilter/>
                             Filter
                         </button>
                     </div>
@@ -215,13 +227,11 @@ const EmployeePage = () => {
                             onChange={(e) => setStatusFilter(e.target.value)}
                         >
                             <option value="">All Status</option>
-                            {uniqueStatuses.map((status) => (
-                                <option key={status} value={status}>
-                                    {status ? "Activated" : "Inactivated"}
-                                </option>
-                            ))}
+                            <option value="Activated">Activated</option>
+                            <option value="Inactivated">Disabled</option>
                         </select>
                     </div>
+
 
                     {(officeFilter || statusFilter || searchTerm) && (
                         <button
@@ -243,12 +253,13 @@ const EmployeePage = () => {
                         <thead>
                         <tr>
                             <th>
-                                <input type="checkbox" className={styles.checkbox} />
+                                <input type="checkbox" className={styles.checkbox}/>
                             </th>
                             <th>Employee</th>
                             <th>Email</th>
+                            <th>Username</th>
                             <th>Office</th>
-                            <th>Status</th>
+                            <th>Role</th>
                             <th>Account</th>
                             <th>Actions</th>
                         </tr>
@@ -257,14 +268,14 @@ const EmployeePage = () => {
                         {paginatedEmployees.map((emp) => (
                             <tr key={emp.id}>
                                 <td>
-                                    <input type="checkbox" className={styles.checkbox} />
+                                    <input type="checkbox" className={styles.checkbox}/>
                                 </td>
                                 <td>
                                     <div className={styles.employeeInfo}>
                                         <div className={styles.employeeAvatar}>
                                             {emp.avatarUrl ? (
                                                 <img
-                                                    src={emp.avatarUrl || "/placeholder.svg"}
+                                                    src={emp.avatarUrl}
                                                     alt={emp.fullName}
                                                     className={styles.avatarImage}
                                                 />
@@ -284,14 +295,17 @@ const EmployeePage = () => {
                                     <div className={styles.emailCell}>{emp.email}</div>
                                 </td>
                                 <td>
+                                    <div className={styles.usernameCell}>{emp.username}</div>
+                                </td>
+                                <td>
                                     <div className={styles.officeCell}>{emp.companyBranch?.name || "N/A"}</div>
                                 </td>
                                 <td>
-                                    <span className={getStatusClass(emp.status)}>{emp.status?.toUpperCase() || "N/A"}</span>
+                                    <div className={styles.roleCell}>{roleMap[emp.role] || "Unknown"}</div>
                                 </td>
                                 <td>
                     <span className={`${styles.accountBadge} ${emp.isEnabled ? styles.enabled : styles.disabled}`}>
-                      {emp.isEnabled ? "Activated" : "Disabled"}
+                        {emp.isEnabled ? "Activated" : "Disabled"}
                     </span>
                                 </td>
                                 <td>
@@ -301,7 +315,7 @@ const EmployeePage = () => {
                                             className={`${styles.actionBtn} ${styles.actionBtnView}`}
                                             title="View Employee"
                                         >
-                                            <FaEye />
+                                            <FaEye/>
                                         </button>
                                         <button
                                             onClick={() => {
@@ -311,7 +325,7 @@ const EmployeePage = () => {
                                             className={`${styles.actionBtn} ${styles.actionBtnDelete}`}
                                             title="Delete Employee"
                                         >
-                                            <FaTrash />
+                                            <FaTrash/>
                                         </button>
                                     </div>
                                 </td>
@@ -323,8 +337,8 @@ const EmployeePage = () => {
                     {/* Pagination */}
                     <div className={styles.paginationContainer}>
                         <div className={styles.paginationInfo}>
-                            Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filtered.length)} of {filtered.length}{" "}
-                            results
+                            Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+                            {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems} results
                         </div>
 
                         <div className={styles.paginationControls}>
@@ -333,7 +347,7 @@ const EmployeePage = () => {
                                 disabled={currentPage === 1}
                                 className={styles.paginationBtn}
                             >
-                                <FaChevronLeft />
+                                <FaChevronLeft/>
                             </button>
 
                             {[...Array(totalPages)].map((_, i) => (
@@ -351,7 +365,7 @@ const EmployeePage = () => {
                                 disabled={currentPage === totalPages}
                                 className={styles.paginationBtn}
                             >
-                                <FaChevronRight />
+                                <FaChevronRight/>
                             </button>
                         </div>
                     </div>
@@ -365,7 +379,8 @@ const EmployeePage = () => {
                     onConfirm={handleConfirmDelete}
                 />
 
-                <SuccessToast message={toastMessage} isVisible={showToast} type="success" onClose={() => setShowToast(false)} />
+                <SuccessToast message={toastMessage} isVisible={showToast} type="success"
+                              onClose={() => setShowToast(false)}/>
             </div>
         </div>
     )

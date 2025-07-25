@@ -1,0 +1,363 @@
+.container {
+    background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%);
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.contentWrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.backSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.backSection:hover {
+    transform: translateX(-4px);
+}
+
+.backArrow {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d5a3d;
+}
+
+.backText {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d5a3d;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.title::before {
+    content: "✏️";
+    font-size: 36px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gridRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formLabel {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.formLabel.primary {
+    color: #3182ce;
+}
+
+.formControl {
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #2d3748;
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.formControl:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    transform: translateY(-1px);
+}
+
+.formControl:disabled {
+    background: #f7fafc;
+    color: #a0aec0;
+    cursor: not-allowed;
+}
+
+.formSelect {
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #2d3748;
+    background: white;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.formSelect:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.formSelect:disabled {
+    background: #f7fafc;
+    color: #a0aec0;
+    cursor: not-allowed;
+}
+
+.manualButton {
+    margin-top: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+    border: 1px solid #a0aec0;
+    border-radius: 8px;
+    color: #4a5568;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+}
+
+.manualButton:hover {
+    background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+    transform: translateY(-1px);
+}
+
+.autoButton {
+    margin-top: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #bee3f8 0%, #90cdf4 100%);
+    border: 1px solid #3182ce;
+    border-radius: 8px;
+    color: #2c5282;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+}
+
+.autoButton:hover:not(:disabled) {
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.autoButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.loadingText {
+    font-size: 13px;
+    color: #718096;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.attendanceSection {
+    background: linear-gradient(135deg, #f4faf6 0%, #e6f7ec 100%);
+    border: 2px solid #d1eee4;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 16px;
+}
+
+.attendanceHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.attendanceInfo {
+    flex: 1;
+}
+
+.attendanceTitle {
+    color: #18926e;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.attendanceSubtitle {
+    color: #718096;
+    font-size: 13px;
+}
+
+.generateButton {
+    background: linear-gradient(135deg, #18926e 0%, #13563f 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 44px;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.generateButton:hover:not(:disabled) {
+    background: linear-gradient(135deg, #13563f 0%, #0a2a1f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(24, 146, 110, 0.3);
+}
+
+.generateButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.expireInfo {
+    color: #718096;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.actionSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    gap: 16px;
+}
+
+.saveButton {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #2d5a3d 0%, #1e3d2a 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.saveButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.saveButton:hover::before {
+    left: 100%;
+}
+
+.saveButton:hover {
+    background: linear-gradient(135deg, #1e3d2a 0%, #0f1f15 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(45, 90, 61, 0.3);
+}
+
+.materialButton {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+    color: #2d5a3d;
+    border: 2px solid #2d5a3d;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.materialButton:hover {
+    background: linear-gradient(135deg, #2d5a3d 0%, #1e3d2a 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(45, 90, 61, 0.2);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .contentWrapper {
+        padding: 24px 20px;
+        border-radius: 16px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .gridRow {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .attendanceHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .generateButton {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .actionSection {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .saveButton,
+    .materialButton {
+        width: 100%;
+    }
+}

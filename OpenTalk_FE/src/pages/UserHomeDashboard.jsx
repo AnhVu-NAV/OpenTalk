@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import "./styles/UserHomeDashboard.css"
+import styles from "./styles/module/UserHomeDashboard.module.css"
 import { getCurrentUser } from "../helper/auth.jsx"
 
 const UserHomeDashboard = () => {
@@ -164,170 +164,189 @@ const UserHomeDashboard = () => {
 
     if (!user) {
         return (
-            <div className="loading-container">
-                <div className="loading-spinner"></div>
+            <div className={styles.loadingContainer}>
+                <div className={styles.loadingSpinner}></div>
                 <p>Loading your dashboard...</p>
             </div>
         )
     }
+    const getGreeting = () => {
+        const hour = new Date().getHours()
+
+        if (hour >= 5 && hour < 12) return "Good Morning"
+        if (hour >= 12 && hour < 17) return "Good Afternoon"
+        if (hour >= 17 && hour < 21) return "Good Evening"
+        return "Good night"
+    }
 
     return (
-        <div className="user-home-dashboard">
+        <div className={styles.userHomeDashboard}>
             {/* Header Section */}
-            <div className="dashboard-header">
-                <div className="welcome-section">
-                    <div className="user-greeting">
-                        <img
-                            src={userDashboardData.profile.avatar || "/placeholder.svg"}
-                            alt="User Avatar"
-                            className="user-avatar-large"
-                        />
-                        <div className="greeting-text">
-                            <h1>Good morning, {userDashboardData.profile.name.split(" ")[0]}! 👋</h1>
+            <div className={styles.dashboardHeader}>
+                <div className={styles.welcomeSection}>
+                    <div className={styles.userGreeting}>
+                        {user.avatarUrl ? (
+                            <img
+                                src={user.avatarUrl}
+                                alt="User Avatar"
+                                className={styles.userAvatarLarge}
+                            />
+                        ) : (
+                            <div className={styles.avatarPlaceholderLarge}>
+                                {user.fullName?.charAt(0)?.toUpperCase() || "?"}
+                            </div>
+                        )}
+
+                        <div className={styles.greetingText}>
+                            <h1>
+                                {getGreeting()}, {user.fullName?.split(" ")[0] || "there"}! 👋
+                            </h1>
                             <p>Ready to make today productive?</p>
-                            <div className="current-time">
-                                <span className="date">{formatDate(currentTime)}</span>
-                                <span className="time">{formatTime(currentTime)}</span>
+                            <div className={styles.currentTime}>
+                                <span className={styles.date}>{formatDate(currentTime)}</span>
+                                <span className={styles.time}>{formatTime(currentTime)}</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="quick-status">
-                        <div className="status-card working">
-                            <div className="status-indicator"></div>
-                            <div className="status-info">
-                                <span className="status-label">Status</span>
-                                <span className="status-value">{userDashboardData.todayStats.status}</span>
+                    <div className={styles.quickStatus}>
+                        <div className={`${styles.statusCard} ${styles.working}`}>
+                            <div className={styles.statusIndicator}></div>
+                            <div className={styles.statusInfo}>
+                                <span className={styles.statusLabel}>Status</span>
+                                <span className={styles.statusValue}>{userDashboardData.todayStats.status}</span>
                             </div>
                         </div>
-                        <div className="status-card">
-                            <span className="status-label">Working Hours</span>
-                            <span className="status-value">{userDashboardData.todayStats.workingHours}</span>
+                        <div className={styles.statusCard}>
+                            <span className={styles.statusLabel}>Working Hours</span>
+                            <span className={styles.statusValue}>{userDashboardData.todayStats.workingHours}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="quick-actions-grid">
+                <div className={styles.quickActionsGrid}>
                     {userDashboardData.quickActions.map((action) => (
-                        <button key={action.id} className={`quick-action-btn ${action.color}`}>
-                            <span className="action-icon">{action.icon}</span>
-                            <span className="action-title">{action.title}</span>
+                        <button key={action.id} className={`${styles.quickActionBtn} ${styles[action.color]}`}>
+                            <span className={styles.actionIcon}>{action.icon}</span>
+                            <span className={styles.actionTitle}>{action.title}</span>
                         </button>
                     ))}
                 </div>
             </div>
 
             {/* Main Content Grid */}
-            <div className="dashboard-content">
+            <div className={styles.dashboardContent}>
                 {/* Today's Overview */}
-                <div className="content-card today-overview">
-                    <div className="card-header">
+                <div className={`${styles.contentCard} ${styles.todayOverview}`}>
+                    <div className={styles.cardHeader}>
                         <h3>Today's Overview</h3>
-                        <div className="header-actions">
-                            <button className="action-btn">📊 View Details</button>
+                        <div className={styles.headerActions}>
+                            <button className={styles.actionBtn}>📊 View Details</button>
                         </div>
                     </div>
-                    <div className="today-stats">
-                        <div className="stat-item">
-                            <div className="stat-icon checkin">⏰</div>
-                            <div className="stat-info">
-                                <span className="stat-label">Check In</span>
-                                <span className="stat-value">{userDashboardData.todayStats.checkInTime}</span>
+                    <div className={styles.todayStats}>
+                        <div className={styles.statItem}>
+                            <div className={`${styles.statIcon} ${styles.checkin}`}>⏰</div>
+                            <div className={styles.statInfo}>
+                                <span className={styles.statLabel}>Check In</span>
+                                <span className={styles.statValue}>{userDashboardData.todayStats.checkInTime}</span>
                             </div>
                         </div>
-                        <div className="stat-item">
-                            <div className="stat-icon break">☕</div>
-                            <div className="stat-info">
-                                <span className="stat-label">Break Time</span>
-                                <span className="stat-value">{userDashboardData.todayStats.breakTime}</span>
+                        <div className={styles.statItem}>
+                            <div className={`${styles.statIcon} ${styles.break}`}>☕</div>
+                            <div className={styles.statInfo}>
+                                <span className={styles.statLabel}>Break Time</span>
+                                <span className={styles.statValue}>{userDashboardData.todayStats.breakTime}</span>
                             </div>
                         </div>
-                        <div className="stat-item">
-                            <div className="stat-icon location">📍</div>
-                            <div className="stat-info">
-                                <span className="stat-label">Location</span>
-                                <span className="stat-value">{userDashboardData.todayStats.location}</span>
+                        <div className={styles.statItem}>
+                            <div className={`${styles.statIcon} ${styles.location}`}>📍</div>
+                            <div className={styles.statInfo}>
+                                <span className={styles.statLabel}>Location</span>
+                                <span className={styles.statValue}>{userDashboardData.todayStats.location}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Monthly Attendance */}
-                <div className="content-card attendance-summary">
-                    <div className="card-header">
+                <div className={`${styles.contentCard} ${styles.attendanceSummary}`}>
+                    <div className={styles.cardHeader}>
                         <h3>This Month's Attendance</h3>
                         <select
                             value={selectedPeriod}
                             onChange={(e) => setSelectedPeriod(e.target.value)}
-                            className="period-select"
+                            className={styles.periodSelect}
                         >
                             <option value="thisMonth">This Month</option>
                             <option value="lastMonth">Last Month</option>
                             <option value="thisQuarter">This Quarter</option>
                         </select>
                     </div>
-                    <div className="attendance-grid">
-                        <div className="attendance-item">
-                            <div className="attendance-number">{userDashboardData.thisMonth.presentDays}</div>
-                            <div className="attendance-label">Present Days</div>
-                            <div className="attendance-total">of {userDashboardData.thisMonth.totalWorkingDays}</div>
+                    <div className={styles.attendanceGrid}>
+                        <div className={styles.attendanceItem}>
+                            <div className={styles.attendanceNumber}>{userDashboardData.thisMonth.presentDays}</div>
+                            <div className={styles.attendanceLabel}>Present Days</div>
+                            <div className={styles.attendanceTotal}>of {userDashboardData.thisMonth.totalWorkingDays}</div>
                         </div>
-                        <div className="attendance-item">
-                            <div className="attendance-number late">{userDashboardData.thisMonth.lateDays}</div>
-                            <div className="attendance-label">Late Days</div>
+                        <div className={styles.attendanceItem}>
+                            <div className={`${styles.attendanceNumber} ${styles.late}`}>{userDashboardData.thisMonth.lateDays}</div>
+                            <div className={styles.attendanceLabel}>Late Days</div>
                         </div>
-                        <div className="attendance-item">
-                            <div className="attendance-number leave">{userDashboardData.thisMonth.leaveDays}</div>
-                            <div className="attendance-label">Leave Days</div>
+                        <div className={styles.attendanceItem}>
+                            <div className={`${styles.attendanceNumber} ${styles.leave}`}>
+                                {userDashboardData.thisMonth.leaveDays}
+                            </div>
+                            <div className={styles.attendanceLabel}>Leave Days</div>
                         </div>
-                        <div className="attendance-rate">
-                            <div className="rate-circle">
-                                <svg viewBox="0 0 36 36" className="circular-chart">
+                        <div className={styles.attendanceRate}>
+                            <div className={styles.rateCircle}>
+                                <svg viewBox="0 0 36 36" className={styles.circularChart}>
                                     <path
-                                        className="circle-bg"
+                                        className={styles.circleBg}
                                         d="M18 2.0845
                       a 15.9155 15.9155 0 0 1 0 31.831
                       a 15.9155 15.9155 0 0 1 0 -31.831"
                                     />
                                     <path
-                                        className="circle"
+                                        className={styles.circle}
                                         strokeDasharray={`${userDashboardData.thisMonth.attendanceRate}, 100`}
                                         d="M18 2.0845
                       a 15.9155 15.9155 0 0 1 0 31.831
                       a 15.9155 15.9155 0 0 1 0 -31.831"
                                     />
-                                    <text x="18" y="20.35" className="percentage">
+                                    <text x="18" y="20.35" className={styles.percentage}>
                                         {userDashboardData.thisMonth.attendanceRate}%
                                     </text>
                                 </svg>
                             </div>
-                            <div className="rate-label">Attendance Rate</div>
+                            <div className={styles.rateLabel}>Attendance Rate</div>
                         </div>
                     </div>
                 </div>
 
                 {/* Upcoming Meetings */}
-                <div className="content-card upcoming-meetings">
-                    <div className="card-header">
+                <div className={`${styles.contentCard} ${styles.upcomingMeetings}`}>
+                    <div className={styles.cardHeader}>
                         <h3>Today's Meetings</h3>
-                        <button className="action-btn">📅 View Calendar</button>
+                        <button className={styles.actionBtn}>📅 View Calendar</button>
                     </div>
-                    <div className="meetings-list">
+                    <div className={styles.meetingsList}>
                         {userDashboardData.upcomingMeetings.map((meeting) => (
-                            <div key={meeting.id} className="meeting-item">
-                                <div className="meeting-time">
-                                    <span className="time">{meeting.time}</span>
-                                    <span className="duration">{meeting.duration}</span>
+                            <div key={meeting.id} className={styles.meetingItem}>
+                                <div className={styles.meetingTime}>
+                                    <span className={styles.time}>{meeting.time}</span>
+                                    <span className={styles.duration}>{meeting.duration}</span>
                                 </div>
-                                <div className="meeting-details">
+                                <div className={styles.meetingDetails}>
                                     <h4>{meeting.title}</h4>
                                     <p>
                                         {meeting.type} • {meeting.attendees} attendees
                                     </p>
                                 </div>
-                                <div className="meeting-actions">
-                                    <button className="join-btn">🎥 Join</button>
+                                <div className={styles.meetingActions}>
+                                    <button className={styles.joinBtn}>🎥 Join</button>
                                 </div>
                             </div>
                         ))}
@@ -335,34 +354,34 @@ const UserHomeDashboard = () => {
                 </div>
 
                 {/* Weekly Schedule */}
-                <div className="content-card weekly-schedule">
-                    <div className="card-header">
+                <div className={`${styles.contentCard} ${styles.weeklySchedule}`}>
+                    <div className={styles.cardHeader}>
                         <h3>This Week's Schedule</h3>
                     </div>
-                    <div className="schedule-grid">
+                    <div className={styles.scheduleGrid}>
                         {userDashboardData.weeklySchedule.map((day, index) => (
-                            <div key={index} className={`schedule-day ${day.status}`}>
-                                <div className="day-name">{day.day}</div>
-                                <div className="day-meetings">{day.meetings} meetings</div>
-                                <div className={`day-status ${day.status}`}></div>
+                            <div key={index} className={`${styles.scheduleDay} ${styles[day.status]}`}>
+                                <div className={styles.dayName}>{day.day}</div>
+                                <div className={styles.dayMeetings}>{day.meetings} meetings</div>
+                                <div className={`${styles.dayStatus} ${styles[day.status]}`}></div>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 {/* Recent Activities */}
-                <div className="content-card recent-activities">
-                    <div className="card-header">
+                <div className={`${styles.contentCard} ${styles.recentActivities}`}>
+                    <div className={styles.cardHeader}>
                         <h3>Recent Activities</h3>
-                        <button className="action-btn">📋 View All</button>
+                        <button className={styles.actionBtn}>📋 View All</button>
                     </div>
-                    <div className="activities-list">
+                    <div className={styles.activitiesList}>
                         {userDashboardData.recentActivities.map((activity) => (
-                            <div key={activity.id} className="activity-item">
-                                <div className="activity-icon">{activity.icon}</div>
-                                <div className="activity-details">
-                                    <span className="activity-title">{activity.title}</span>
-                                    <span className="activity-time">{activity.time}</span>
+                            <div key={activity.id} className={styles.activityItem}>
+                                <div className={styles.activityIcon}>{activity.icon}</div>
+                                <div className={styles.activityDetails}>
+                                    <span className={styles.activityTitle}>{activity.title}</span>
+                                    <span className={styles.activityTime}>{activity.time}</span>
                                 </div>
                             </div>
                         ))}
@@ -370,22 +389,25 @@ const UserHomeDashboard = () => {
                 </div>
 
                 {/* Notifications */}
-                <div className="content-card notifications">
-                    <div className="card-header">
+                <div className={`${styles.contentCard} ${styles.notifications}`}>
+                    <div className={styles.cardHeader}>
                         <h3>Notifications</h3>
-                        <span className="notification-count">
+                        <span className={styles.notificationCount}>
               {userDashboardData.notifications.filter((n) => n.unread).length} new
             </span>
                     </div>
-                    <div className="notifications-list">
+                    <div className={styles.notificationsList}>
                         {userDashboardData.notifications.map((notification) => (
-                            <div key={notification.id} className={`notification-item ${notification.unread ? "unread" : ""}`}>
-                                <div className="notification-content">
+                            <div
+                                key={notification.id}
+                                className={`${styles.notificationItem} ${notification.unread ? styles.unread : ""}`}
+                            >
+                                <div className={styles.notificationContent}>
                                     <h4>{notification.title}</h4>
                                     <p>{notification.message}</p>
-                                    <span className="notification-time">{notification.time}</span>
+                                    <span className={styles.notificationTime}>{notification.time}</span>
                                 </div>
-                                {notification.unread && <div className="unread-indicator"></div>}
+                                {notification.unread && <div className={styles.unreadIndicator}></div>}
                             </div>
                         ))}
                     </div>

@@ -3,6 +3,8 @@ import axios from "../api/axiosClient.jsx"
 import UserAttendanceTab from "./UserAttendanceTab"
 import styles from "./styles/module/UserProfilePage.module.css"
 import { getCurrentUser } from "../helper/auth.jsx"
+import { useNavigate } from "react-router-dom"
+
 
 const UserProfilePage = ({ userId }) => {
     const [user, setUser] = useState(null)
@@ -11,6 +13,11 @@ const UserProfilePage = ({ userId }) => {
     const getRandomPastelColor = () => {
         const hue = Math.floor(Math.random() * 360)
         return `hsl(${hue}, 70%, 85%)` // pastel màu sáng
+    }
+    const navigate = useNavigate()
+
+    const handleEditClick = () => {
+        navigate("/edit-profile")
     }
 
     useEffect(() => {
@@ -43,8 +50,8 @@ const UserProfilePage = ({ userId }) => {
     }
 
     const tabs = [
-        { id: "profile", label: "Profile", icon: "👤" },
-        // { id: "personal", label: "Personal Information", icon: "📋" },
+        // { id: "profile", label: "Profile", icon: "👤" },
+        { id: "personal", label: "Personal Information", icon: "📋" },
         { id: "professional", label: "Professional Information", icon: "💼" },
         { id: "attendance", label: "Attendance", icon: "📅" },
         { id: "documents", label: "Documents", icon: "📄" },
@@ -95,7 +102,7 @@ const UserProfilePage = ({ userId }) => {
                                 </div>
                             </div>
                         </div>
-                        <button className={styles.profileEditBtn}>
+                        <button className={styles.profileEditBtn} onClick={handleEditClick}>
                             <span className={styles.profileEditIcon}>✏️</span>
                             Edit Profile
                         </button>

@@ -1,79 +1,95 @@
-import React, { useState } from 'react';
-import authApi from '../api/authApi';
-import SuccessToast from '../components/SuccessToast/SuccessToast';
+import { useState } from "react"
+import authApi from "../api/authApi"
+import SuccessToast from "../components/SuccessToast/SuccessToast"
+import styles from "./styles/module/ForgotPassword.module.css"
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState('');
-  const [toastVisible, setToastVisible] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('success');
+  const [email, setEmail] = useState("")
+  const [toastVisible, setToastVisible] = useState(false)
+  const [toastMessage, setToastMessage] = useState("")
+  const [toastType, setToastType] = useState("success")
 
-  const showToast = (msg, type = 'success') => {
-    setToastMessage(msg);
-    setToastType(type);
-    setToastVisible(true);
-  };
+  const showToast = (msg, type = "success") => {
+    setToastMessage(msg)
+    setToastType(type)
+    setToastVisible(true)
+  }
 
   const handleChange = (e) => {
-    setEmail(e.target.value);
-  };
+    setEmail(e.target.value)
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const res = await authApi.forgetPassword(email);
-      showToast(res.data.message, 'success');
+      const res = await authApi.forgetPassword(email)
+      showToast(res.data.message, "success")
     } catch (err) {
-      const msg = err.response?.data?.message || 'Something went wrong. Please try again!';
-      showToast(msg, 'error');
-      console.error(err);
+      const msg = err.response?.data?.message || "Something went wrong. Please try again!"
+      showToast(msg, "error")
+      console.error(err)
     }
-  };
+  }
 
   return (
-    <>
-      <div className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-        <div className="bg-white p-5 shadow rounded" style={{ width: '100%', maxWidth: 400 }}>
-          <div className="text-center mb-4">
-            <h5 className="fw-bold">Forgot Password</h5>
-            <p className="text-muted" style={{ fontSize: 14 }}>
-              Enter your email to receive a password reset link
-            </p>
+      <>
+        <div className={styles.container}>
+          <div className={styles.floatingElements}>
+            <div className={styles.floatingShape}></div>
+            <div className={styles.floatingShape}></div>
+            <div className={styles.floatingShape}></div>
           </div>
 
-          <hr className="my-4" />
+          <div className={styles.floatingCard}>
+            <div className={styles.leftPanel}>
+              <div className={styles.header}>
+                <div className={styles.logo}>
+                  <div className={styles.logoIcon}>💬</div>
+                  OpenTalk
+                </div>
+                <h1 className={styles.title}>Forgot Password</h1>
+                <p className={styles.subtitle}>Enter your email to receive a password reset link</p>
+              </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">
-                Email<span className="text-danger">*</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                placeholder="Enter your email"
-                value={email}
-                onChange={handleChange}
-                required
-              />
+              <hr className={styles.divider} />
+
+              <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.inputGroup}>
+                  <div className={styles.inputIcon}>📧</div>
+                  <input
+                      type="email"
+                      name="email"
+                      className={styles.input}
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+
+                <button type="submit" className={styles.submitButton}>
+                  Send Reset Link
+                </button>
+              </form>
+
+              <p className={styles.footer}>
+                Remember your password?{" "}
+                <a href="/login" className={styles.footerLink}>
+                  Back to login
+                </a>
+              </p>
             </div>
 
-            <button type="submit" className="btn btn-dark w-100">Send Reset Link</button>
-          </form>
-
-          <p className="text-center mt-3 small">
-            Remember your password? <a href="/login">Back to login</a>
-          </p>
+            <div className={styles.rightPanel}></div>
+          </div>
         </div>
-      </div>
 
-      <SuccessToast
-        message={toastMessage}
-        isVisible={toastVisible}
-        type={toastType}
-        onClose={() => setToastVisible(false)}
-      />
-    </>
-  );
+        <SuccessToast
+            message={toastMessage}
+            isVisible={toastVisible}
+            type={toastType}
+            onClose={() => setToastVisible(false)}
+        />
+      </>
+  )
 }

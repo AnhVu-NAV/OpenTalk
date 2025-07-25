@@ -1,0 +1,315 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    backdrop-filter: blur(4px);
+}
+
+.modalContent {
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modalBody {
+    padding: 32px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a202c;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.title::before {
+    content: "📁";
+    font-size: 28px;
+}
+
+.dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #cbd5e0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    padding: 40px 20px;
+    margin-bottom: 24px;
+    transition: all 0.2s ease;
+}
+
+.dropzone:hover {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+}
+
+.dropzoneIcon {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropzoneTitle {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.dropzoneSubtitle {
+    color: #718096;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.uploadButton {
+    background: linear-gradient(135deg, #2d5a3d 0%, #1e3d2a 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.uploadButton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.uploadButton:hover::before {
+    left: 100%;
+}
+
+.uploadButton:hover {
+    background: linear-gradient(135deg, #1e3d2a 0%, #0f1f15 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(45, 90, 61, 0.3);
+}
+
+.sectionTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sectionTitle::before {
+    content: "📄";
+    font-size: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px;
+}
+
+.table thead {
+    background: linear-gradient(135deg, #2d5a3d 0%, #1e3d2a 100%);
+}
+
+.table thead th {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 16px;
+    text-align: left;
+    border: none;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: linear-gradient(135deg, #f8fdf8 0%, #f0f9f0 100%);
+}
+
+.table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.table td {
+    padding: 16px;
+    vertical-align: middle;
+    border: none;
+    font-size: 14px;
+    color: #2d3748;
+}
+
+.emptyMessage {
+    text-align: center;
+    color: #718096;
+    font-style: italic;
+    padding: 40px 20px;
+}
+
+.actionButton {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.downloadButton {
+    background: linear-gradient(135deg, #bee3f8 0%, #90cdf4 100%);
+    color: #2c5282;
+    border: 1px solid #63b3ed;
+}
+
+.downloadButton:hover {
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.deleteButton {
+    background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+    color: #742a2a;
+    border: 1px solid #fc8181;
+}
+
+.deleteButton:hover {
+    background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px 32px;
+    border-top: 1px solid #e2e8f0;
+    background: #f7fafc;
+}
+
+.footerButton {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    min-width: 100px;
+}
+
+.backButton {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+    color: #4a5568;
+    border: 1px solid #cbd5e0;
+}
+
+.backButton:hover {
+    background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+    transform: translateY(-1px);
+}
+
+.saveButton {
+    background: linear-gradient(135deg, #2d5a3d 0%, #1e3d2a 100%);
+    color: white;
+    border: 1px solid #1e3d2a;
+}
+
+.saveButton:hover {
+    background: linear-gradient(135deg, #1e3d2a 0%, #0f1f15 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(45, 90, 61, 0.3);
+}
+
+@media (max-width: 768px) {
+    .modalContent {
+        width: 95%;
+        margin: 20px;
+    }
+
+    .modalBody {
+        padding: 24px 20px;
+    }
+
+    .dropzone {
+        padding: 30px 16px;
+    }
+
+    .dropzoneTitle {
+        font-size: 18px;
+    }
+
+    .dropzoneSubtitle {
+        font-size: 14px;
+    }
+
+    .footer {
+        padding: 16px 20px;
+        flex-direction: column-reverse;
+    }
+
+    .footerButton {
+        width: 100%;
+    }
+}

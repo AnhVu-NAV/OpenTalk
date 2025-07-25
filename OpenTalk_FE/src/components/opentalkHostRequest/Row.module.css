@@ -1,0 +1,274 @@
+/* Row Styles */
+.row {
+    transition: all 0.2s ease;
+}
+
+.row:hover {
+    background: linear-gradient(135deg, #f8fdf8 0%, #f0f9f0 100%);
+}
+
+.cell {
+    padding: 16px;
+    vertical-align: middle;
+    border: none;
+    font-size: 14px;
+    color: #2d3748;
+}
+
+.meetingId {
+    font-weight: 600;
+    color: #6b7280;
+    font-family: "Monaco", "Menlo", "Consolas", monospace;
+}
+
+.meetingName {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 15px;
+}
+
+.meetingTitle {
+    font-weight: 600;
+    color: #1a202c;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.topicName {
+    color: #4a5568;
+    font-size: 13px;
+}
+
+.hostName {
+    color: #374151;
+    font-weight: 500;
+}
+
+.branchName {
+    color: #718096;
+    font-size: 13px;
+    padding: 4px 8px;
+    background: #f8fafc;
+    border-radius: 6px;
+}
+
+.scheduledDate {
+    color: #2b6cb0;
+    font-weight: 500;
+    font-size: 13px;
+    font-family: "Monaco", "Menlo", "Consolas", monospace;
+}
+
+.meetingLink {
+    color: #10b981;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.meetingLink:hover {
+    background: #ecfdf5;
+    color: #059669;
+    text-decoration: none;
+}
+
+.duration {
+    font-weight: 500;
+    color: #6b7280;
+    font-family: "Monaco", "Menlo", "Consolas", monospace;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.iconBtn {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.2s ease;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+.iconBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.viewBtn {
+    color: #1d4ed8;
+    border-color: #dbeafe;
+    background: #dbeafe;
+}
+
+.viewBtn:hover {
+    background: #1d4ed8;
+    color: white;
+    border-color: #1d4ed8;
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+.deleteBtn {
+    color: #dc2626;
+    border-color: #fee2e2;
+    background: #fee2e2;
+}
+
+.deleteBtn:hover {
+    background: #dc2626;
+    color: white;
+    border-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.notificationBtn {
+    background: linear-gradient(135deg, #e6f3ff 0%, #cce7ff 100%);
+    border: 1px solid #3182ce;
+    color: #3182ce;
+}
+
+.notificationBtn:hover {
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    color: white;
+    border-color: #2c5282;
+}
+
+/* Menu Styles */
+.menuContainer {
+    position: relative;
+}
+
+.actionMenu {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    min-width: 140px;
+    z-index: 10;
+    padding: 8px 0;
+    animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menuItem {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 14px;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.menuItem:hover {
+    background: #f9fafb;
+}
+
+.menuItem.danger {
+    color: #dc2626;
+}
+
+.menuItem.danger:hover {
+    background: #fef2f2;
+}
+
+.requestBadge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 50%;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(245, 101, 101, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(245, 101, 101, 0.4);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 4px 16px rgba(245, 101, 101, 0.6);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 8px rgba(245, 101, 101, 0.4);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cell {
+        padding: 12px 8px;
+        font-size: 12px;
+        color: #2d3748;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .iconBtn {
+        min-width: 36px;
+        min-height: 36px;
+        padding: 6px;
+    }
+
+    .actionMenu {
+        min-width: 120px;
+    }
+
+    .menuItem {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .requestBadge {
+        min-width: 18px;
+        height: 18px;
+        font-size: 11px;
+    }
+}

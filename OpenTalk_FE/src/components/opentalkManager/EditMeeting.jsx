@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { Button, Form, Modal } from "react-bootstrap";
-import MeetingMaterialModal from "./MeetingMaterial";
+import { useEffect, useState, useRef, useCallback } from "react"
+import { useNavigate, useParams, useLocation } from "react-router-dom"
+import MeetingMaterialModal from "./MeetingMaterial"
 import {
   updateMeeting,
   getMeetingById,
@@ -9,9 +8,10 @@ import {
   generateCheckinCode,
   getCheckinCode,
   getTopics,
-  autoSelectHost
-} from "../../services/opentalkManagerService";
-import SuccessDialog from "./SuccessModal";
+  autoSelectHost,
+} from "../../services/opentalkManagerService"
+import SuccessDialog from "./SuccessModal"
+import styles from "./EditMeeting.module.css"
 
 const statusOptions = [
   "WAITING_TOPIC",
@@ -21,108 +21,106 @@ const statusOptions = [
   "ONGOING",
   "COMPLETED",
   "CANCELLED",
-  "POSTPONED"
-];
+  "POSTPONED",
+]
 
 function EditMeeting() {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const location = useLocation();
-  const meetingFromState = location.state?.meeting;
+  const navigate = useNavigate()
+  const { id } = useParams()
+  const location = useLocation()
+  const meetingFromState = location.state?.meeting
 
   // Form state
-  const [form, setForm] = useState(null);
-  const [branches, setBranches] = useState([]);
-  const [branchesLoading, setBranchesLoading] = useState(true);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [form, setForm] = useState(null)
+  const [branches, setBranches] = useState([])
+  const [branchesLoading, setBranchesLoading] = useState(true)
+  const [showSuccess, setShowSuccess] = useState(false)
 
   // Attendance code state
-  const [showExpireModal, setShowExpireModal] = useState(false);
-  const [expireMinutes, setExpireMinutes] = useState(15);
-  const [genCodeLoading, setGenCodeLoading] = useState(false);
-  const [attendanceCodeInfo, setAttendanceCodeInfo] = useState({ code: "", expiresAt: "" });
-  const [attendanceCodeLoading, setAttendanceCodeLoading] = useState(true);
-  const [topicEditable, setTopicEditable] = useState(false);
-  const [topics, setTopics] = useState([]);
-  const [topicsLoading, setTopicsLoading] = useState(false); 
-  const [autoHostInfo, setAutoHostInfo] = useState(null);
-  const [autoHostLoading, setAutoHostLoading] = useState(false);
+  const [showExpireModal, setShowExpireModal] = useState(false)
+  const [expireMinutes, setExpireMinutes] = useState(15)
+  const [genCodeLoading, setGenCodeLoading] = useState(false)
+  const [attendanceCodeInfo, setAttendanceCodeInfo] = useState({ code: "", expiresAt: "" })
+  const [attendanceCodeLoading, setAttendanceCodeLoading] = useState(true)
+  const [topicEditable, setTopicEditable] = useState(false)
+  const [topics, setTopics] = useState([])
+  const [topicsLoading, setTopicsLoading] = useState(false)
+  const [autoHostInfo, setAutoHostInfo] = useState(null)
+  const [autoHostLoading, setAutoHostLoading] = useState(false)
 
-  const codeTimeout = useRef(null);
+  const codeTimeout = useRef(null)
 
   // Material files (UI only, không gửi backend)
-  const [showMaterial, setShowMaterial] = useState(false);
-  const [files, setFiles] = useState([]);
+  const [showMaterial, setShowMaterial] = useState(false)
+  const [files, setFiles] = useState([])
 
-  const [hosts, setHosts] = useState([]);
+  const [hosts, setHosts] = useState([])
 
   // --- Attendance code: Fetch & setup auto-clear ---
   const fetchAttendanceCode = useCallback(async () => {
-    setAttendanceCodeLoading(true);
+    setAttendanceCodeLoading(true)
     try {
-      const res = await getCheckinCode(id);
-      const data = res.data;
+      const res = await getCheckinCode(id)
+      const data = res.data
       if (data?.checkinCode && data?.expiresAt) {
         setAttendanceCodeInfo({
           code: data.checkinCode,
           expiresAt: data.expiresAt,
-        });
-        setupExpireTimeout(data.expiresAt);
+        })
+        setupExpireTimeout(data.expiresAt)
       } else {
-        setAttendanceCodeInfo({ code: "", expiresAt: "" });
+        setAttendanceCodeInfo({ code: "", expiresAt: "" })
       }
     } catch {
-      setAttendanceCodeInfo({ code: "", expiresAt: "" });
+      setAttendanceCodeInfo({ code: "", expiresAt: "" })
     } finally {
-      setAttendanceCodeLoading(false);
+      setAttendanceCodeLoading(false)
     }
-  }, [id]);
+  }, [id])
 
   const handleAutoChooseHost = async () => {
-  setAutoHostLoading(true);
-  setAutoHostInfo(null);
-  try {
-    const res = await autoSelectHost(id);
-    const host = res.data;
-    setForm(prev => ({
-      ...prev,
-      host: host.id
-    }));
-    if (!hosts.some(u => u.id === host.id)) {
-      setHosts(prev => [...prev, host]);
+    setAutoHostLoading(true)
+    setAutoHostInfo(null)
+    try {
+      const res = await autoSelectHost(id)
+      const host = res.data
+      setForm((prev) => ({
+        ...prev,
+        host: host.id,
+      }))
+      if (!hosts.some((u) => u.id === host.id)) {
+        setHosts((prev) => [...prev, host])
+      }
+    } catch (err) {
+      setAutoHostInfo("No host found or error occurred!")
+    } finally {
+      setAutoHostLoading(false)
     }
-  } catch (err) {
-    setAutoHostInfo("No host found or error occurred!");
-  } finally {
-    setAutoHostLoading(false);
   }
-};
-
-
 
   const setupExpireTimeout = (expiresAtStr) => {
-    if (codeTimeout.current) clearTimeout(codeTimeout.current);
-    if (!expiresAtStr) return;
-    const expiresAt = new Date(expiresAtStr).getTime();
-    const now = Date.now();
-    const ms = expiresAt - now;
+    if (codeTimeout.current) clearTimeout(codeTimeout.current)
+    if (!expiresAtStr) return
+    const expiresAt = new Date(expiresAtStr).getTime()
+    const now = Date.now()
+    const ms = expiresAt - now
     if (ms > 0) {
       codeTimeout.current = setTimeout(() => {
-        setAttendanceCodeInfo({ code: "", expiresAt: "" });
-      }, ms);
+        setAttendanceCodeInfo({ code: "", expiresAt: "" })
+      }, ms)
     } else {
-      setAttendanceCodeInfo({ code: "", expiresAt: "" });
+      setAttendanceCodeInfo({ code: "", expiresAt: "" })
     }
-  };
+  }
 
   // Fetch form + attendance code khi vào trang
   useEffect(() => {
-    let didCancel = false;
+    let didCancel = false
     async function fetchData() {
-      let meetingObj = meetingFromState;
+      let meetingObj = meetingFromState
       if (!meetingObj) {
-        const res = await getMeetingById(id);
-        meetingObj = res.data;
+        const res = await getMeetingById(id)
+        meetingObj = res.data
       }
       setForm({
         ...meetingObj,
@@ -132,71 +130,71 @@ function EditMeeting() {
         scheduledDate: meetingObj.scheduledDate?.slice(0, 16),
         attendanceCode: meetingObj.attendanceCode || "",
         duration: meetingObj.duration || "",
-      });
-      if (!didCancel) fetchAttendanceCode();
+      })
+      if (!didCancel) fetchAttendanceCode()
     }
-    fetchData();
+    fetchData()
 
     return () => {
-      didCancel = true;
-      if (codeTimeout.current) clearTimeout(codeTimeout.current);
-    };
-  }, [id, meetingFromState, fetchAttendanceCode]);
+      didCancel = true
+      if (codeTimeout.current) clearTimeout(codeTimeout.current)
+    }
+  }, [id, meetingFromState, fetchAttendanceCode])
 
   // Fetch branch list
   useEffect(() => {
-    setBranchesLoading(true);
+    setBranchesLoading(true)
     getCompanyBranches()
-      .then(res => setBranches(res.data || []))
-      .catch(() => setBranches([]))
-      .finally(() => setBranchesLoading(false));
-  }, []);
+        .then((res) => setBranches(res.data || []))
+        .catch(() => setBranches([]))
+        .finally(() => setBranchesLoading(false))
+  }, [])
 
   // Khi generate code, show modal
-  const handleGenerateCode = () => setShowExpireModal(true);
+  const handleGenerateCode = () => setShowExpireModal(true)
 
-   const handleManualChooseTopic = async () => {
-      setTopicEditable(true);
-      setTopicsLoading(true);
-      try {
-        const res = await getTopics({ status: "approved" });
-        setTopics(res.data.content || []);
-      } catch (err) {
-        setTopics([]);
-      } finally {
-        setTopicsLoading(false);
-      }
-    };   
+  const handleManualChooseTopic = async () => {
+    setTopicEditable(true)
+    setTopicsLoading(true)
+    try {
+      const res = await getTopics({ status: "approved" })
+      setTopics(res.data.content || [])
+    } catch (err) {
+      setTopics([])
+    } finally {
+      setTopicsLoading(false)
+    }
+  }
 
   // Khi xác nhận generate, gọi API generate xong gọi lại GET để update UI
   const handleConfirmGenerate = async () => {
-    setGenCodeLoading(true);
+    setGenCodeLoading(true)
     try {
-      await generateCheckinCode(id, expireMinutes);
-      await fetchAttendanceCode();
-      setShowExpireModal(false);
+      await generateCheckinCode(id, expireMinutes)
+      await fetchAttendanceCode()
+      setShowExpireModal(false)
     } catch {
-      alert("Failed to generate code.");
+      alert("Failed to generate code.")
     } finally {
-      setGenCodeLoading(false);
+      setGenCodeLoading(false)
     }
-  };
+  }
 
   // Xử lý form change
-  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
 
   // Material
   const handleFileChange = (e) => {
-    const filesArr = Array.from(e.target.files).map(file => ({ name: file.name }));
-    setFiles(prev => [...prev, ...filesArr]);
-  };
-  const handleDeleteFile = (idx) => setFiles(prev => prev.filter((_, i) => i !== idx));
-  const handleShowMaterial = () => setShowMaterial(true);
-  const handleCloseMaterial = () => setShowMaterial(false);
+    const filesArr = Array.from(e.target.files).map((file) => ({ name: file.name }))
+    setFiles((prev) => [...prev, ...filesArr])
+  }
+  const handleDeleteFile = (idx) => setFiles((prev) => prev.filter((_, i) => i !== idx))
+  const handleShowMaterial = () => setShowMaterial(true)
+  const handleCloseMaterial = () => setShowMaterial(false)
 
   // Submit update
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const meetingData = {
       meetingName: form.meetingName,
       scheduledDate: form.scheduledDate,
@@ -204,297 +202,246 @@ function EditMeeting() {
       status: form.status,
       topic: form.topic ? { id: form.topic } : null,
       host: form.host ? { id: form.host } : null,
-      duration: form.duration ? parseFloat(form.duration) : null,
+      duration: form.duration ? Number.parseFloat(form.duration) : null,
       companyBranch: form.companyBranch ? { id: form.companyBranch } : null,
       // attendanceCode và files KHÔNG gửi backend
-    };
-    try {
-      await updateMeeting(id, meetingData);
-      setShowSuccess(true);
-    } catch (err) {
-      console.error("Error updating meeting:", err);
     }
-  };
+    try {
+      await updateMeeting(id, meetingData)
+      setShowSuccess(true)
+    } catch (err) {
+      console.error("Error updating meeting:", err)
+    }
+  }
   const handleSuccessClose = () => {
-    setShowSuccess(false);
-    navigate("/opentalk/manager");
-  };
+    setShowSuccess(false)
+    navigate("/opentalk/manager")
+  }
 
-  if (!form) return <div className="p-4">Loading...</div>;
+  if (!form) return <div className={styles.container}>Loading...</div>
 
   return (
-    <div className="addmeeting-bg-enterprise">
-      <div className="addmeeting-container py-3">
-        <div className="d-flex align-items-center gap-2 mb-1">
-          <span
-            style={{ fontSize: 24, cursor: "pointer" }}
-            onClick={() => navigate(-1)}
-            className="fw-bold text-dark"
-          >
-            &larr;
-          </span>
-          <span className="fw-semibold fs-5 back-text" style={{ cursor: "pointer" }} onClick={() => navigate(-1)}>
-            Back
-          </span>
+      <div className={styles.container}>
+        <div className={styles.contentWrapper}>
+          <div className={styles.backSection} onClick={() => navigate(-1)}>
+            <span className={styles.backArrow}>←</span>
+            <span className={styles.backText}>Back</span>
+          </div>
+
+          <h2 className={styles.title}>Edit Meeting</h2>
+
+          <form onSubmit={handleSubmit} className={styles.form}>
+            {/* Row: Meeting Title + Scheduled Date */}
+            <div className={styles.gridRow}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Meeting Title</label>
+                <input
+                    name="meetingName"
+                    value={form.meetingName}
+                    onChange={handleChange}
+                    placeholder="Enter meeting title"
+                    required
+                    className={styles.formControl}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label className={`${styles.formLabel} ${styles.primary}`}>Scheduled Date</label>
+                <input
+                    type="datetime-local"
+                    name="scheduledDate"
+                    value={form.scheduledDate}
+                    onChange={handleChange}
+                    required
+                    className={styles.formControl}
+                />
+              </div>
+            </div>
+
+            {/* Topic */}
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Topic</label>
+              <select
+                  name="topic"
+                  value={form.topic}
+                  onChange={handleChange}
+                  required
+                  disabled={!topicEditable || topicsLoading}
+                  className={styles.formSelect}
+              >
+                {!topicEditable && form.topic && (
+                    <option value={form.topic}>{meetingFromState?.topic?.title || "Current Topic"}</option>
+                )}
+                {topicEditable ? (
+                    <>
+                      <option value="">-- Select Topic --</option>
+                      {topics.map((topic) => (
+                          <option key={topic.id} value={topic.id}>
+                            {topic.title}
+                          </option>
+                      ))}
+                    </>
+                ) : (
+                    !form.topic && <option value="">-- Topic will be assigned later --</option>
+                )}
+              </select>
+              {!topicEditable && !form.topic && (
+                  <button type="button" className={styles.manualButton} onClick={handleManualChooseTopic}>
+                    ✏️ Manual Choose Topic
+                  </button>
+              )}
+              {topicsLoading && topicEditable && <div className={styles.loadingText}>Loading topics...</div>}
+            </div>
+
+            {/* Host */}
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Host</label>
+              <input
+                  type="text"
+                  value={
+                      hosts.find((u) => u.id === form.host)?.fullName || hosts.find((u) => u.id === form.host)?.username || ""
+                  }
+                  readOnly
+                  disabled
+                  className={styles.formControl}
+                  placeholder="-- Host will be assigned automatically --"
+              />
+              <button
+                  type="button"
+                  className={styles.autoButton}
+                  onClick={handleAutoChooseHost}
+                  disabled={autoHostLoading}
+              >
+                🔄 {autoHostLoading ? "Selecting..." : "Automatically Choose Host"}
+              </button>
+            </div>
+
+            {/* Company Branch */}
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Company Branch</label>
+              <select
+                  name="companyBranch"
+                  value={form.companyBranch}
+                  onChange={handleChange}
+                  required
+                  disabled={branchesLoading}
+                  className={styles.formSelect}
+              >
+                <option value="">-- Select Branch --</option>
+                {branches.map((branch) => (
+                    <option key={branch.id} value={branch.id}>
+                      {branch.name}
+                    </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Meeting URL */}
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Meeting URL</label>
+              <input
+                  name="meetingLink"
+                  value={form.meetingLink}
+                  onChange={handleChange}
+                  placeholder="Enter meeting URL"
+                  className={styles.formControl}
+              />
+            </div>
+
+            {/* Status */}
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Status</label>
+              <select name="status" value={form.status} onChange={handleChange} className={styles.formSelect} required>
+                <option value="">-- Select Status --</option>
+                {statusOptions.map((stt) => (
+                    <option key={stt} value={stt}>
+                      {stt}
+                    </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Duration */}
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Duration (hours)</label>
+              <input
+                  name="duration"
+                  type="number"
+                  min={1}
+                  value={form.duration}
+                  onChange={handleChange}
+                  placeholder="Enter duration (minutes)"
+                  required
+                  className={styles.formControl}
+              />
+            </div>
+
+            {/* Attendance Code */}
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Attendance Code</label>
+              <input
+                  type="text"
+                  value={attendanceCodeLoading ? "Loading..." : attendanceCodeInfo.code}
+                  readOnly
+                  className={styles.formControl}
+              />
+              {/* Hiển thị ngày hết hạn nếu có */}
+              {attendanceCodeInfo.expiresAt && attendanceCodeInfo.code && !attendanceCodeLoading && (
+                  <div className={styles.expireInfo}>
+                    Expire at: <b>{new Date(attendanceCodeInfo.expiresAt).toLocaleString()}</b>
+                  </div>
+              )}
+
+              {/* Phần Generate chỉ xuất hiện khi ONGOING */}
+              {form.status === "ONGOING" && (
+                  <div className={styles.attendanceSection}>
+                    <div className={styles.attendanceHeader}>
+                      <div className={styles.attendanceInfo}>
+                        <div className={styles.attendanceTitle}>⚡ Generating Attendance Code</div>
+                        <div className={styles.attendanceSubtitle}>
+                          Generate a unique code for this meeting. Click the button to auto-generate.
+                        </div>
+                      </div>
+                      <button
+                          type="button"
+                          className={styles.generateButton}
+                          onClick={handleGenerateCode}
+                          disabled={attendanceCodeLoading || genCodeLoading}
+                      >
+                        ⚡ {genCodeLoading ? "Generating..." : "Generate"}
+                      </button>
+                    </div>
+                  </div>
+              )}
+            </div>
+
+            {/* Action buttons */}
+            <div className={styles.actionSection}>
+              <button className={styles.saveButton} type="submit">
+                Save
+              </button>
+              <button className={styles.materialButton} type="button" onClick={handleShowMaterial}>
+                📁 Manage Meeting Material
+              </button>
+            </div>
+          </form>
         </div>
-        <h2 className="addmeeting-title mb-3">Edit Meeting</h2>
-        <Form onSubmit={handleSubmit} autoComplete="off" className="addmeeting-form-enterprise">
-          {/* Row: Meeting Title + Scheduled Date */}
-          <div className="addmeeting-grid-row mb-2">
-            <Form.Group>
-              <Form.Label className="form-label-enterprise">Meeting Title</Form.Label>
-              <Form.Control
-                name="meetingName"
-                value={form.meetingName}
-                onChange={handleChange}
-                placeholder="Enter meeting title"
-                autoComplete="off"
-                required
-                size="sm"
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="form-label-enterprise text-primary">Scheduled Date</Form.Label>
-              <Form.Control
-                type="datetime-local"
-                name="scheduledDate"
-                value={form.scheduledDate}
-                onChange={handleChange}
-                required
-                size="sm"
-              />
-            </Form.Group>
-          </div>
-          {/* Topic */}
-          <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Topic</Form.Label>
-            <Form.Select
-              name="topic"
-              value={form.topic}
-              onChange={handleChange}
-              required
-              disabled={!topicEditable || topicsLoading}
-              style={{ background: !topicEditable ? '#e9ecef' : undefined }}
-            >
-              {!topicEditable && form.topic && (
-                // Nếu chưa chọn manual, hiển thị topic hiện tại (từ meeting)
-                <option value={form.topic}>
-                  {meetingFromState?.topic?.title || meeting?.topic?.title || "Current Topic"}
-                </option>
-              )}
-              {topicEditable ? (
-                // Nếu manual, render tất cả topics đã fetch
-                <>
-                  <option value="">-- Select Topic --</option>
-                  {topics.map(topic => (
-                    <option key={topic.id} value={topic.id}>{topic.title}</option>
-                  ))}
-                </>
-              ) : (
-                // Nếu không manual, chỉ hiển thị 1 option hoặc thông báo nếu chưa có topic
-                !form.topic && <option value="">-- Topic will be assigned later --</option>
-              )}
-            </Form.Select>
-            {!topicEditable && !form.topic && (
-              <Button
-                variant="outline-secondary"
-                size="sm"
-                style={{ marginTop: 8, marginLeft: 4 }}
-                onClick={handleManualChooseTopic}
-              >
-                <i className="bi bi-pencil-square"></i> Manual Choose Topic
-              </Button>
-            )}
-            {topicsLoading && topicEditable && (
-              <div style={{ fontSize: 13, marginTop: 4, color: "#999" }}>
-                Loading topics...
-              </div>
-            )}
-          </Form.Group>
 
-          {/* Host */}
-          <Form.Group className="mb-2">
-              <Form.Label className="form-label-enterprise">Host</Form.Label>
-              <Form.Control
-                type="text"
-                value={
-                  hosts.find(u => u.id === form.host)?.fullName ||
-                  hosts.find(u => u.id === form.host)?.username ||
-                  ""
-                }
-                readOnly
-                disabled
-                style={{ background: "#e9ecef" }}
-                placeholder="-- Host will be assigned automatically --"
-              />
-              <Button
-                variant="outline-primary"
-                size="sm"
-                style={{ marginTop: 8, marginLeft: 4 }}
-                onClick={handleAutoChooseHost}
-                disabled={autoHostLoading}
-              >
-                <i className="bi bi-shuffle"></i> {autoHostLoading ? "Selecting..." : "Automatically Choose Host"}
-              </Button>
-          </Form.Group>
-          {/* Company Branch */}
-          <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Company Branch</Form.Label>
-            <Form.Select
-              name="companyBranch"
-              value={form.companyBranch}
-              onChange={handleChange}
-              required
-              disabled={branchesLoading}
-            >
-              <option value="">-- Select Branch --</option>
-              {branches.map(branch => (
-                <option key={branch.id} value={branch.id}>{branch.name}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          {/* Meeting URL */}
-          <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Meeting URL</Form.Label>
-            <Form.Control
-              name="meetingLink"
-              value={form.meetingLink}
-              onChange={handleChange}
-              placeholder="Enter meeting URL"
-              autoComplete="off"
-              size="sm"
-            />
-          </Form.Group>
-          {/* Status */}
-          <Form.Group className="mb-2">
-            <Form.Label className="form-label-enterprise">Status</Form.Label>
-            <Form.Select name="status" value={form.status} onChange={handleChange} size="sm" required>
-              <option value="">-- Select Status --</option>
-              {statusOptions.map(stt => (
-                <option key={stt} value={stt}>{stt}</option>
-              ))}
-            </Form.Select>
-          </Form.Group>
-          {/* Duration */}
-          <Form.Group className="mb-3">
-            <Form.Label className="form-label-enterprise">Duration (hours)</Form.Label>
-            <Form.Control
-              name="duration"
-              type="number"
-              min={1}
-              value={form.duration}
-              onChange={handleChange}
-              placeholder="Enter duration (minutes)"
-              autoComplete="off"
-              size="sm"
-              required
-            />
-          </Form.Group>
-          {/* Attendance Code */}
-          <Form.Group className="mb-3">
-          <Form.Label className="form-label-enterprise">Attendance Code</Form.Label>
-          <Form.Control
-            type="text"
-            value={attendanceCodeLoading ? "Loading..." : attendanceCodeInfo.code}
-            readOnly
-            isInvalid={attendanceCodeLoading}
-          />
-          {/* Hiển thị ngày hết hạn nếu có */}
-          {attendanceCodeInfo.expiresAt && attendanceCodeInfo.code && !attendanceCodeLoading && (
-            <div className="text-muted mt-1" style={{ fontSize: 13 }}>
-              Expire at: <b>{new Date(attendanceCodeInfo.expiresAt).toLocaleString()}</b>
-            </div>
-          )}
-
-          {/* Phần Generate chỉ xuất hiện khi ONGOING */}
-          {form.status === "ONGOING" && (
-            <div className="gen-attendance-card mt-2 d-flex align-items-center justify-content-between">
-              <div style={{ width: "100%" }}>
-                <div className="fw-semibold" style={{ color: "#18926e", fontSize: 16 }}>
-                  <i className="bi bi-magic me-2"></i>
-                  Generating Attendance Code
-                </div>
-                <div className="text-muted" style={{ fontSize: 13 }}>
-                  Generate a unique code for this meeting. Click the button to auto-generate.
-                </div>
-              </div>
-              <Button
-                size="sm"
-                className="btn-gen-code"
-                type="button"
-                onClick={handleGenerateCode}
-                style={{ minHeight: 44, minWidth: 120 }}
-                disabled={attendanceCodeLoading || genCodeLoading}
-              >
-                <i className="bi bi-lightning-charge-fill me-1"></i> {genCodeLoading ? "Generating..." : "Generate"}
-              </Button>
-            </div>
-          )}
-        </Form.Group>
-          {/* Save button & Manage Meeting Material */}
-          <div className="d-flex justify-content-between align-items-center mt-2 gap-3">
-            <Button className="px-4 py-2 rounded-3 btn-dark-green" type="submit" style={{ minWidth: 110 }}>
-              Save
-            </Button>
-            <Button
-              className="px-4 py-2 rounded-3 btn-outline-dark-green"
-              type="button"
-              style={{ minWidth: 200, fontWeight: 500 }}
-              onClick={handleShowMaterial}
-            >
-              <i className="bi bi-folder2-open me-2"></i>
-              Manage Meeting Material
-            </Button>
-          </div>
-        </Form>
-        {/* Modal chọn expire */}
-        <Modal show={showExpireModal} onHide={() => setShowExpireModal(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Set Expiry Time</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form.Group>
-              <Form.Label>Valid Minutes</Form.Label>
-              <Form.Control
-                type="number"
-                min={1}
-                max={120}
-                value={expireMinutes}
-                onChange={e => setExpireMinutes(Number(e.target.value))}
-                disabled={genCodeLoading}
-              />
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowExpireModal(false)} disabled={genCodeLoading}>
-              Cancel
-            </Button>
-            <Button variant="success" onClick={handleConfirmGenerate} disabled={genCodeLoading}>
-              {genCodeLoading ? "Generating..." : "Confirm"}
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        {/* MeetingMaterialModal popup */}
+        <MeetingMaterialModal
+            show={showMaterial}
+            onHide={handleCloseMaterial}
+            files={files}
+            onUpload={handleFileChange}
+            onDelete={handleDeleteFile}
+        />
+        <SuccessDialog
+            show={showSuccess}
+            onClose={handleSuccessClose}
+            title="Success"
+            message="Meeting updated successfully!"
+        />
       </div>
-      {/* MeetingMaterialModal popup */}
-      <MeetingMaterialModal
-        show={showMaterial}
-        onHide={handleCloseMaterial}
-        files={files}
-        onUpload={handleFileChange}
-        onDelete={handleDeleteFile}
-      />
-      <SuccessDialog
-        show={showSuccess}
-        onClose={handleSuccessClose}
-        title="Success"
-        message="Meeting updated successfully!"
-      />
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-      />
-    </div>
-  );
+  )
 }
 
-export default EditMeeting;
+export default EditMeeting

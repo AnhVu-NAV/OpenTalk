@@ -1,0 +1,176 @@
+.tableContainer {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0f9f0 100%);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.table thead {
+    background: linear-gradient(135deg, #2d5a3d 0%, #1e3d2a 100%);
+}
+
+.table thead th {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 18px 16px;
+    text-align: left;
+    letter-spacing: 0.5px;
+    border: none;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.table thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.table tbody tr {
+    background: white;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: linear-gradient(135deg, #f8fdf8 0%, #f0f9f0 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+
+.table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+
+.table td {
+    padding: 16px;
+    vertical-align: middle;
+    border: none;
+    font-size: 14px;
+    color: #2d3748;
+}
+
+.meetingActions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.actionBtn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.actionBtn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.actionBtn:hover::before {
+    left: 100%;
+}
+
+.viewBtn {
+    background: linear-gradient(135deg, #e0f7f1 0%, #c6f6d5 100%);
+    color: #10b981;
+    border: 1px solid #10b981;
+}
+
+.viewBtn:hover {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.editBtn {
+    background: linear-gradient(135deg, #fef9c3 0%, #fde68a 100%);
+    color: #ca8a04;
+    border: 1px solid #ca8a04;
+}
+
+.editBtn:hover {
+    background: linear-gradient(135deg, #ca8a04 0%, #a16207 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(202, 138, 4, 0.3);
+}
+
+.deleteBtn {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #dc2626;
+    border: 1px solid #dc2626;
+}
+
+.deleteBtn:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+@media (max-width: 768px) {
+    .tableContainer {
+        padding: 16px;
+        margin: 0 -16px;
+        border-radius: 0;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+
+    .table thead th {
+        padding: 12px 8px;
+        font-size: 12px;
+    }
+
+    .table td {
+        padding: 12px 8px;
+    }
+
+    .actionBtn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+}

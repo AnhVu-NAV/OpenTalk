@@ -1,0 +1,215 @@
+/* Row Styles */
+.row {
+    transition: all 0.2s ease;
+}
+
+.row:hover {
+    background: linear-gradient(135deg, #f9fafb 0%, #f0fdf4 100%);
+    transform: translateY(-1px);
+}
+
+.cell {
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.meetingId {
+    font-weight: 600;
+    color: #6b7280;
+    font-family: "Monaco", "Menlo", "Consolas", monospace;
+}
+
+.meetingName {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 15px;
+}
+
+.topicName {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.hostName {
+    color: #374151;
+    font-weight: 500;
+}
+
+.branchName {
+    color: #374151;
+    font-weight: 500;
+    padding: 4px 8px;
+    background: #f8fafc;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.scheduledDate {
+    color: #6b7280;
+    font-family: "Monaco", "Menlo", "Consolas", monospace;
+    font-size: 13px;
+}
+
+.meetingLink {
+    color: #10b981;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.meetingLink:hover {
+    background: #ecfdf5;
+    color: #059669;
+    text-decoration: none;
+}
+
+.duration {
+    font-weight: 500;
+    color: #6b7280;
+    font-family: "Monaco", "Menlo", "Consolas", monospace;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.iconBtn {
+    width: 36px;
+    height: 36px;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #6b7280;
+}
+
+.iconBtn:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    transform: translateY(-1px);
+}
+
+.viewBtn {
+    color: #1d4ed8;
+    border-color: #dbeafe;
+    background: #dbeafe;
+}
+
+.viewBtn:hover {
+    background: #1d4ed8;
+    color: white;
+    border-color: #1d4ed8;
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+.deleteBtn {
+    color: #dc2626;
+    border-color: #fee2e2;
+    background: #fee2e2;
+}
+
+.deleteBtn:hover {
+    background: #dc2626;
+    color: white;
+    border-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Menu Styles */
+.menuContainer {
+    position: relative;
+}
+
+.actionMenu {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    min-width: 140px;
+    z-index: 10;
+    padding: 8px 0;
+    animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menuItem {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 14px;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.menuItem:hover {
+    background: #f9fafb;
+}
+
+.menuItem.danger {
+    color: #dc2626;
+}
+
+.menuItem.danger:hover {
+    background: #fef2f2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cell {
+        padding: 12px 8px;
+        font-size: 13px;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .iconBtn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .actionMenu {
+        min-width: 120px;
+    }
+
+    .menuItem {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
